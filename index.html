@@ -965,7 +965,7 @@
         figure26Downwind:
           "https://jrupprechtlaw.com/wp-content/uploads/2016/07/Figure-26-of-the-Part-107-sample-knowledge-test-questions.jpg",
         figure26Lat:
-          "https://jrupprechtlaw.com/wp-content/uploads/2016/08/Figure-26-area-4.jpg",
+          "https://jrupprechtlaw.com/wp-content/uploads/2016/08/Figure-26-area-4-600x516.jpg",
         minot:
           "https://jrupprechtlaw.com/wp-content/uploads/2018/08/remote-pilot-knowledge-test-practice-question-minot.jpg",
         garrison:
@@ -973,13 +973,11 @@
         trenton:
           "https://jrupprechtlaw.com/wp-content/uploads/2018/08/remote-pilot-knowledge-test-practice-question-trenton.jpg",
         hertford:
-          "https://jrupprechtlaw.com/wp-content/uploads/2016/07/Figure-20-area-3-of-the-Part-107-sample-knowledge-test-questions.jpg",
+          "https://jrupprechtlaw.com/wp-content/uploads/2018/08/remote-pilot-knowledge-test-practice-question-hertford.jpg",
         cardAirport:
           "https://jrupprechtlaw.com/wp-content/uploads/2018/08/remote-pilot-knowledge-test-practice-question-card-airport.jpg",
         elizabethCity:
           "https://jrupprechtlaw.com/wp-content/uploads/2018/08/remote-pilot-knowledge-test-practice-question-elizabeth-city.jpg",
-        jamestownE:
-          "https://jrupprechtlaw.com/wp-content/uploads/2017/12/E4-–-Class-E-Airspace-Areas-Designated-as-an-Extension-to-a-Class-D-or-Class-E-Surface-Area.jpg",
         parachute:
           "https://jrupprechtlaw.com/wp-content/uploads/2018/08/remote-pilot-knowledge-test-practice-question-parachute.jpg"
       };
@@ -1870,7 +1868,7 @@
           ]
         },
         {
-          q: "UA.V.B.K6a (Refer to FAA-CT-8080-2H, Figure 24, Area 6.) Near Jamestown Regional (JMS), what must you receive prior to flying at 46.9N 98.6W near a tower under construction?",
+          q: "UA.V.B.K6a (Refer to FAA-CT-8080-2H, Figure 26, area 4.) Near Jamestown Regional (JMS), what must you receive prior to flying at 46.9N 98.6W near a tower under construction?",
           choices: [
             "Authorization from the military.",
             "Authorization from ATC (controlled airspace / surface E as applicable).",
@@ -2420,6 +2418,87 @@
         return html;
       }
 
+      /**
+       * One rule per figure-referenced question in EXAM_MC_BANK (order = first match wins).
+       * Images: https://jrupprechtlaw.com/part-107-knowledge-test/
+       */
+      const EXAM_FIGURE_RULES = [
+        { re: /Blencoe.*Onawa|railroad tracks from Blencoe/i, key: "blencoe", caption: "Figure 78 — Blencoe to Onawa (chart excerpt)" },
+        { re: /Contracted to inspect towers ~4 NM southwest|towers ~4 NM southwest of.*SUX|~4 NM southwest of Sioux Gateway/i, key: "siouxGateway", caption: "Figure 78 — SUX tower inspection (altitude over towers)" },
+        { re: /What class of airspace is associated with Sioux Gateway/i, key: "siouxGateway", caption: "Figure 78 — Sioux Gateway (SUX) Class D" },
+        { re: /Dallas Executive \(RBD\)|Figure 25.*Area 3/i, key: "redbird", caption: "Figure 25 — Dallas Executive (RBD)" },
+        { re: /floor of the Savannah Class C|Figure 23.*area 3\)/i, key: "savannah", caption: "Figure 23 — Savannah Class C shelf" },
+        { re: /What type of airport is Pueblo Airport/i, key: "nationalSecurityPueblo", caption: "Pueblo Airport — Class D (chart context; Pueblo article figure)" },
+        { re: /Fentress NALF|NFE.*Figure 20.*Area 1/i, key: "fentress", caption: "Figure 20 — Area 1 (Fentress / NFE)" },
+        { re: /Figure 59.*area 2|VR1667|chart shows VR routes/i, key: "figure59", caption: "Figure 59 — Military training routes (VR)" },
+        { re: /R-2305|Figure 75.*Area 6/i, key: "gilaBend", caption: "Figure 75 — Area 6 (R-2305 / chart supplement)" },
+        { re: /Devil.*Lake West MOA|Figure 21.*MOA.*east of area 2/i, key: "devilsLakeMoa", caption: "Figure 21 — Devil’s Lake West MOA" },
+        { re: /dashed magenta.*Pueblo|Pueblo.*dashed magenta|Pueblo.*national security/i, key: "nationalSecurityPueblo", caption: "Pueblo area — national security / chart symbols" },
+        { re: /Plantation Airport \(JYL\)|Figure 23.*Area 4/i, key: "plantation", caption: "Figure 23 — Area 4 (Plantation / JYL)" },
+        { re: /Lake Drummond|Figure 20, area 2/i, key: "figure20Area2", caption: "Figure 20 — Area 2 (Lake Drummond)" },
+        { re: /Figure 20, area 5|CHECK NOTAMS.*unmarked balloon/i, key: "figure20Area3", caption: "Figure 20 — Area 5 (NOTAM / balloon caution)" },
+        { re: /Figure 12.*METAR|KMDW.*Figure 12|KJFK.*Figure 12/i, pdf: true, caption: "Figure 12 (METAR) — use the full-color figure in the FAA PDF (no separate image on the article)." },
+        { re: /Figure 2\)|33 pound.*30°|30° banked turn/i, key: "loadFactor", caption: "Figure 2 — Load factor / bank (also see supplement)" },
+        { re: /Cooperstown|midfield left downwind to RWY 13|Figure 26, area 2/i, key: "figure26Downwind", caption: "Figure 26 — Area 2 (traffic pattern)" },
+        { re: /Jamestown Regional \(JMS\)|46\.9N.*98\.6W/i, key: "figure26Lat", caption: "Figure 26 — Area 4 (Jamestown / tower)" },
+        { re: /line of latitude at area 4/i, key: "figure26Lat", caption: "Figure 26 — Area 4 (latitude line)" },
+        { re: /Minot International \(MOT\)|Figure 21, Area 1.*MOT/i, key: "minot", caption: "Figure 21 — Area 1 (Minot)" },
+        { re: /What airport is at approximately 47°40|47°40.*101°26/i, key: "garrison", caption: "Figure 21 — Garrison (coordinates)" },
+        { re: /Coeur D['\u2019]Alene|Figure 22, area 2/i, key: "trenton", caption: "Figure 22 — Coeur d’Alene (CTAF)" },
+        { re: /northeast of Hertford|2 NM northeast of Hertford/i, key: "hertford", caption: "Figure 20 — Area 4 (Hertford obstacle)" },
+        { re: /What type of airport is Card Airport/i, key: "cardAirport", caption: "Figure 24 — Area 6 (Card Airport)" },
+        { re: /Elizabeth City Regional \(ECG\)|Figure 20, area 3\).*ECG|southeast of Elizabeth City Regional/i, key: "elizabethCity", caption: "Figure 20 — Area 3 (ECG / balloon)" },
+        { re: /parachute operations at Tri-County|Figure 24, Area 3.*Legend 1/i, key: "parachute", caption: "Figure 24 — Tri-County / parachute note" }
+      ];
+
+      function buildExamFigureHtml(q) {
+        const pdf = EXAM_SRC.faaKnowledgeSupplement;
+        const article = EXAM_SRC.rupprechtLaw;
+        function img(key, caption) {
+          const url = EXAM_FIGURE_IMAGES[key];
+          if (!url) return "";
+          const u = escapeHtml(url);
+          const c = escapeHtml(caption);
+          return (
+            '<div class="exam-figure-block"><img src="' +
+            u +
+            '" alt="' +
+            c +
+            '" loading="lazy" decoding="async" /><p class="exam-figure-caption">' +
+            c +
+            ' · <a href="' +
+            escapeHtml(article) +
+            '" target="_blank" rel="noopener noreferrer">Rupprecht Law article</a> · <a href="' +
+            escapeHtml(pdf) +
+            '" target="_blank" rel="noopener noreferrer">FAA FAA-CT-8080-2H (PDF)</a></p></div>'
+          );
+        }
+        function pdfNote(caption) {
+          return (
+            '<div class="exam-figure-block"><p class="exam-figure-caption">' +
+            escapeHtml(caption) +
+            ' <a href="' +
+            escapeHtml(pdf) +
+            '" target="_blank" rel="noopener noreferrer">FAA testing supplement (PDF)</a> · <a href="' +
+            escapeHtml(article) +
+            '" target="_blank" rel="noopener noreferrer">Article</a></p></div>'
+          );
+        }
+        var ri;
+        for (ri = 0; ri < EXAM_FIGURE_RULES.length; ri++) {
+          var rule = EXAM_FIGURE_RULES[ri];
+          if (!rule.re.test(q)) continue;
+          if (rule.pdf) return pdfNote(rule.caption);
+          return img(rule.key, rule.caption);
+        }
+        if (/Refer to FAA-CT-8080-2H/i.test(q)) {
+          return pdfNote(
+            "This question refers to a figure in FAA-CT-8080-2H — open the FAA PDF and locate the figure cited in the stem."
+          );
+        }
+        return "";
+      }
+
       let deck = CARDS_CLEAN.slice();
       let index = 0;
       let filtered = deck;
@@ -2571,6 +2650,13 @@
         elExamMc.hidden = false;
         const c = examList[examIdx];
         elQ.textContent = c.q;
+        var figHtml = buildExamFigureHtml(c.q);
+        if (figHtml) {
+          elExamFigures.innerHTML = figHtml;
+          elExamFigures.hidden = false;
+        } else {
+          clearExamFigures();
+        }
         elA.textContent = "";
         elRefs.innerHTML = "";
         elCard.classList.remove("flipped");
@@ -2706,6 +2792,7 @@
         elExamGrade.hidden = true;
         elExamMc.hidden = true;
         elExamMcOptions.innerHTML = "";
+        clearExamFigures();
         elExamSetup.hidden = false;
         examActive = false;
         examList = [];
