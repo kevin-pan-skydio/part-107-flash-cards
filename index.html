@@ -409,6 +409,39 @@
       cursor: default;
     }
 
+    .exam-figures {
+      width: min(100%, 42rem);
+      margin-top: 0.5rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .exam-figure-block {
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      padding: 0.65rem 0.85rem;
+      box-shadow: 0 4px 16px rgba(0, 50, 100, 0.08);
+    }
+
+    .exam-figure-block img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto 0.5rem;
+      border-radius: 8px;
+    }
+
+    .exam-figure-caption {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    .exam-figure-caption a {
+      color: var(--skydio-blue-darker);
+    }
+
     .exam-mc {
       width: min(100%, 42rem);
       margin-top: 0.75rem;
@@ -518,6 +551,7 @@
       </div>
     </div>
   </div>
+  <div class="exam-figures" id="examFigures" hidden aria-label="Figure images for this question"></div>
   <div class="exam-mc" id="examMc" hidden>
     <p class="exam-mc-label" id="examMcLabel">Choose the best answer</p>
     <div class="exam-mc-options" id="examMcOptions"></div>
@@ -890,7 +924,64 @@
         aimCh3: "https://www.faa.gov/air_traffic/publications/atpubs/aim_html/chap_3.html",
         notamSearch: "https://notams.aim.faa.gov/notamSearch/nsapp.html",
         faaTesting: "https://www.faa.gov/training_testing/testing",
-        rupprechtLaw: "https://jrupprechtlaw.com/part-107-knowledge-test/"
+        rupprechtLaw: "https://jrupprechtlaw.com/part-107-knowledge-test/",
+        faaKnowledgeSupplement:
+          "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/sport_rec_private_akts.pdf"
+      };
+
+      /**
+       * Chart / figure images reproduced on jrupprechtlaw.com (same article as the sample questions).
+       * Attribution: https://jrupprechtlaw.com/part-107-knowledge-test/
+       */
+      const EXAM_FIGURE_IMAGES = {
+        blencoe:
+          "https://jrupprechtlaw.com/wp-content/uploads/2018/08/remote-pilot-knowledge-test-practice-question-blencoe.jpg",
+        siouxGateway:
+          "https://jrupprechtlaw.com/wp-content/uploads/2018/08/remote-pilot-knowledge-test-practice-question-sioux-gateway1.jpg",
+        redbird:
+          "https://jrupprechtlaw.com/wp-content/uploads/2018/08/remote-pilot-knowledge-test-practice-question-redbird.jpg",
+        savannah:
+          "https://jrupprechtlaw.com/wp-content/uploads/2018/08/remote-pilot-knowledge-test-practice-question-savannah.jpg",
+        fentress:
+          "https://jrupprechtlaw.com/wp-content/uploads/2018/08/remote-pilot-knowledge-test-practice-question-fentress.jpg",
+        figure59:
+          "https://jrupprechtlaw.com/wp-content/uploads/2016/07/Figure-59-of-the-Part-107-sample-knowledge-test-questions.jpg",
+        gilaBend:
+          "https://jrupprechtlaw.com/wp-content/uploads/2018/08/remote-pilot-knowledge-test-practice-question-gila-bend.jpg",
+        devilsLakeMoa:
+          "https://jrupprechtlaw.com/wp-content/uploads/2016/07/Figure-21-of-the-Part-107-Devils-lake-MOA-sample-knowledge-test-questions.jpg",
+        nationalSecurityPueblo:
+          "https://jrupprechtlaw.com/wp-content/uploads/2018/08/nationa-security-area.jpg",
+        plantation:
+          "https://jrupprechtlaw.com/wp-content/uploads/2018/08/remote-pilot-knowledge-test-practice-question-plantation.jpg",
+        figure20Area2:
+          "https://jrupprechtlaw.com/wp-content/uploads/2016/07/Figure-20-area-2-of-the-Part-107-sample-knowledge-test-questions.jpg",
+        figure20Area3:
+          "https://jrupprechtlaw.com/wp-content/uploads/2016/07/Figure-20-area-3-of-the-Part-107-sample-knowledge-test-questions.jpg",
+        loadFactor:
+          "https://jrupprechtlaw.com/wp-content/uploads/2016/07/loadfactor.jpg",
+        figure2Supplement:
+          "https://jrupprechtlaw.com/wp-content/uploads/2016/08/Figure-2-of-the-Part-107-sample-knowledge-test-questions.jpg",
+        figure26Downwind:
+          "https://jrupprechtlaw.com/wp-content/uploads/2016/07/Figure-26-of-the-Part-107-sample-knowledge-test-questions.jpg",
+        figure26Lat:
+          "https://jrupprechtlaw.com/wp-content/uploads/2016/08/Figure-26-area-4.jpg",
+        minot:
+          "https://jrupprechtlaw.com/wp-content/uploads/2018/08/remote-pilot-knowledge-test-practice-question-minot.jpg",
+        garrison:
+          "https://jrupprechtlaw.com/wp-content/uploads/2018/08/remote-pilot-knowledge-test-practice-question-garrison.jpg",
+        trenton:
+          "https://jrupprechtlaw.com/wp-content/uploads/2018/08/remote-pilot-knowledge-test-practice-question-trenton.jpg",
+        hertford:
+          "https://jrupprechtlaw.com/wp-content/uploads/2016/07/Figure-20-area-3-of-the-Part-107-sample-knowledge-test-questions.jpg",
+        cardAirport:
+          "https://jrupprechtlaw.com/wp-content/uploads/2018/08/remote-pilot-knowledge-test-practice-question-card-airport.jpg",
+        elizabethCity:
+          "https://jrupprechtlaw.com/wp-content/uploads/2018/08/remote-pilot-knowledge-test-practice-question-elizabeth-city.jpg",
+        jamestownE:
+          "https://jrupprechtlaw.com/wp-content/uploads/2017/12/E4-–-Class-E-Airspace-Areas-Designated-as-an-Extension-to-a-Class-D-or-Class-E-Surface-Area.jpg",
+        parachute:
+          "https://jrupprechtlaw.com/wp-content/uploads/2018/08/remote-pilot-knowledge-test-practice-question-parachute.jpg"
       };
 
       /**
@@ -2368,6 +2459,12 @@
       const elExamMc = document.getElementById("examMc");
       const elExamMcOptions = document.getElementById("examMcOptions");
       const elCardWrap = document.getElementById("cardWrap");
+      const elExamFigures = document.getElementById("examFigures");
+
+      function clearExamFigures() {
+        elExamFigures.innerHTML = "";
+        elExamFigures.hidden = true;
+      }
 
       const subLineStudyHtml = elSubLine.innerHTML;
 
@@ -2564,6 +2661,7 @@
         elExamMc.hidden = true;
         elExamMcOptions.innerHTML = "";
         elExamGrade.hidden = true;
+        clearExamFigures();
         elFlip.disabled = false;
         elFlip.textContent = "Flip";
         elCard.classList.remove("flipped");
@@ -2626,6 +2724,7 @@
         elCardWrap.hidden = false;
         elExamMc.hidden = true;
         elExamMcOptions.innerHTML = "";
+        clearExamFigures();
         examList = [];
         examIdx = 0;
         examCorrect = 0;
