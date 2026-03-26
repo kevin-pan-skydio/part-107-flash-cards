@@ -411,6 +411,7 @@
 
     .exam-mc {
       width: min(100%, 42rem);
+      margin-top: 0.75rem;
       margin-bottom: 0.75rem;
     }
 
@@ -501,10 +502,6 @@
     <button type="button" id="shuffle">Shuffle deck</button>
     <button type="button" id="random">Random card</button>
   </div>
-  <div class="exam-mc" id="examMc" hidden>
-    <p class="exam-mc-label" id="examMcLabel">Choose the best answer</p>
-    <div class="exam-mc-options" id="examMcOptions"></div>
-  </div>
   <div class="wrap" id="cardWrap">
     <div class="card" id="card" role="button" tabindex="0" aria-label="Flashcard. Click to flip.">
       <div class="face front">
@@ -519,6 +516,10 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="exam-mc" id="examMc" hidden>
+    <p class="exam-mc-label" id="examMcLabel">Choose the best answer</p>
+    <div class="exam-mc-options" id="examMcOptions"></div>
   </div>
   <div class="exam-grade" id="examGrade" hidden>
     <button type="button" class="primary exam-grade-btn" id="examNextBtn">Next question →</button>
