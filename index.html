@@ -1691,15 +1691,36 @@
 
       const subLineStudyHtml = elSubLine.innerHTML;
 
+      /** Uniform index in [0, maxExclusive), preferring crypto RNG when available. */
+      function randomUintBelow(maxExclusive) {
+        if (maxExclusive <= 0) return 0;
+        if (typeof crypto !== "undefined" && crypto.getRandomValues) {
+          const buf = new Uint32Array(1);
+          crypto.getRandomValues(buf);
+          return buf[0] % maxExclusive;
+        }
+        return Math.floor(Math.random() * maxExclusive);
+      }
+
       function shuffleArray(arr) {
         const a = arr.slice();
         for (let i = a.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
+          const j = randomUintBelow(i + 1);
           const t = a[i];
           a[i] = a[j];
           a[j] = t;
         }
         return a;
+      }
+
+      function shuffleDeckInPlace(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+          const j = randomUintBelow(i + 1);
+          const t = arr[i];
+          arr[i] = arr[j];
+          arr[j] = t;
+        }
+        return arr;
       }
 
       /**
@@ -1709,16 +1730,17 @@
         const pairs = item.choices.map(function (text, i) {
           return { text: text, isCorrect: i === item.correctIndex };
         });
-        shuffleArray(pairs);
+        const shuffled = shuffleArray(pairs);
         let correctIndex = -1;
         for (let j = 0; j < 4; j++) {
-          if (pairs[j].isCorrect) correctIndex = j;
+          if (shuffled[j].isCorrect) correctIndex = j;
         }
         return {
           q: item.q,
           a: item.a,
           links: item.links,
-          choices: pairs.map(function (p) {
+          sources: item.sources,
+          choices: shuffled.map(function (p) {
             return p.text;
           }),
           correctIndex: correctIndex
@@ -2000,19 +2022,14 @@
 
       function shuffle() {
         if (examActive) return;
-        for (let i = deck.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          const t = deck[i];
-          deck[i] = deck[j];
-          deck[j] = t;
-        }
+        shuffleDeckInPlace(deck);
         applyFilter();
       }
 
       function randomCard() {
         if (examActive) return;
         if (filtered.length === 0) return;
-        index = Math.floor(Math.random() * filtered.length);
+        index = randomUintBelow(filtered.length);
         elCard.classList.remove("flipped");
         show();
       }
@@ -2088,7 +2105,10 @@
         else if (e.key === "r" || e.key === "R") randomCard();
       });
 
-      applyFilter();
+      shuffleDeckInPlace(deck);
+      filtered = deck.slice();
+      index = filtered.length ? randomUintBelow(filtered.length) : 0;
+      show();
     })();
   </script>
 </body>
