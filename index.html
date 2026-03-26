@@ -31,6 +31,11 @@
       box-sizing: border-box;
     }
 
+    /* HTML hidden must override component rules like .exam-hud { display: flex } */
+    [hidden] {
+      display: none !important;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
@@ -120,6 +125,9 @@
       cursor: pointer;
       transform-style: preserve-3d;
       transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: minmax(220px, auto);
     }
 
     .card.flipped {
@@ -127,8 +135,10 @@
     }
 
     .face {
-      position: absolute;
-      inset: 0;
+      grid-area: 1 / 1;
+      position: relative;
+      width: 100%;
+      min-height: 220px;
       backface-visibility: hidden;
       border-radius: 14px;
       border: 1px solid var(--border);
@@ -138,6 +148,7 @@
       justify-content: flex-start;
       padding: 1rem 1.35rem 1.25rem;
       line-height: 1.45;
+      box-sizing: border-box;
     }
 
     .face-label {
@@ -172,7 +183,6 @@
       background: linear-gradient(145deg, var(--card-back), var(--card-back-tint));
       transform: rotateY(180deg);
       color: var(--text);
-      overflow: hidden;
       box-shadow: 0 6px 28px rgba(0, 50, 100, 0.1);
     }
 
@@ -181,9 +191,6 @@
       flex-direction: column;
       gap: 0.75rem;
       width: 100%;
-      max-height: 100%;
-      min-height: 0;
-      overflow-y: auto;
       text-align: left;
     }
 
@@ -201,8 +208,7 @@
       border-top: 1px solid var(--border);
       padding-top: 0.75rem;
       color: var(--muted);
-      flex: 0 1 auto;
-      min-height: 0;
+      flex: 0 0 auto;
     }
 
     .refs-title {
@@ -275,25 +281,231 @@
       background: #ffffff;
       color: var(--skydio-blue-darkest);
     }
+
+    .exam-setup {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem 0.75rem;
+      width: min(100%, 42rem);
+      margin-bottom: 0.75rem;
+      padding: 0.65rem 0.85rem;
+      border-radius: 10px;
+      border: 1px dashed var(--border);
+      background: rgba(255, 255, 255, 0.7);
+      font-size: 0.875rem;
+      color: var(--text);
+    }
+
+    .exam-setup label {
+      font-weight: 600;
+      color: var(--skydio-blue-darkest);
+    }
+
+    .exam-setup select {
+      padding: 0.35rem 0.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 0.875rem;
+    }
+
+    .exam-hud {
+      width: min(100%, 42rem);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--skydio-blue-darkest), #004a8c);
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .exam-hud span {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .exam-hud button {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .exam-hud button:hover {
+      background: rgba(255, 255, 255, 0.28);
+      border-color: #fff;
+    }
+
+    .exam-grade {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+      width: min(100%, 42rem);
+    }
+
+    .exam-grade #examNextBtn {
+      min-width: 12rem;
+    }
+
+    .exam-results {
+      width: min(100%, 42rem);
+      margin-bottom: 1rem;
+      padding: 1.25rem 1.5rem;
+      border-radius: 14px;
+      border: 2px solid var(--skydio-blue);
+      background: var(--surface);
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0, 50, 100, 0.12);
+    }
+
+    .exam-results h2 {
+      margin: 0 0 0.5rem;
+      font-size: 1.35rem;
+      color: var(--skydio-blue);
+    }
+
+    .exam-results .exam-stat {
+      font-size: 1.1rem;
+      margin: 0.35rem 0;
+      color: var(--text);
+    }
+
+    .exam-results .exam-pct {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--skydio-blue-darkest);
+      margin: 0.5rem 0;
+    }
+
+    body.exam-active .search,
+    body.exam-active .search input {
+      pointer-events: none;
+      opacity: 0.45;
+    }
+
+    body.exam-active .toolbar button:not(#examEnd):not(.exam-grade-btn) {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    body.exam-active .toolbar button#flip:not(:disabled) {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .card.no-flip {
+      cursor: default;
+    }
+
+    .exam-mc {
+      width: min(100%, 42rem);
+      margin-bottom: 0.75rem;
+    }
+
+    .exam-mc-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--skydio-blue-darkest);
+      margin: 0 0 0.5rem;
+    }
+
+    .exam-mc-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .exam-choice-btn {
+      text-align: left;
+      padding: 0.65rem 0.85rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 0.9rem;
+      line-height: 1.35;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .exam-choice-btn:hover:not(:disabled) {
+      border-color: var(--skydio-blue);
+      background: var(--surface-hover);
+    }
+
+    .exam-choice-btn:disabled {
+      cursor: default;
+      opacity: 1;
+    }
+
+    .exam-choice-btn.exam-choice-correct {
+      border-color: #0a7d4a;
+      background: #e8f8ef;
+      color: #064a2e;
+    }
+
+    .exam-choice-btn.exam-choice-wrong {
+      border-color: #c94c4c;
+      background: #ffeef0;
+      color: #7a1a1a;
+    }
   </style>
 </head>
 
 <body>
   <h1>Part 107 flashcards</h1>
-  <p class="sub">FAA small UAS (sUAS) — tap card or press <kbd>Space</kbd> to flip · <kbd>←</kbd><kbd>→</kbd> navigate ·
+  <p class="sub" id="subLine">FAA small UAS (sUAS) — tap card or press <kbd>Space</kbd> to flip ·
+    <kbd>←</kbd><kbd>→</kbd> navigate ·
     <kbd>S</kbd> shuffle · <kbd>R</kbd> random · references (eCFR, FAA, PHAK) on the back
   </p>
+  <div class="exam-setup" id="examSetup">
+    <label for="examLength">Practice exam</label>
+    <select id="examLength" aria-label="Number of practice exam questions">
+      <option value="10">10 questions</option>
+      <option value="25" selected>25 questions</option>
+      <option value="50">50 questions</option>
+      <option value="60">60 questions</option>
+    </select>
+    <button type="button" class="primary" id="examStart">Start exam</button>
+  </div>
+  <div class="exam-hud" id="examHud" hidden>
+    <span id="examHudText"></span>
+    <button type="button" id="examEnd">End exam</button>
+  </div>
+  <div class="exam-results" id="examResults" hidden>
+    <h2>Exam complete</h2>
+    <p class="exam-pct" id="examResultPct"></p>
+    <p class="exam-stat" id="examResultDetail"></p>
+    <p class="exam-stat" id="examResultTime"></p>
+    <button type="button" class="primary" id="examDismiss">Back to study</button>
+  </div>
   <div class="search"><input type="search" id="filter" placeholder="Filter cards (question or answer)…"
       autocomplete="off" /></div>
   <div class="progress" id="progress"></div>
-  <div class="toolbar">
+  <div class="toolbar" id="mainToolbar">
     <button type="button" id="prev">← Prev</button>
     <button type="button" class="primary" id="flip">Flip</button>
     <button type="button" id="next">Next →</button>
     <button type="button" id="shuffle">Shuffle deck</button>
     <button type="button" id="random">Random card</button>
   </div>
-  <div class="wrap">
+  <div class="exam-mc" id="examMc" hidden>
+    <p class="exam-mc-label" id="examMcLabel">Choose the best answer</p>
+    <div class="exam-mc-options" id="examMcOptions"></div>
+  </div>
+  <div class="wrap" id="cardWrap">
     <div class="card" id="card" role="button" tabindex="0" aria-label="Flashcard. Click to flip.">
       <div class="face front">
         <span class="face-label">Question</span>
@@ -307,6 +519,9 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="exam-grade" id="examGrade" hidden>
+    <button type="button" class="primary exam-grade-btn" id="examNextBtn">Next question →</button>
   </div>
   <p class="hint" id="count"></p>
 
@@ -640,6 +855,525 @@
         return c && typeof c.q === "string" && typeof c.a === "string";
       });
 
+      /** eCFR / FAA links for practice exam questions (same targets as literature links elsewhere). */
+      const EXAM_SRC = {
+        part107: "https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-107",
+        part89: "https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-89",
+        part48: "https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-48",
+        part91: "https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-91",
+        s107_3: "https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-107/subpart-A/section-107.3",
+        s107_9: "https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-107/subpart-A/section-107.9",
+        s107_12: "https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-107/subpart-A/section-107.12",
+        s107_15: "https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-107/subpart-A/section-107.15",
+        s107_17: "https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-107/subpart-A/section-107.17",
+        s107_21: "https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-107/subpart-A/section-107.21",
+        s107_23: "https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-107/subpart-B/section-107.23",
+        s107_29: "https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-107/subpart-B/section-107.29",
+        s107_31: "https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-107/subpart-B/section-107.31",
+        s107_33: "https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-107/subpart-B/section-107.33",
+        s107_35: "https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-107/subpart-B/section-107.35",
+        s107_36: "https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-107/subpart-B/section-107.36",
+        s107_39: "https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-107/subpart-B/section-107.39",
+        s107_41: "https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-107/subpart-B/section-107.41",
+        s107_49: "https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-107/subpart-B/section-107.49",
+        s107_51: "https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-107/subpart-B/section-107.51",
+        s91_113: "https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-91/subpart-B/section-91.113",
+        faaLaanc: "https://www.faa.gov/uas/commercial_operators/laanc",
+        faaRemoteId: "https://www.faa.gov/uas/getting_started/remote_id",
+        faaRegister: "https://www.faa.gov/uas/getting_started/register_drone",
+        faaTrust: "https://www.faa.gov/uas/recreational_flyers/knowledge_test_updates",
+        acsUas: "https://www.faa.gov/training_testing/testing/acs/uas_acs.pdf",
+        phak: "https://www.faa.gov/sites/faa.gov/files/pilots/pilot_handbook.pdf",
+        aim: "https://www.faa.gov/air_traffic/publications/atpubs/aim_html/",
+        aimCh3: "https://www.faa.gov/air_traffic/publications/atpubs/aim_html/chap_3.html",
+        notamSearch: "https://notams.aim.faa.gov/notamSearch/nsapp.html",
+        faaTesting: "https://www.faa.gov/training_testing/testing"
+      };
+
+      /**
+       * Exam mode only — FAA knowledge-test style: full question stems + four plausible choices.
+       * Separate from flashcards (CARDS). Each item includes `sources` for eCFR / FAA / ACS / PHAK / AIM.
+       */
+      const EXAM_MC_BANK = [
+        {
+          q: "Under 14 CFR Part 107, what is the maximum weight of a small unmanned aircraft, including everything onboard, at the time of takeoff?",
+          choices: ["35 pounds", "44 pounds", "55 pounds", "75 pounds"],
+          correctIndex: 2,
+          a: "A small UAS must weigh less than 55 pounds (25 kg) at takeoff, including payload and anything attached (14 CFR §107.3, §107.51 where applicable).",
+          sources: [
+            { label: "14 CFR §107.3 — Definitions", url: EXAM_SRC.s107_3 },
+            { label: "14 CFR §107.51 — Operating limitations", url: EXAM_SRC.s107_51 }
+          ]
+        },
+        {
+          q: "What is the maximum groundspeed allowed for the operation of a small unmanned aircraft under Part 107?",
+          choices: ["87 knots", "100 mph", "120 mph", "150 knots"],
+          correctIndex: 1,
+          a: "Part 107 limits groundspeed to 100 mph (87 knots) unless operating under a waiver (14 CFR §107.51(a)).",
+          sources: [{ label: "14 CFR §107.51 — Operating limitations", url: EXAM_SRC.s107_51 }]
+        },
+        {
+          q: "Unless operating within the immediate vicinity of a qualifying structure, what is the maximum altitude a small UAS may be operated above ground level (AGL) under Part 107?",
+          choices: ["200 feet AGL", "400 feet AGL", "500 feet AGL", "1,200 feet AGL"],
+          correctIndex: 1,
+          a: "Generally 400 feet AGL; in the immediate vicinity of a structure, you may fly up to 400 feet above the structure’s uppermost height (14 CFR §107.51(b)).",
+          sources: [{ label: "14 CFR §107.51 — Operating limitations", url: EXAM_SRC.s107_51 }]
+        },
+        {
+          q: "What minimum flight visibility must a remote pilot in command have from the control station under Part 107?",
+          choices: ["1 statute mile", "2 statute miles", "3 statute miles", "5 statute miles"],
+          correctIndex: 2,
+          a: "Three statute miles of visibility from the control station (14 CFR §107.51(c)).",
+          sources: [{ label: "14 CFR §107.51 — Operating limitations", url: EXAM_SRC.s107_51 }]
+        },
+        {
+          q: "Below 10,000 feet MSL, what minimum distance must a small UAS remain from clouds under Part 107?",
+          choices: ["200 ft below, 500 ft horizontal", "500 ft below, 1,000 ft horizontal", "500 ft below, 2,000 ft horizontal", "1,000 ft below, 2,000 ft horizontal"],
+          correctIndex: 2,
+          a: "500 feet below clouds and 2,000 feet horizontally from clouds (14 CFR §107.51(d)).",
+          sources: [{ label: "14 CFR §107.51 — Operating limitations", url: EXAM_SRC.s107_51 }]
+        },
+        {
+          q: "Who is directly responsible for the operation of a small unmanned aircraft operated under Part 107?",
+          choices: ["The visual observer only", "The person manipulating the controls only", "The remote pilot in command", "The aircraft owner only"],
+          correctIndex: 2,
+          a: "The remote PIC is directly responsible and must ensure the operation complies with Part 107 (14 CFR §107.15).",
+          sources: [{ label: "14 CFR §107.15 — Responsibility of remote PIC", url: EXAM_SRC.s107_15 }]
+        },
+        {
+          q: "How many small unmanned aircraft may one remote pilot in command operate at one time under standard Part 107?",
+          choices: ["One", "Two if using a visual observer", "Three with LAANC", "As many as the software allows"],
+          correctIndex: 0,
+          a: "One small UAS at a time for one remote PIC (14 CFR §107.33).",
+          sources: [{ label: "14 CFR §107.33 — Multiple UAS", url: EXAM_SRC.s107_33 }]
+        },
+        {
+          q: "Regarding right-of-way, a small UAS operated under Part 107 must yield to which of the following?",
+          choices: ["Only aircraft on a runway", "Only aircraft below 400 feet", "All manned aircraft", "Only aircraft in Class B airspace"],
+          correctIndex: 2,
+          a: "The small UAS must yield the right-of-way to all manned aircraft (14 CFR §107.35).",
+          sources: [
+            { label: "14 CFR §107.35 — Right-of-way", url: EXAM_SRC.s107_35 },
+            { label: "14 CFR §91.113 — Right-of-way (manned)", url: EXAM_SRC.s91_113 }
+          ]
+        },
+        {
+          q: "When must a remote PIC report an accident to the FAA under §107.9 if property damage occurs (excluding damage to the sUAS)?",
+          choices: ["Within 24 hours if damage exceeds $100", "Within 10 days if damage exceeds the threshold in §107.9", "Only if someone is injured", "Only if requested by law enforcement"],
+          correctIndex: 1,
+          a: "Report within 10 calendar days when any person suffers serious injury, loss of consciousness, or property damage exceeds the regulatory threshold — confirm current dollar amount in 14 CFR §107.9.",
+          sources: [{ label: "14 CFR §107.9 — Accident reporting", url: EXAM_SRC.s107_9 }]
+        },
+        {
+          q: "What is required before a person may act as remote pilot in command of an sUAS under Part 107?",
+          choices: ["A private pilot certificate only", "A Remote Pilot Certificate with a small UAS rating (or applicable supervision per §107.12)", "A medical certificate only", "TRUST completion only"],
+          correctIndex: 1,
+          a: "You need a Remote Pilot Certificate with a small UAS rating, or to operate under the direct supervision of someone who holds it, per §§107.12 and 107.3.",
+          sources: [
+            { label: "14 CFR §107.12 — Certificate required", url: EXAM_SRC.s107_12 },
+            { label: "14 CFR §107.3 — Definitions", url: EXAM_SRC.s107_3 }
+          ]
+        },
+        {
+          q: "What is the minimum age to obtain a Remote Pilot Certificate with a small UAS rating?",
+          choices: ["14 years", "15 years", "16 years", "18 years"],
+          correctIndex: 2,
+          a: "You must be at least 16 years old to receive the remote pilot certificate (14 CFR §107.12(b)).",
+          sources: [{ label: "14 CFR §107.12 — Certificate required", url: EXAM_SRC.s107_12 }]
+        },
+        {
+          q: "Operations of a small UAS in Class B, C, or D airspace generally require which of the following before flight?",
+          choices: ["A phone call to the tower", "Prior authorization from ATC or LAANC where available", "Only a visual observer", "Nothing if under 400 feet"],
+          correctIndex: 1,
+          a: "Prior authorization is required in controlled airspace (e.g., LAANC or other FAA authorization) — see 14 CFR §107.41 and current FAA procedures.",
+          sources: [
+            { label: "14 CFR §107.41 — Operation in certain airspace", url: EXAM_SRC.s107_41 },
+            { label: "FAA — LAANC", url: EXAM_SRC.faaLaanc },
+            { label: "AIM — Airspace (Ch. 3)", url: EXAM_SRC.aimCh3 }
+          ]
+        },
+        {
+          q: "What does LAANC primarily provide for drone operators?",
+          choices: ["Weather briefings", "Near-real-time authorization in controlled airspace", "Aircraft registration", "Insurance"],
+          correctIndex: 1,
+          a: "LAANC (Low Altitude Authorization and Notification Capability) supports authorization requests in controlled airspace near many airports (FAA program).",
+          sources: [
+            { label: "FAA — LAANC", url: EXAM_SRC.faaLaanc },
+            { label: "14 CFR §107.41 — Operation in certain airspace", url: EXAM_SRC.s107_41 }
+          ]
+        },
+        {
+          q: "Standard Remote ID for drones is primarily regulated under which part of 14 CFR?",
+          choices: ["Part 91", "Part 48", "Part 89", "Part 121"],
+          correctIndex: 2,
+          a: "Remote identification requirements are in 14 CFR Part 89; Part 107 operations must comply with applicable Remote ID rules.",
+          sources: [
+            { label: "14 CFR Part 89 — Remote ID", url: EXAM_SRC.part89 },
+            { label: "FAA — Remote ID", url: EXAM_SRC.faaRemoteId }
+          ]
+        },
+        {
+          q: "Which best describes visual line of sight (VLOS) for the remote pilot in command under Part 107?",
+          choices: ["The aircraft may be tracked only on a screen", "The sUAS must be visible without binoculars (corrective lenses allowed)", "VLOS is satisfied if GPS position is known", "A camera feed alone is sufficient"],
+          correctIndex: 1,
+          a: "The RPIC or VO must be able to see the aircraft throughout the flight without vision aids other than corrective lenses (14 CFR §107.31).",
+          sources: [{ label: "14 CFR §107.31 — Visual line of sight", url: EXAM_SRC.s107_31 }]
+        },
+        {
+          q: "May a visual observer use binoculars to maintain the visual line of sight of the small unmanned aircraft?",
+          choices: ["Yes, anytime", "Yes, only at night", "No", "Only with ATC permission"],
+          correctIndex: 2,
+          a: "Binoculars may not be used to maintain VLOS (14 CFR §107.31).",
+          sources: [{ label: "14 CFR §107.31 — Visual line of sight", url: EXAM_SRC.s107_31 }]
+        },
+        {
+          q: "Which statement best describes careless or reckless operation of a small UAS under Part 107?",
+          choices: ["It is allowed if under 400 feet", "It is prohibited", "It is allowed in Class G only", "It requires only a verbal warning"],
+          correctIndex: 1,
+          a: "No person may operate a small UAS in a careless or reckless manner so as to endanger life or property of another (14 CFR §107.23).",
+          sources: [{ label: "14 CFR §107.23 — Hazardous operation", url: EXAM_SRC.s107_23 }]
+        },
+        {
+          q: "For night operations under current Part 107 rules, anti-collision lighting must typically be visible for at least how far?",
+          choices: ["1 statute mile", "2 statute miles", "3 statute miles", "5 statute miles"],
+          correctIndex: 2,
+          a: "Anti-collision lighting must be visible for at least three statute miles unless the current rule text specifies otherwise — verify night operation requirements in the ACS and 14 CFR.",
+          sources: [
+            { label: "FAA — Remote Pilot ACS (PDF)", url: EXAM_SRC.acsUas },
+            { label: "14 CFR Part 107", url: EXAM_SRC.part107 }
+          ]
+        },
+        {
+          q: "What is density altitude?",
+          choices: ["Pressure altitude corrected for nonstandard temperature", "Height above the runway only", "GPS altitude minus field elevation", "Always the same as true altitude"],
+          correctIndex: 0,
+          a: "Density altitude is pressure altitude corrected for nonstandard temperature; high density altitude reduces performance (PHAK).",
+          sources: [{ label: "PHAK — Pilot’s Handbook of Aeronautical Knowledge (PDF)", url: EXAM_SRC.phak }]
+        },
+        {
+          q: "In a METAR, wind reported as \"27010KT\" indicates wind from which direction and at what speed?",
+          choices: ["From 270° at 10 knots", "Toward 270° at 10 knots", "From 270° at 10 mph", "Variable at 10 knots"],
+          correctIndex: 0,
+          a: "Wind direction is reported as the direction the wind is coming from; 27010KT means from 270° at 10 knots.",
+          sources: [
+            { label: "PHAK — Weather theory (PDF)", url: EXAM_SRC.phak },
+            { label: "AIM — Meteorology", url: EXAM_SRC.aim }
+          ]
+        },
+        {
+          q: "A stable atmosphere is generally associated with which type of vertical motion of air?",
+          choices: ["Tendency to resist vertical displacement", "Strong upward motion and cumulus buildups", "Always turbulence near the surface", "Hurricane formation only"],
+          correctIndex: 0,
+          a: "Stable air tends to resist vertical displacement; unstable air favors vertical development and turbulence (weather theory / PHAK).",
+          sources: [{ label: "PHAK — Weather theory (PDF)", url: EXAM_SRC.phak }]
+        },
+        {
+          q: "What is the purpose of a Temporary Flight Restriction (TFR)?",
+          choices: ["To advertise airport closures", "To restrict flight in a defined area for safety or security", "To increase Class G ceiling", "To waive Part 107"],
+          correctIndex: 1,
+          a: "TFRs temporarily restrict certain flights in defined areas; check NOTAMs before flight (AIM).",
+          sources: [
+            { label: "FAA NOTAM search", url: EXAM_SRC.notamSearch },
+            { label: "AIM", url: EXAM_SRC.aim }
+          ]
+        },
+        {
+          q: "On a sectional chart, Class B airspace is generally depicted by which color outline?",
+          choices: ["Magenta", "Solid blue", "Yellow", "Green"],
+          correctIndex: 1,
+          a: "Class B is typically shown with solid blue outlines; always verify with chart legend and current chart.",
+          sources: [
+            { label: "PHAK — Navigation & charts (PDF)", url: EXAM_SRC.phak },
+            { label: "AIM — Airspace (Ch. 3)", url: EXAM_SRC.aimCh3 }
+          ]
+        },
+        {
+          q: "What does the hazardous attitude \"anti-authority\" reflect?",
+          choices: ["Rules do not apply to me", "I hurry to save time", "It cannot happen to me", "What is the use"],
+          correctIndex: 0,
+          a: "Anti-authority: \"Do not tell me…\" — one of the five hazardous attitudes in aeronautical decision making (PHAK).",
+          sources: [{ label: "PHAK — Human factors (PDF)", url: EXAM_SRC.phak }]
+        },
+        {
+          q: "In the DECIDE model of aeronautical decision making, what is the first step?",
+          choices: ["Detect the need for a decision", "Estimate severity", "Choose options", "Do the safest action"],
+          correctIndex: 0,
+          a: "DECIDE begins with Detect — recognizing that a decision is needed (ADM / PHAK).",
+          sources: [{ label: "PHAK — Human factors (PDF)", url: EXAM_SRC.phak }]
+        },
+        {
+          q: "Which IMSAFE checklist item refers to effects of prescription or over-the-counter drugs?",
+          choices: ["Illness", "Medication", "Stress", "Eating"],
+          correctIndex: 1,
+          a: "M is for medication — consider side effects that could impair judgment (IMSAFE).",
+          sources: [{ label: "PHAK — Human factors (PDF)", url: EXAM_SRC.phak }]
+        },
+        {
+          q: "If a small UAS loses GPS in a GPS-dependent mode, what should the remote PIC be most concerned about?",
+          choices: ["Automatic switch to Class A", "Position hold and navigation may degrade; have a contingency", "Nothing if VLOS is maintained", "LAANC will automatically extend"],
+          correctIndex: 1,
+          a: "Loss of GNSS can affect navigation and automated functions; PIC must maintain safety and VLOS (risk management).",
+          sources: [
+            { label: "14 CFR §107.31 — Visual line of sight", url: EXAM_SRC.s107_31 },
+            { label: "FAA — Remote Pilot ACS (PDF)", url: EXAM_SRC.acsUas }
+          ]
+        },
+        {
+          q: "What is the primary purpose of checking NOTAMs before a small UAS flight?",
+          choices: ["To get fuel prices", "To learn of TFRs, hazards, and airspace changes", "To file a flight plan only", "To register the aircraft"],
+          correctIndex: 1,
+          a: "NOTAMs provide notice of restrictions and hazards affecting flight — always consult official sources before operations.",
+          sources: [
+            { label: "FAA NOTAM search", url: EXAM_SRC.notamSearch },
+            { label: "AIM", url: EXAM_SRC.aim }
+          ]
+        },
+        {
+          q: "Under Part 107, carrying an external load is allowed if which condition is met?",
+          choices: ["The load is under 5 pounds", "The load is securely attached and the flight remains safe", "External loads are never allowed", "Only in Class G"],
+          correctIndex: 1,
+          a: "Carrying an object is permitted if it is securely attached and the small UAS remains in a condition for safe operation (14 CFR §107.36 — verify current rule text).",
+          sources: [{ label: "14 CFR §107.36 — Carrying loads", url: EXAM_SRC.s107_36 }]
+        },
+        {
+          q: "Which operation is generally prohibited for standard Part 107 without a waiver?",
+          choices: ["Day VLOS flight in Class G", "Beyond visual line of sight (BVLOS) routine operations", "Flight with a visual observer", "Using a preflight checklist"],
+          correctIndex: 1,
+          a: "BVLOS is not authorized under standard Part 107 without an appropriate waiver or exemption (compare to §107.31).",
+          sources: [
+            { label: "14 CFR §107.31 — Visual line of sight", url: EXAM_SRC.s107_31 },
+            { label: "FAA — Part 107 waivers", url: "https://www.faa.gov/uas/commercial_operators/part_107_waivers" }
+          ]
+        },
+        {
+          q: "What does \"MEF\" on a sectional chart quadrant generally represent?",
+          choices: ["Minimum en route altitude for IFR", "Maximum elevation figure for obstacle clearance in that quadrant", "Mean sea level of the airport", "Military exercise floor"],
+          correctIndex: 1,
+          a: "MEF (maximum elevation figure) helps identify the highest elevation in a chart quadrant for obstacle awareness (chart legend).",
+          sources: [{ label: "PHAK — Navigation & charts (PDF)", url: EXAM_SRC.phak }]
+        },
+        {
+          q: "A Military Operations Area (MOA) on a chart indicates what?",
+          choices: ["Flight is always prohibited", "Military training activity may occur; exercise caution", "Only gliders may enter", "Drone flights are automatically authorized"],
+          correctIndex: 1,
+          a: "MOAs denote areas where military training occurs; nonparticipating aircraft may fly through but should use caution (AIM).",
+          sources: [{ label: "AIM — Special use airspace", url: EXAM_SRC.aim }]
+        },
+        {
+          q: "What is the relationship between true heading and magnetic heading when magnetic variation is 10° east?",
+          choices: ["Magnetic = true + 10°", "Magnetic = true − 10°", "They are always equal", "Variation does not apply below 400 feet"],
+          correctIndex: 1,
+          a: "East is least (subtract east variation from true to get magnetic); verify with current mnemonic and chart (navigation).",
+          sources: [{ label: "PHAK — Navigation & charts (PDF)", url: EXAM_SRC.phak }]
+        },
+        {
+          q: "Thunderstorms can produce which hazard to aircraft and small UAS?",
+          choices: ["Calm winds only", "Severe turbulence, wind shear, hail, and lightning", "Improved visibility", "No hazards below the cloud base"],
+          correctIndex: 1,
+          a: "Thunderstorms pose multiple severe hazards; avoid operating in or near them.",
+          sources: [{ label: "PHAK — Weather theory (PDF)", url: EXAM_SRC.phak }]
+        },
+        {
+          q: "What is a microburst?",
+          choices: ["A slow steady wind", "A small, intense downdraft that can cause extreme wind shear", "A type of cloud above 18,000 feet", "A GPS error"],
+          correctIndex: 1,
+          a: "Microbursts are intense downdrafts associated with convective weather and are hazardous to low-altitude flight.",
+          sources: [{ label: "PHAK — Weather theory (PDF)", url: EXAM_SRC.phak }]
+        },
+        {
+          q: "If the dewpoint and temperature are close together near the surface, what might you expect?",
+          choices: ["Very dry air", "Fog or low visibility potential", "Always clear skies", "Higher density altitude only"],
+          correctIndex: 1,
+          a: "Small dewpoint spread suggests high relative humidity and fog or low ceilings are more likely.",
+          sources: [{ label: "PHAK — Weather theory (PDF)", url: EXAM_SRC.phak }]
+        },
+        {
+          q: "What must a remote PIC do if a small UAS operation would violate Part 107 except to the extent necessary to address an emergency?",
+          choices: ["Land immediately in all cases", "May deviate from rules to the extent necessary to handle that emergency", "Call the media", "Switch to recreational rules"],
+          correctIndex: 1,
+          a: "The remote PIC may deviate from any rule of Part 107 to the extent necessary to meet that emergency (14 CFR §107.21).",
+          sources: [{ label: "14 CFR §107.21 — In-flight emergency", url: EXAM_SRC.s107_21 }]
+        },
+        {
+          q: "Recreational flyers operating under 49 USC §44809 must complete which training, where applicable?",
+          choices: ["Part 107 knowledge test only", "The FAA TRUST (recreational safety test)", "An airline transport pilot checkride", "No training is required"],
+          correctIndex: 1,
+          a: "Recreational operators must pass The Recreational UAS Safety Test (TRUST) and follow community-based guidelines (FAA recreational rules).",
+          sources: [
+            { label: "FAA — TRUST (recreational)", url: EXAM_SRC.faaTrust },
+            { label: "14 CFR Part 107 — overview", url: EXAM_SRC.part107 }
+          ]
+        },
+        {
+          q: "Which is true about English language proficiency for U.S. pilot certificates including Remote Pilot?",
+          choices: ["Not required for drones", "Required — read, speak, write, and understand English", "Only required for night flight", "Only if flying internationally"],
+          correctIndex: 1,
+          a: "English language proficiency is required for U.S. pilot certificates as specified in the regulations.",
+          sources: [
+            { label: "14 CFR §107.12 — Certificate required", url: EXAM_SRC.s107_12 },
+            { label: "FAA — Testing & training", url: EXAM_SRC.faaTesting }
+          ]
+        },
+        {
+          q: "What is the primary risk of electromagnetic interference near power lines or large metal structures?",
+          choices: ["Improved battery life", "Compass and GPS errors affecting navigation", "Automatic Class B clearance", "Increased VLOS range"],
+          correctIndex: 1,
+          a: "EMI can affect magnetometers, GPS, and datalinks — plan flights to mitigate interference.",
+          sources: [
+            { label: "FAA — Remote Pilot ACS (PDF)", url: EXAM_SRC.acsUas },
+            { label: "PHAK — Human factors (PDF)", url: EXAM_SRC.phak }
+          ]
+        },
+        {
+          q: "Why is a preflight inspection important for small UAS?",
+          choices: ["It replaces registration", "To verify the aircraft is in a condition for safe operation", "It is only needed once per year", "It is optional for flights under 15 minutes"],
+          correctIndex: 1,
+          a: "The remote PIC must ensure the small UAS is in a condition for safe operation before flight (14 CFR §107.49).",
+          sources: [{ label: "14 CFR §107.49 — Preflight", url: EXAM_SRC.s107_49 }]
+        },
+        {
+          q: "What does \"situational awareness\" include in aviation decision making?",
+          choices: ["Only aircraft speed", "Perceiving, comprehending, and projecting the state of the flight and environment", "Only reading METARs", "Only battery voltage"],
+          correctIndex: 1,
+          a: "Situational awareness is perceiving, comprehending, and projecting future states — critical for safe UAS operations.",
+          sources: [
+            { label: "PHAK — Human factors (PDF)", url: EXAM_SRC.phak },
+            { label: "FAA — Remote Pilot ACS (PDF)", url: EXAM_SRC.acsUas }
+          ]
+        },
+        {
+          q: "When may a small UAS be operated from a moving vehicle under Part 107?",
+          choices: ["Anytime in cities", "Never", "Only in sparsely populated areas and without certain carriage-for-hire operations — see §107.29", "Whenever using a visual observer"],
+          correctIndex: 2,
+          a: "Operation from a moving vehicle has strict limits in §107.29 — read the rule for populated vs sparsely populated and other conditions.",
+          sources: [{ label: "14 CFR §107.29 — Moving vehicle/aircraft", url: EXAM_SRC.s107_29 }]
+        },
+        {
+          q: "Operations over people under Part 107 may depend on which of the following?",
+          choices: ["Only aircraft color", "Category of operation and aircraft compliance with applicable rules (e.g., operations over people provisions)", "Only pilot age", "Only wind speed"],
+          correctIndex: 1,
+          a: "Operations over people have specific requirements; aircraft may need to meet declared categories and operational limitations (14 CFR §107.39 and related rules).",
+          sources: [
+            { label: "14 CFR §107.39 — Operation over human beings", url: EXAM_SRC.s107_39 },
+            { label: "FAA — Operations over people", url: "https://www.faa.gov/uas/commercial_operators/operations_over_people/" }
+          ]
+        },
+        {
+          q: "What is the role of the Airman Certification Standards (ACS) for Remote Pilot?",
+          choices: ["It replaces all regulations", "It describes knowledge and risk areas tested for certification", "It is only for manned aircraft", "It waives Part 107"],
+          correctIndex: 1,
+          a: "The UAS ACS outlines the knowledge, skill, and risk management elements for the Remote Pilot certificate (FAA testing standards).",
+          sources: [{ label: "FAA — Remote Pilot ACS (PDF)", url: EXAM_SRC.acsUas }]
+        },
+        {
+          q: "A SIGMET is issued for which type of condition?",
+          choices: ["Routine VFR weather", "Significant meteorological phenomena such as severe turbulence or icing", "TFRs only", "Airport lighting outages only"],
+          correctIndex: 1,
+          a: "SIGMETs advise of significant weather including severe turbulence, icing, dust storms, etc.",
+          sources: [
+            { label: "PHAK — Weather theory (PDF)", url: EXAM_SRC.phak },
+            { label: "AIM", url: EXAM_SRC.aim }
+          ]
+        },
+        {
+          q: "What is wake turbulence?",
+          choices: ["Turbulence from solar wind", "Vortices generated by aircraft wings in flight", "Turbulence only in Class A", "GPS multipath"],
+          correctIndex: 1,
+          a: "Wake turbulence is vortex energy behind aircraft; large aircraft produce strong vortices — avoid flight paths behind heavy traffic near airports.",
+          sources: [
+            { label: "PHAK — Aerodynamics (PDF)", url: EXAM_SRC.phak },
+            { label: "AIM", url: EXAM_SRC.aim }
+          ]
+        },
+        {
+          q: "Why must a remote PIC avoid operating a small UAS in a careless or reckless manner?",
+          choices: ["Because it voids warranty only", "Because it can endanger the life or property of another", "Because LAANC requires it", "Because Class G prohibits all flight"],
+          correctIndex: 1,
+          a: "Careless or reckless operation that endangers life or property of another is prohibited (14 CFR §107.23).",
+          sources: [{ label: "14 CFR §107.23 — Hazardous operation", url: EXAM_SRC.s107_23 }]
+        },
+        {
+          q: "What is typically required to register a small UAS with the FAA for Part 107 operations (subject to current rules)?",
+          choices: ["Only a state driver license", "Compliance with 14 CFR Part 48 and marking requirements where applicable", "Only an insurance policy", "Registration is never required"],
+          correctIndex: 1,
+          a: "Aircraft registration under Part 48 and proper marking are required for applicable sUAS (verify current weight and rule thresholds on the FAA site).",
+          sources: [
+            { label: "14 CFR Part 48 — Registration", url: EXAM_SRC.part48 },
+            { label: "FAA — Register your drone", url: EXAM_SRC.faaRegister }
+          ]
+        },
+        {
+          q: "What best describes Class G airspace in many areas?",
+          choices: ["Always requires LAANC", "Uncontrolled airspace where ATC authorization is not typically required for Part 107 unless other restrictions apply", "Same as Class B", "Prohibited to all aircraft"],
+          correctIndex: 1,
+          a: "Class G is uncontrolled; Part 107 still requires compliance with all other rules and any NOTAMs/TFRs.",
+          sources: [
+            { label: "AIM — Airspace (Ch. 3)", url: EXAM_SRC.aimCh3 },
+            { label: "14 CFR Part 107", url: EXAM_SRC.part107 }
+          ]
+        },
+        {
+          q: "When two manned aircraft are approaching head-on, what is the general rule for altering course?",
+          choices: ["Both turn left", "Both alter course to the right", "The faster aircraft has priority", "The drone has priority"],
+          correctIndex: 1,
+          a: "General aviation right-of-way: converging/head-on traffic typically alters course to the right (14 CFR §91.113 — know manned rules for see-and-avoid context).",
+          sources: [{ label: "14 CFR §91.113 — Right-of-way", url: EXAM_SRC.s91_113 }]
+        },
+        {
+          q: "What is the primary purpose of crew resource management (CRM) concepts when using a visual observer?",
+          choices: ["To replace VLOS", "Clear roles, communication, and shared understanding of hazards", "To allow BVLOS without waiver", "To eliminate preflight checks"],
+          correctIndex: 1,
+          a: "CRM emphasizes communication and teamwork between PIC and VO to maintain safety.",
+          sources: [
+            { label: "PHAK — Human factors (PDF)", url: EXAM_SRC.phak },
+            { label: "FAA — Remote Pilot ACS (PDF)", url: EXAM_SRC.acsUas }
+          ]
+        },
+        {
+          q: "Under Part 107, may a person operate a small UAS under the influence of alcohol or drugs that impair safety?",
+          choices: ["Yes, if under 400 feet", "Yes, if a VO is used", "No", "Only on weekends"],
+          correctIndex: 2,
+          a: "No person may operate a small UAS in a manner that violates §107.17 (alcohol or drugs) or while impaired — verify current 14 CFR §107.17 text.",
+          sources: [{ label: "14 CFR §107.17 — Alcohol or drugs", url: EXAM_SRC.s107_17 }]
+        },
+        {
+          q: "What does an AIRMET often communicate?",
+          choices: ["SIGMET-level convection only", "Moderate turbulence, icing, IFR conditions, or sustained surface winds in some cases", "Presidential TFRs only", "Runway closures"],
+          correctIndex: 1,
+          a: "AIRMETs advise of moderate turbulence, icing, IFR conditions, and sustained surface winds per chart products.",
+          sources: [
+            { label: "PHAK — Weather theory (PDF)", url: EXAM_SRC.phak },
+            { label: "AIM", url: EXAM_SRC.aim }
+          ]
+        },
+        {
+          q: "Why is magnetic variation important when using a sectional chart for navigation?",
+          choices: ["It changes fuel burn", "It converts between true and magnetic directions", "It sets transponder codes", "It is only used above FL180"],
+          correctIndex: 1,
+          a: "Isogonic lines show variation between true north and magnetic north for heading conversions.",
+          sources: [{ label: "PHAK — Navigation & charts (PDF)", url: EXAM_SRC.phak }]
+        },
+        {
+          q: "What is a common effect of high density altitude on aircraft and sUAS performance?",
+          choices: ["Improved climb performance", "Reduced performance — thinner air", "Lower stall speed only for drones", "No effect below 400 feet"],
+          correctIndex: 1,
+          a: "High density altitude reduces performance margins — motors/props work harder; batteries may drain faster.",
+          sources: [{ label: "PHAK — Aerodynamics (PDF)", url: EXAM_SRC.phak }]
+        },
+        {
+          q: "What is the minimum age to take the initial FAA aeronautical knowledge test for a Remote Pilot Certificate (before receiving the certificate)?",
+          choices: ["14", "15", "16", "18"],
+          correctIndex: 1,
+          a: "You must be at least 15 years old to take the initial knowledge test; 16 to receive the certificate (verify current FAA testing eligibility).",
+          sources: [
+            { label: "FAA — Testing & training", url: EXAM_SRC.faaTesting },
+            { label: "14 CFR §107.12 — Certificate required", url: EXAM_SRC.s107_12 }
+          ]
+        }
+      ];
+
+      const EXAM_MC_COUNT = EXAM_MC_BANK.length;
+
       /** Stable FAA / eCFR URLs for literature links */
       const LIT = {
         part107: "https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-107",
@@ -901,9 +1635,10 @@
           .replace(/"/g, "&quot;");
       }
 
-      function renderRefsHtml(links) {
+      function renderRefsHtml(links, title) {
         if (!links.length) return "";
-        let html = "<p class=\"refs-title\">References</p><ul>";
+        const t = title ? escapeHtml(title) : "References";
+        let html = "<p class=\"refs-title\">" + t + "</p><ul>";
         for (let i = 0; i < links.length; i++) {
           const L = links[i];
           const lab = escapeHtml(L.label);
@@ -918,6 +1653,16 @@
       let index = 0;
       let filtered = deck;
 
+      let examActive = false;
+      let examList = [];
+      let examIdx = 0;
+      let examCorrect = 0;
+      let examAnswerShown = false;
+      let examMcCorrectIndex = 0;
+      let examCurrentItem = null;
+      let examStartMs = 0;
+      let examTimerId = null;
+
       const elCard = document.getElementById("card");
       const elQ = document.getElementById("q");
       const elA = document.getElementById("a");
@@ -925,8 +1670,273 @@
       const elProgress = document.getElementById("progress");
       const elCount = document.getElementById("count");
       const elFilter = document.getElementById("filter");
+      const elFlip = document.getElementById("flip");
+      const elSubLine = document.getElementById("subLine");
+      const elExamSetup = document.getElementById("examSetup");
+      const elExamLength = document.getElementById("examLength");
+      const elExamStart = document.getElementById("examStart");
+      const elExamHud = document.getElementById("examHud");
+      const elExamHudText = document.getElementById("examHudText");
+      const elExamGrade = document.getElementById("examGrade");
+      const elExamResults = document.getElementById("examResults");
+      const elExamResultPct = document.getElementById("examResultPct");
+      const elExamResultDetail = document.getElementById("examResultDetail");
+      const elExamResultTime = document.getElementById("examResultTime");
+      const elExamEnd = document.getElementById("examEnd");
+      const elExamDismiss = document.getElementById("examDismiss");
+      const elExamNextBtn = document.getElementById("examNextBtn");
+      const elExamMc = document.getElementById("examMc");
+      const elExamMcOptions = document.getElementById("examMcOptions");
+      const elCardWrap = document.getElementById("cardWrap");
+
+      const subLineStudyHtml = elSubLine.innerHTML;
+
+      function shuffleArray(arr) {
+        const a = arr.slice();
+        for (let i = a.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          const t = a[i];
+          a[i] = a[j];
+          a[j] = t;
+        }
+        return a;
+      }
+
+      /**
+       * Shuffle answer positions so letter memorization does not match the bank file.
+       */
+      function prepareExamBankItem(item) {
+        const pairs = item.choices.map(function (text, i) {
+          return { text: text, isCorrect: i === item.correctIndex };
+        });
+        shuffleArray(pairs);
+        let correctIndex = -1;
+        for (let j = 0; j < 4; j++) {
+          if (pairs[j].isCorrect) correctIndex = j;
+        }
+        return {
+          q: item.q,
+          a: item.a,
+          links: item.links,
+          choices: pairs.map(function (p) {
+            return p.text;
+          }),
+          correctIndex: correctIndex
+        };
+      }
+
+      function renderExamMcOptions(choices, onPick) {
+        const letters = ["A", "B", "C", "D"];
+        elExamMcOptions.innerHTML = "";
+        for (let i = 0; i < 4; i++) {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "exam-choice-btn";
+          btn.textContent = letters[i] + ". " + choices[i];
+          btn.dataset.index = String(i);
+          btn.addEventListener("click", function () {
+            onPick(parseInt(btn.dataset.index, 10));
+          });
+          elExamMcOptions.appendChild(btn);
+        }
+      }
+
+      function formatElapsed(totalSec) {
+        const mm = Math.floor(totalSec / 60);
+        const ss = totalSec % 60;
+        return mm + ":" + (ss < 10 ? "0" : "") + ss;
+      }
+
+      function updateExamHud() {
+        if (!examActive || !examList.length) return;
+        const elapsed = Math.floor((Date.now() - examStartMs) / 1000);
+        elExamHudText.textContent =
+          "Q " +
+          (examIdx + 1) +
+          " / " +
+          examList.length +
+          " · " +
+          examCorrect +
+          " correct · " +
+          formatElapsed(elapsed) +
+          " elapsed";
+      }
+
+      function showExamQuestion() {
+        elExamResults.hidden = true;
+        elCardWrap.hidden = false;
+        if (examIdx >= examList.length) {
+          finishExamWithResults();
+          return;
+        }
+        elExamMc.hidden = false;
+        const c = examList[examIdx];
+        elQ.textContent = c.q;
+        elA.textContent = "";
+        elRefs.innerHTML = "";
+        elCard.classList.remove("flipped");
+        elCard.classList.remove("no-flip");
+        examAnswerShown = false;
+        elExamGrade.hidden = true;
+        elFlip.disabled = true;
+        elFlip.textContent = "Multiple choice";
+        examCurrentItem = prepareExamBankItem(c);
+        examMcCorrectIndex = examCurrentItem.correctIndex;
+        renderExamMcOptions(examCurrentItem.choices, onExamMcSelect);
+        elProgress.textContent = "Exam · question " + (examIdx + 1) + " of " + examList.length;
+        elCount.textContent =
+          "FAA-style practice bank · Pick A–D or keys 1–4.";
+        updateExamHud();
+      }
+
+      function onExamMcSelect(pickedIndex) {
+        if (!examActive || examAnswerShown || examIdx >= examList.length) return;
+        const c = examCurrentItem;
+        if (!c) return;
+        const ok = pickedIndex === examMcCorrectIndex;
+        if (ok) examCorrect++;
+        examAnswerShown = true;
+        elA.textContent = c.a;
+        if (c.sources && c.sources.length) {
+          elRefs.innerHTML = renderRefsHtml(c.sources, "Sources");
+        } else {
+          elRefs.innerHTML = renderRefsHtml(
+            collectRefs(c.q, c.a, c.links),
+            "References"
+          );
+        }
+        elCard.classList.add("flipped");
+        elCard.classList.add("no-flip");
+        elFlip.disabled = true;
+        elFlip.textContent = "Answer shown";
+        elExamGrade.hidden = false;
+        const buttons = elExamMcOptions.querySelectorAll(".exam-choice-btn");
+        for (let i = 0; i < buttons.length; i++) {
+          buttons[i].disabled = true;
+          if (i === examMcCorrectIndex) {
+            buttons[i].classList.add("exam-choice-correct");
+          } else if (i === pickedIndex && !ok) {
+            buttons[i].classList.add("exam-choice-wrong");
+          }
+        }
+        elCount.textContent = ok
+          ? "Correct."
+          : "Incorrect — green shows the correct answer.";
+        updateExamHud();
+        try {
+          elExamNextBtn.focus();
+        } catch (err) { }
+      }
+
+      function advanceExam() {
+        if (!examActive || !examAnswerShown) return;
+        examIdx++;
+        examAnswerShown = false;
+        if (examIdx >= examList.length) {
+          finishExamWithResults();
+        } else {
+          showExamQuestion();
+        }
+      }
+
+      function finishExamWithResults() {
+        if (examTimerId !== null) {
+          clearInterval(examTimerId);
+          examTimerId = null;
+        }
+        document.body.classList.remove("exam-active");
+        elExamHud.hidden = true;
+        elExamGrade.hidden = true;
+        const total = examList.length;
+        const correct = examCorrect;
+        const pct = total ? Math.round((100 * correct) / total) : 0;
+        const elapsed = Math.floor((Date.now() - examStartMs) / 1000);
+        elExamResultPct.textContent = pct + "%";
+        elExamResultDetail.textContent =
+          correct + " correct out of " + total + " questions";
+        elExamResultTime.textContent = "Time: " + formatElapsed(elapsed);
+        elExamResults.hidden = false;
+        elCardWrap.hidden = true;
+        elExamSetup.hidden = false;
+        examActive = false;
+        elExamMc.hidden = true;
+        elExamMcOptions.innerHTML = "";
+        elExamGrade.hidden = true;
+        elFlip.disabled = false;
+        elFlip.textContent = "Flip";
+        elCard.classList.remove("flipped");
+        elCard.classList.remove("no-flip");
+        elSubLine.innerHTML = subLineStudyHtml;
+        examCurrentItem = null;
+      }
+
+      function startExam() {
+        if (!EXAM_MC_COUNT) {
+          window.alert("The practice exam question bank is empty.");
+          return;
+        }
+        let n = parseInt(elExamLength.value, 10);
+        n = Math.min(n, EXAM_MC_COUNT);
+        if (n < 1) return;
+        examList = shuffleArray(EXAM_MC_BANK.slice()).slice(0, n);
+        examIdx = 0;
+        examCorrect = 0;
+        examAnswerShown = false;
+        examStartMs = Date.now();
+        examActive = true;
+        elExamSetup.hidden = true;
+        elExamHud.hidden = false;
+        elExamResults.hidden = true;
+        document.body.classList.add("exam-active");
+        elSubLine.innerHTML =
+          "Exam mode uses the <strong>FAA-style practice bank</strong> (not flashcards). Choose <strong>A–D</strong> (or <kbd>1</kbd>–<kbd>4</kbd>), review the explanation, then <strong>Next</strong> or <kbd>Enter</kbd>.";
+        if (examTimerId !== null) clearInterval(examTimerId);
+        examTimerId = setInterval(updateExamHud, 1000);
+        showExamQuestion();
+      }
+
+      function endExamEarly() {
+        if (!examActive) return;
+        if (examTimerId !== null) {
+          clearInterval(examTimerId);
+          examTimerId = null;
+        }
+        document.body.classList.remove("exam-active");
+        elExamHud.hidden = true;
+        elExamGrade.hidden = true;
+        elExamMc.hidden = true;
+        elExamMcOptions.innerHTML = "";
+        elExamSetup.hidden = false;
+        examActive = false;
+        examList = [];
+        examIdx = 0;
+        elFlip.disabled = false;
+        elFlip.textContent = "Flip";
+        elCard.classList.remove("flipped");
+        elCard.classList.remove("no-flip");
+        elSubLine.innerHTML = subLineStudyHtml;
+        examCurrentItem = null;
+        applyFilter();
+      }
+
+      function dismissExamResults() {
+        elExamResults.hidden = true;
+        elCardWrap.hidden = false;
+        elExamMc.hidden = true;
+        elExamMcOptions.innerHTML = "";
+        examList = [];
+        examIdx = 0;
+        examCorrect = 0;
+        examCurrentItem = null;
+        elSubLine.innerHTML = subLineStudyHtml;
+        applyFilter();
+      }
 
       function show() {
+        if (examActive) return;
+        elFlip.textContent = "Flip";
+        elFlip.disabled = false;
+        elCard.classList.remove("no-flip");
         if (filtered.length === 0) {
           elQ.textContent = "No cards match filter.";
           elA.textContent = "Clear the search box.";
@@ -944,11 +1954,13 @@
         const links = collectRefs(c.q, c.a, c.links);
         elRefs.innerHTML = renderRefsHtml(links);
         elProgress.textContent = index + 1 + " / " + filtered.length + " (showing)";
-        elCount.textContent = "Full deck: " + deck.length + " cards · " + CARDS_CLEAN.length + " topics";
+        elCount.textContent =
+          "Full deck: " + deck.length + " cards · " + CARDS_CLEAN.length + " topics";
         elCard.classList.remove("flipped");
       }
 
       function applyFilter() {
+        if (examActive) return;
         const q = elFilter.value.trim().toLowerCase();
         if (!q) {
           filtered = deck.slice();
@@ -965,11 +1977,13 @@
       }
 
       function flip() {
+        if (examActive) return;
         if (filtered.length === 0) return;
         elCard.classList.toggle("flipped");
       }
 
       function next() {
+        if (examActive) return;
         if (filtered.length === 0) return;
         index = (index + 1) % filtered.length;
         elCard.classList.remove("flipped");
@@ -977,6 +1991,7 @@
       }
 
       function prev() {
+        if (examActive) return;
         if (filtered.length === 0) return;
         index = (index - 1 + filtered.length) % filtered.length;
         elCard.classList.remove("flipped");
@@ -984,6 +1999,7 @@
       }
 
       function shuffle() {
+        if (examActive) return;
         for (let i = deck.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
           const t = deck[i];
@@ -994,6 +2010,7 @@
       }
 
       function randomCard() {
+        if (examActive) return;
         if (filtered.length === 0) return;
         index = Math.floor(Math.random() * filtered.length);
         elCard.classList.remove("flipped");
@@ -1015,14 +2032,30 @@
       document.getElementById("shuffle").addEventListener("click", shuffle);
       document.getElementById("random").addEventListener("click", randomCard);
 
+      elExamStart.addEventListener("click", startExam);
+      elExamEnd.addEventListener("click", function () {
+        if (window.confirm("End this exam? Your progress will not be saved.")) {
+          endExamEarly();
+        }
+      });
+      elExamDismiss.addEventListener("click", dismissExamResults);
+      elExamNextBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        advanceExam();
+      });
+
       elRefs.addEventListener("click", function (e) {
         e.stopPropagation();
       });
 
-      elCard.addEventListener("click", flip);
+      elCard.addEventListener("click", function () {
+        if (examActive) return;
+        flip();
+      });
       elCard.addEventListener("keydown", function (e) {
         if (e.key === " " || e.key === "Enter") {
           e.preventDefault();
+          if (examActive) return;
           flip();
         }
       });
@@ -1031,6 +2064,21 @@
 
       document.addEventListener("keydown", function (e) {
         if (e.target === elFilter) return;
+        if (examActive) {
+          if (examAnswerShown) {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              advanceExam();
+            }
+            return;
+          }
+          const k = e.key;
+          if (k === "1" || k === "2" || k === "3" || k === "4") {
+            e.preventDefault();
+            onExamMcSelect(parseInt(k, 10) - 1);
+          }
+          return;
+        }
         if (e.key === " " || e.key === "Spacebar") {
           e.preventDefault();
           flip();
