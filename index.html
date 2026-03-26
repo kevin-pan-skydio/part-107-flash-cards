@@ -478,6 +478,7 @@
       <option value="25" selected>25 questions</option>
       <option value="50">50 questions</option>
       <option value="60">60 questions</option>
+      <option value="72">72 questions (full bank)</option>
     </select>
     <button type="button" class="primary" id="examStart">Start exam</button>
   </div>
@@ -888,489 +889,1167 @@
         aim: "https://www.faa.gov/air_traffic/publications/atpubs/aim_html/",
         aimCh3: "https://www.faa.gov/air_traffic/publications/atpubs/aim_html/chap_3.html",
         notamSearch: "https://notams.aim.faa.gov/notamSearch/nsapp.html",
-        faaTesting: "https://www.faa.gov/training_testing/testing"
+        faaTesting: "https://www.faa.gov/training_testing/testing",
+        rupprechtLaw: "https://jrupprechtlaw.com/part-107-knowledge-test/"
       };
 
       /**
-       * Exam mode only — FAA knowledge-test style: full question stems + four plausible choices.
-       * Separate from flashcards (CARDS). Each item includes `sources` for eCFR / FAA / ACS / PHAK / AIM.
+       * Exam mode — 72 FAA-style sample questions (ACS-style stems; includes figure references to FAA-CT-8080-2H).
+       * Aggregated with commentary on Rupprecht Law (attribution); verify rules and figures against current FAA materials.
        */
       const EXAM_MC_BANK = [
         {
-          q: "Under 14 CFR Part 107, what is the maximum weight of a small unmanned aircraft, including everything onboard, at the time of takeoff?",
-          choices: ["35 pounds", "44 pounds", "55 pounds", "75 pounds"],
+          q: "UA.I.A.K4 A small UA causes an accident and your crew member loses consciousness. When do you report the accident?",
+          choices: [
+            "No accidents need to be reported.",
+            "When requested by the UA owner.",
+            "Within 10 days of the accident.",
+            "Only if the FAA sends a written request first.",
+          ],
           correctIndex: 2,
-          a: "A small UAS must weigh less than 55 pounds (25 kg) at takeoff, including payload and anything attached (14 CFR §107.3, §107.51 where applicable).",
+          a: "§107.9: report no later than 10 calendar days when the operation meets the accident reporting criteria (verify current thresholds in the rule).",
           sources: [
-            { label: "14 CFR §107.3 — Definitions", url: EXAM_SRC.s107_3 },
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "14 CFR §107.9 — Accident reporting", url: EXAM_SRC.s107_9 }
+          ]
+        },
+        {
+          q: "UA.I.B.K1 Under what condition would a small UA not have to be registered before it is operated in the United States?",
+          choices: [
+            "When the aircraft weighs less than 0.55 pounds on takeoff, including everything on-board or attached.",
+            "When the aircraft weighs more than 0.55 pounds but less than 55 pounds, not including fuel.",
+            "All small UAS must be registered regardless of weight.",
+            "Only when flown exclusively under Part 107.",
+          ],
+          correctIndex: 0,
+          a: "Part 48 / FAA registration rules: very small UAS below the regulatory weight threshold may be exempt from registration (verify current FAA registration requirements).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "14 CFR Part 48 — Registration", url: EXAM_SRC.part48 }
+          ]
+        },
+        {
+          q: "UA.I.B.K1 According to 14 CFR part 48, when must a person register a small UA with the Federal Aviation Administration?",
+          choices: [
+            "All civilian small UAS weighing greater than 0.55 pounds must be registered regardless of its intended use.",
+            "Only when used for compensation or hire.",
+            "Only when the operator will be paid for commercial services.",
+            "Only when operating in controlled airspace.",
+          ],
+          correctIndex: 0,
+          a: "Part 48 registration applies above the statutory weight threshold for small unmanned aircraft (verify current Part 48 text).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "14 CFR Part 48 — Registration", url: EXAM_SRC.part48 }
+          ]
+        },
+        {
+          q: "UA.I.B.K1 According to 14 CFR part 48, when would a small UA owner not be permitted to register it?",
+          choices: [
+            "The owner is less than 13 years of age.",
+            "The owner does not have a U.S. driver license.",
+            "The aircraft is used only for recreation.",
+            "The aircraft weighs exactly 0.55 pounds.",
+          ],
+          correctIndex: 0,
+          a: "Part 48 requires registration by the owner using the owner’s legal name unless the owner is under 13 (then a person at least 13 registers).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "14 CFR Part 48 — Registration", url: EXAM_SRC.part48 }
+          ]
+        },
+        {
+          q: "UA.I.B.K1 Where must a small unmanned aircraft’s serial number be listed when using either standard remote identification or a broadcast module?",
+          choices: [
+            "The aircraft’s Document of Compliance.",
+            "The manufacturer’s Method of Compliance.",
+            "The Certificate of Aircraft Registration.",
+            "The pilot’s logbook only.",
+          ],
+          correctIndex: 2,
+          a: "Registration certificate / record requirements tie to aircraft identification (see Part 48 remote ID and registration provisions).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "14 CFR Part 48 — Registration", url: EXAM_SRC.part48 }
+          ]
+        },
+        {
+          q: "UA.I.B.K6a A small UA must be operated in a manner which",
+          choices: [
+            "does not endanger the life or property of another.",
+            "requires more than one visual observer.",
+            "never exceeds 200 feet AGL.",
+            "avoids all Class E airspace.",
+          ],
+          correctIndex: 0,
+          a: "§107.23 prohibits hazardous operation; careless/reckless operation endangering life or property of another is prohibited.",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "14 CFR §107.23 — Hazardous operation", url: EXAM_SRC.s107_23 }
+          ]
+        },
+        {
+          q: "UA.I.B.K6b You plan to release golf balls from your small UA at an altitude of 100 feet AGL. You must ensure the objects being dropped will",
+          choices: [
+            "not create an undue hazard to persons or property.",
+            "land within 10 feet of the expected landing zone.",
+            "not cause property damage in excess of $300.",
+            "be released only in Class G airspace.",
+          ],
+          correctIndex: 0,
+          a: "§107.23: dropping an object must not create an undue hazard to persons or property.",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "14 CFR §107.23 — Hazardous operation", url: EXAM_SRC.s107_23 }
+          ]
+        },
+        {
+          q: "UA.I.B.K8 After having dinner and wine, your client asks you to go outside to demonstrate the small UA’s capabilities. You must",
+          choices: [
+            "pass a self-administered sobriety test before operating.",
+            "not operate a small UA within 8 hours of consuming any alcoholic beverage.",
+            "ensure your visual observer has not consumed alcohol in the previous 12 hours.",
+            "operate only if BAC is below state driving limits.",
+          ],
+          correctIndex: 1,
+          a: "Many pilots use an 8-hour “bottle to throttle” rule of thumb; the regulatory standard is §107.17 — verify current rule text for alcohol/drugs.",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "14 CFR §107.17 — Alcohol or drugs", url: EXAM_SRC.s107_17 }
+          ]
+        },
+        {
+          q: "UA.I.B.K9 According to 14 CFR part 107, what is required to operate a small UA within 30 minutes after official sunset?",
+          choices: [
+            "Use of anti-collision lighting visible for at least 3 statute miles (civil twilight / night rules).",
+            "Must be operated in a rural area only.",
+            "Use of a transponder.",
+            "Operations are prohibited after sunset without a waiver.",
+          ],
+          correctIndex: 0,
+          a: "Night / civil twilight operations require compliant anti-collision lighting per current Part 107 (see ACS and §107.29).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "14 CFR §107.29 — Daylight / night", url: EXAM_SRC.s107_29 }
+          ]
+        },
+        {
+          q: "UA.I.B.K14 During a flight of your small UA, you observe a hot air balloon entering the area. You should",
+          choices: [
+            "yield the right-of-way to the hot air balloon.",
+            "ensure the UA passes below, above, or ahead of the balloon.",
+            "expect the balloon to climb above your altitude.",
+            "continue if you remain below 400 feet AGL.",
+          ],
+          correctIndex: 0,
+          a: "§107.37: small UA must yield the right-of-way to all aircraft, airborne vehicles, and launch/reentry vehicles.",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "14 CFR §107.35 — Right-of-way", url: EXAM_SRC.s107_35 }
+          ]
+        },
+        {
+          q: "UA.I.B.K16 According to 14 CFR part 107, how may a remote pilot operate an unmanned aircraft in Class C airspace?",
+          choices: [
+            "The remote pilot must have prior authorization from the ATC facility having jurisdiction over that airspace.",
+            "The remote pilot must monitor ATC frequency from launch to recovery only.",
+            "The remote pilot must contact ATC only after launching.",
+            "No authorization is needed below 400 feet AGL.",
+          ],
+          correctIndex: 0,
+          a: "§107.41: prior authorization required for operations in Class B, C, D, and certain Class E surface areas (e.g., via LAANC).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "14 CFR §107.41 — Certain airspace", url: EXAM_SRC.s107_41 }
+          ]
+        },
+        {
+          q: "UA.I.B.K16 (Refer to FAA-CT-8080-2H, Figure 78.) You have been hired to inspect railroad tracks from Blencoe to Onawa. Will ATC authorization be required?",
+          choices: [
+            "Yes — Onawa is in Class D airspace.",
+            "No — your entire flight is in Class G airspace.",
+            "Yes — you must contact the Onawa control tower within 5 miles.",
+            "Only if you exceed 400 feet AGL.",
+          ],
+          correctIndex: 1,
+          a: "Chart interpretation question: know how to read airspace on the supplement figure (verify against the current test figure).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "AIM — Airspace (Ch. 3)", url: EXAM_SRC.aimCh3 }
+          ]
+        },
+        {
+          q: "UA.I.B.K20 According to 14 CFR part 107, who is responsible for determining the performance of a small unmanned aircraft?",
+          choices: [
+            "Remote pilot-in-command.",
+            "Manufacturer.",
+            "Owner or operator.",
+            "Visual observer.",
+          ],
+          correctIndex: 0,
+          a: "§107.19 places preflight and operational responsibility on the remote PIC.",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "14 CFR §107.15 — Remote PIC", url: EXAM_SRC.s107_15 }
+          ]
+        },
+        {
+          q: "UA.I.B.K21a According to 14 CFR part 107, what is the maximum groundspeed for a small UA?",
+          choices: [
+            "87 knots.",
+            "87 mph.",
+            "100 knots.",
+            "120 mph.",
+          ],
+          correctIndex: 0,
+          a: "§107.51: maximum groundspeed is 100 mph (approximately 87 knots).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
             { label: "14 CFR §107.51 — Operating limitations", url: EXAM_SRC.s107_51 }
           ]
         },
         {
-          q: "What is the maximum groundspeed allowed for the operation of a small unmanned aircraft under Part 107?",
-          choices: ["87 knots", "100 mph", "120 mph", "150 knots"],
+          q: "UA.I.B.K21b (Refer to FAA-CT-8080-2H, Figure 78.) Contracted to inspect towers ~4 NM southwest of Sioux Gateway (SUX). What is the maximum altitude AGL authorized over the top of the towers?",
+          choices: [
+            "400 feet AGL.",
+            "402 feet AGL.",
+            "802 feet AGL.",
+            "200 feet AGL.",
+          ],
+          correctIndex: 2,
+          a: "Figure/chart question: structure + 400 ft rule in vicinity vs authorization in controlled airspace — study the published FAA figure and legend.",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "14 CFR §107.41 — Certain airspace", url: EXAM_SRC.s107_41 }
+          ]
+        },
+        {
+          q: "UA.I.B.K22 Upon request by the FAA, the remote pilot-in-command must provide",
+          choices: [
+            "a logbook documenting small UA landing currency.",
+            "a remote pilot certificate with a small UAS rating.",
+            "any employer-issued photo identification only.",
+            "only the aircraft registration number verbally.",
+          ],
           correctIndex: 1,
-          a: "Part 107 limits groundspeed to 100 mph (87 knots) unless operating under a waiver (14 CFR §107.51(a)).",
-          sources: [{ label: "14 CFR §107.51 — Operating limitations", url: EXAM_SRC.s107_51 }]
+          a: "§107.7: upon request, produce the remote pilot certificate with small UAS rating (among other compliance items).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "14 CFR §107.12 — Certificate", url: EXAM_SRC.s107_12 }
+          ]
         },
         {
-          q: "Unless operating within the immediate vicinity of a qualifying structure, what is the maximum altitude a small UAS may be operated above ground level (AGL) under Part 107?",
-          choices: ["200 feet AGL", "400 feet AGL", "500 feet AGL", "1,200 feet AGL"],
-          correctIndex: 1,
-          a: "Generally 400 feet AGL; in the immediate vicinity of a structure, you may fly up to 400 feet above the structure’s uppermost height (14 CFR §107.51(b)).",
-          sources: [{ label: "14 CFR §107.51 — Operating limitations", url: EXAM_SRC.s107_51 }]
-        },
-        {
-          q: "What minimum flight visibility must a remote pilot in command have from the control station under Part 107?",
-          choices: ["1 statute mile", "2 statute miles", "3 statute miles", "5 statute miles"],
+          q: "UA.I.B.K25 When may a remote pilot reduce the intensity of an aircraft’s lights during a night flight?",
+          choices: [
+            "At no time may lights be reduced.",
+            "When a manned aircraft is in the vicinity.",
+            "When it is in the interest of safety to dim the aircraft’s lights.",
+            "Only before takeoff.",
+          ],
           correctIndex: 2,
-          a: "Three statute miles of visibility from the control station (14 CFR §107.51(c)).",
-          sources: [{ label: "14 CFR §107.51 — Operating limitations", url: EXAM_SRC.s107_51 }]
+          a: "§107.29 allows reducing (but not extinguishing) anti-collision lighting when safety warrants.",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "14 CFR §107.29 — Daylight / night", url: EXAM_SRC.s107_29 }
+          ]
         },
         {
-          q: "Below 10,000 feet MSL, what minimum distance must a small UAS remain from clouds under Part 107?",
-          choices: ["200 ft below, 500 ft horizontal", "500 ft below, 1,000 ft horizontal", "500 ft below, 2,000 ft horizontal", "1,000 ft below, 2,000 ft horizontal"],
-          correctIndex: 2,
-          a: "500 feet below clouds and 2,000 feet horizontally from clouds (14 CFR §107.51(d)).",
-          sources: [{ label: "14 CFR §107.51 — Operating limitations", url: EXAM_SRC.s107_51 }]
-        },
-        {
-          q: "Who is directly responsible for the operation of a small unmanned aircraft operated under Part 107?",
-          choices: ["The visual observer only", "The person manipulating the controls only", "The remote pilot in command", "The aircraft owner only"],
-          correctIndex: 2,
-          a: "The remote PIC is directly responsible and must ensure the operation complies with Part 107 (14 CFR §107.15).",
-          sources: [{ label: "14 CFR §107.15 — Responsibility of remote PIC", url: EXAM_SRC.s107_15 }]
-        },
-        {
-          q: "How many small unmanned aircraft may one remote pilot in command operate at one time under standard Part 107?",
-          choices: ["One", "Two if using a visual observer", "Three with LAANC", "As many as the software allows"],
+          q: "UA.I.C.K2 The refusal of a remote PIC to submit to a blood alcohol test when requested by a law enforcement officer",
+          choices: [
+            "is grounds for suspension or revocation of their remote pilot certificate.",
+            "can be delayed for up to 8 hours after the request.",
+            "has no consequences to the remote pilot certificate.",
+            "is allowed once per calendar year.",
+          ],
           correctIndex: 0,
-          a: "One small UAS at a time for one remote PIC (14 CFR §107.33).",
-          sources: [{ label: "14 CFR §107.33 — Multiple UAS", url: EXAM_SRC.s107_33 }]
-        },
-        {
-          q: "Regarding right-of-way, a small UAS operated under Part 107 must yield to which of the following?",
-          choices: ["Only aircraft on a runway", "Only aircraft below 400 feet", "All manned aircraft", "Only aircraft in Class B airspace"],
-          correctIndex: 2,
-          a: "The small UAS must yield the right-of-way to all manned aircraft (14 CFR §107.35).",
+          a: "Certificate enforcement and implied consent provisions — see §107.59 and related FAA guidance.",
           sources: [
-            { label: "14 CFR §107.35 — Right-of-way", url: EXAM_SRC.s107_35 },
-            { label: "14 CFR §91.113 — Right-of-way (manned)", url: EXAM_SRC.s91_113 }
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "14 CFR §107.12 — Certificate", url: EXAM_SRC.s107_12 }
           ]
         },
         {
-          q: "When must a remote PIC report an accident to the FAA under §107.9 if property damage occurs (excluding damage to the sUAS)?",
-          choices: ["Within 24 hours if damage exceeds $100", "Within 10 days if damage exceeds the threshold in §107.9", "Only if someone is injured", "Only if requested by law enforcement"],
-          correctIndex: 1,
-          a: "Report within 10 calendar days when any person suffers serious injury, loss of consciousness, or property damage exceeds the regulatory threshold — confirm current dollar amount in 14 CFR §107.9.",
-          sources: [{ label: "14 CFR §107.9 — Accident reporting", url: EXAM_SRC.s107_9 }]
-        },
-        {
-          q: "What is required before a person may act as remote pilot in command of an sUAS under Part 107?",
-          choices: ["A private pilot certificate only", "A Remote Pilot Certificate with a small UAS rating (or applicable supervision per §107.12)", "A medical certificate only", "TRUST completion only"],
-          correctIndex: 1,
-          a: "You need a Remote Pilot Certificate with a small UAS rating, or to operate under the direct supervision of someone who holds it, per §§107.12 and 107.3.",
+          q: "UA.I.E.K3a To conduct Category 1 operations, a remote pilot in command must use a small unmanned aircraft that weighs",
+          choices: [
+            "0.55 pounds or less.",
+            "0.65 pounds or less.",
+            "0.75 pounds or less.",
+            "1.0 pounds or less.",
+          ],
+          correctIndex: 0,
+          a: "Operations over people categories reference defined weight limits in the rule (verify current Category 1 requirements).",
           sources: [
-            { label: "14 CFR §107.12 — Certificate required", url: EXAM_SRC.s107_12 },
-            { label: "14 CFR §107.3 — Definitions", url: EXAM_SRC.s107_3 }
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "14 CFR §107.39 — Operations over people", url: EXAM_SRC.s107_39 }
           ]
         },
         {
-          q: "What is the minimum age to obtain a Remote Pilot Certificate with a small UAS rating?",
-          choices: ["14 years", "15 years", "16 years", "18 years"],
-          correctIndex: 2,
-          a: "You must be at least 16 years old to receive the remote pilot certificate (14 CFR §107.12(b)).",
-          sources: [{ label: "14 CFR §107.12 — Certificate required", url: EXAM_SRC.s107_12 }]
+          q: "UA.I.E.K3d Which Category of small unmanned aircraft must have an airworthiness certificate issued by the FAA?",
+          choices: [
+            "4.",
+            "3.",
+            "2.",
+            "1.",
+          ],
+          correctIndex: 0,
+          a: "Higher categories for operations over people can involve declared compliance / certification concepts — verify current rule text.",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "14 CFR §107.39 — Operations over people", url: EXAM_SRC.s107_39 }
+          ]
         },
         {
-          q: "Operations of a small UAS in Class B, C, or D airspace generally require which of the following before flight?",
-          choices: ["A phone call to the tower", "Prior authorization from ATC or LAANC where available", "Only a visual observer", "Nothing if under 400 feet"],
-          correctIndex: 1,
-          a: "Prior authorization is required in controlled airspace (e.g., LAANC or other FAA authorization) — see 14 CFR §107.41 and current FAA procedures.",
+          q: "UA.I.F.K1 What must a person manipulating the controls do if standard remote identification fails during a flight?",
+          choices: [
+            "Land the aircraft as soon as practicable.",
+            "Notify the nearest FAA Air Traffic facility immediately.",
+            "Activate navigation lights only.",
+            "Continue if GPS position is still displayed.",
+          ],
+          correctIndex: 0,
+          a: "Part 89 remote ID failure procedures — land as soon as practicable is the typical exam-style answer (verify Part 89).",
           sources: [
-            { label: "14 CFR §107.41 — Operation in certain airspace", url: EXAM_SRC.s107_41 },
-            { label: "FAA — LAANC", url: EXAM_SRC.faaLaanc },
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "14 CFR Part 89 — Remote ID", url: EXAM_SRC.part89 }
+          ]
+        },
+        {
+          q: "UA.II.A.K1a (Refer to FAA-CT-8080-2H, Figure 25, Area 3.) The floor of Class B airspace at Dallas Executive (RBD) is",
+          choices: [
+            "at the surface.",
+            "3,000 feet MSL.",
+            "3,100 feet MSL.",
+            "700 feet AGL.",
+          ],
+          correctIndex: 1,
+          a: "Class B shelf/floor chart reading — use the current FAA knowledge test supplement figure.",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
             { label: "AIM — Airspace (Ch. 3)", url: EXAM_SRC.aimCh3 }
           ]
         },
         {
-          q: "What does LAANC primarily provide for drone operators?",
-          choices: ["Weather briefings", "Near-real-time authorization in controlled airspace", "Aircraft registration", "Insurance"],
+          q: "UA.II.A.K1b (Refer to FAA-CT-8080-2H, Figure 23, area 3.) What is the floor of the Savannah Class C airspace at the shelf area (outer circle)?",
+          choices: [
+            "1,300 feet AGL.",
+            "1,300 feet MSL.",
+            "1,700 feet MSL.",
+            "2,500 feet MSL.",
+          ],
           correctIndex: 1,
-          a: "LAANC (Low Altitude Authorization and Notification Capability) supports authorization requests in controlled airspace near many airports (FAA program).",
+          a: "Class C shelf altitudes on charts are typically MSL, not AGL.",
           sources: [
-            { label: "FAA — LAANC", url: EXAM_SRC.faaLaanc },
-            { label: "14 CFR §107.41 — Operation in certain airspace", url: EXAM_SRC.s107_41 }
-          ]
-        },
-        {
-          q: "Standard Remote ID for drones is primarily regulated under which part of 14 CFR?",
-          choices: ["Part 91", "Part 48", "Part 89", "Part 121"],
-          correctIndex: 2,
-          a: "Remote identification requirements are in 14 CFR Part 89; Part 107 operations must comply with applicable Remote ID rules.",
-          sources: [
-            { label: "14 CFR Part 89 — Remote ID", url: EXAM_SRC.part89 },
-            { label: "FAA — Remote ID", url: EXAM_SRC.faaRemoteId }
-          ]
-        },
-        {
-          q: "Which best describes visual line of sight (VLOS) for the remote pilot in command under Part 107?",
-          choices: ["The aircraft may be tracked only on a screen", "The sUAS must be visible without binoculars (corrective lenses allowed)", "VLOS is satisfied if GPS position is known", "A camera feed alone is sufficient"],
-          correctIndex: 1,
-          a: "The RPIC or VO must be able to see the aircraft throughout the flight without vision aids other than corrective lenses (14 CFR §107.31).",
-          sources: [{ label: "14 CFR §107.31 — Visual line of sight", url: EXAM_SRC.s107_31 }]
-        },
-        {
-          q: "May a visual observer use binoculars to maintain the visual line of sight of the small unmanned aircraft?",
-          choices: ["Yes, anytime", "Yes, only at night", "No", "Only with ATC permission"],
-          correctIndex: 2,
-          a: "Binoculars may not be used to maintain VLOS (14 CFR §107.31).",
-          sources: [{ label: "14 CFR §107.31 — Visual line of sight", url: EXAM_SRC.s107_31 }]
-        },
-        {
-          q: "Which statement best describes careless or reckless operation of a small UAS under Part 107?",
-          choices: ["It is allowed if under 400 feet", "It is prohibited", "It is allowed in Class G only", "It requires only a verbal warning"],
-          correctIndex: 1,
-          a: "No person may operate a small UAS in a careless or reckless manner so as to endanger life or property of another (14 CFR §107.23).",
-          sources: [{ label: "14 CFR §107.23 — Hazardous operation", url: EXAM_SRC.s107_23 }]
-        },
-        {
-          q: "For night operations under current Part 107 rules, anti-collision lighting must typically be visible for at least how far?",
-          choices: ["1 statute mile", "2 statute miles", "3 statute miles", "5 statute miles"],
-          correctIndex: 2,
-          a: "Anti-collision lighting must be visible for at least three statute miles unless the current rule text specifies otherwise — verify night operation requirements in the ACS and 14 CFR.",
-          sources: [
-            { label: "FAA — Remote Pilot ACS (PDF)", url: EXAM_SRC.acsUas },
-            { label: "14 CFR Part 107", url: EXAM_SRC.part107 }
-          ]
-        },
-        {
-          q: "What is density altitude?",
-          choices: ["Pressure altitude corrected for nonstandard temperature", "Height above the runway only", "GPS altitude minus field elevation", "Always the same as true altitude"],
-          correctIndex: 0,
-          a: "Density altitude is pressure altitude corrected for nonstandard temperature; high density altitude reduces performance (PHAK).",
-          sources: [{ label: "PHAK — Pilot’s Handbook of Aeronautical Knowledge (PDF)", url: EXAM_SRC.phak }]
-        },
-        {
-          q: "In a METAR, wind reported as \"27010KT\" indicates wind from which direction and at what speed?",
-          choices: ["From 270° at 10 knots", "Toward 270° at 10 knots", "From 270° at 10 mph", "Variable at 10 knots"],
-          correctIndex: 0,
-          a: "Wind direction is reported as the direction the wind is coming from; 27010KT means from 270° at 10 knots.",
-          sources: [
-            { label: "PHAK — Weather theory (PDF)", url: EXAM_SRC.phak },
-            { label: "AIM — Meteorology", url: EXAM_SRC.aim }
-          ]
-        },
-        {
-          q: "A stable atmosphere is generally associated with which type of vertical motion of air?",
-          choices: ["Tendency to resist vertical displacement", "Strong upward motion and cumulus buildups", "Always turbulence near the surface", "Hurricane formation only"],
-          correctIndex: 0,
-          a: "Stable air tends to resist vertical displacement; unstable air favors vertical development and turbulence (weather theory / PHAK).",
-          sources: [{ label: "PHAK — Weather theory (PDF)", url: EXAM_SRC.phak }]
-        },
-        {
-          q: "What is the purpose of a Temporary Flight Restriction (TFR)?",
-          choices: ["To advertise airport closures", "To restrict flight in a defined area for safety or security", "To increase Class G ceiling", "To waive Part 107"],
-          correctIndex: 1,
-          a: "TFRs temporarily restrict certain flights in defined areas; check NOTAMs before flight (AIM).",
-          sources: [
-            { label: "FAA NOTAM search", url: EXAM_SRC.notamSearch },
-            { label: "AIM", url: EXAM_SRC.aim }
-          ]
-        },
-        {
-          q: "On a sectional chart, Class B airspace is generally depicted by which color outline?",
-          choices: ["Magenta", "Solid blue", "Yellow", "Green"],
-          correctIndex: 1,
-          a: "Class B is typically shown with solid blue outlines; always verify with chart legend and current chart.",
-          sources: [
-            { label: "PHAK — Navigation & charts (PDF)", url: EXAM_SRC.phak },
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
             { label: "AIM — Airspace (Ch. 3)", url: EXAM_SRC.aimCh3 }
           ]
         },
         {
-          q: "What does the hazardous attitude \"anti-authority\" reflect?",
-          choices: ["Rules do not apply to me", "I hurry to save time", "It cannot happen to me", "What is the use"],
-          correctIndex: 0,
-          a: "Anti-authority: \"Do not tell me…\" — one of the five hazardous attitudes in aeronautical decision making (PHAK).",
-          sources: [{ label: "PHAK — Human factors (PDF)", url: EXAM_SRC.phak }]
-        },
-        {
-          q: "In the DECIDE model of aeronautical decision making, what is the first step?",
-          choices: ["Detect the need for a decision", "Estimate severity", "Choose options", "Do the safest action"],
-          correctIndex: 0,
-          a: "DECIDE begins with Detect — recognizing that a decision is needed (ADM / PHAK).",
-          sources: [{ label: "PHAK — Human factors (PDF)", url: EXAM_SRC.phak }]
-        },
-        {
-          q: "Which IMSAFE checklist item refers to effects of prescription or over-the-counter drugs?",
-          choices: ["Illness", "Medication", "Stress", "Eating"],
-          correctIndex: 1,
-          a: "M is for medication — consider side effects that could impair judgment (IMSAFE).",
-          sources: [{ label: "PHAK — Human factors (PDF)", url: EXAM_SRC.phak }]
-        },
-        {
-          q: "If a small UAS loses GPS in a GPS-dependent mode, what should the remote PIC be most concerned about?",
-          choices: ["Automatic switch to Class A", "Position hold and navigation may degrade; have a contingency", "Nothing if VLOS is maintained", "LAANC will automatically extend"],
-          correctIndex: 1,
-          a: "Loss of GNSS can affect navigation and automated functions; PIC must maintain safety and VLOS (risk management).",
-          sources: [
-            { label: "14 CFR §107.31 — Visual line of sight", url: EXAM_SRC.s107_31 },
-            { label: "FAA — Remote Pilot ACS (PDF)", url: EXAM_SRC.acsUas }
-          ]
-        },
-        {
-          q: "What is the primary purpose of checking NOTAMs before a small UAS flight?",
-          choices: ["To get fuel prices", "To learn of TFRs, hazards, and airspace changes", "To file a flight plan only", "To register the aircraft"],
-          correctIndex: 1,
-          a: "NOTAMs provide notice of restrictions and hazards affecting flight — always consult official sources before operations.",
-          sources: [
-            { label: "FAA NOTAM search", url: EXAM_SRC.notamSearch },
-            { label: "AIM", url: EXAM_SRC.aim }
-          ]
-        },
-        {
-          q: "Under Part 107, carrying an external load is allowed if which condition is met?",
-          choices: ["The load is under 5 pounds", "The load is securely attached and the flight remains safe", "External loads are never allowed", "Only in Class G"],
-          correctIndex: 1,
-          a: "Carrying an object is permitted if it is securely attached and the small UAS remains in a condition for safe operation (14 CFR §107.36 — verify current rule text).",
-          sources: [{ label: "14 CFR §107.36 — Carrying loads", url: EXAM_SRC.s107_36 }]
-        },
-        {
-          q: "Which operation is generally prohibited for standard Part 107 without a waiver?",
-          choices: ["Day VLOS flight in Class G", "Beyond visual line of sight (BVLOS) routine operations", "Flight with a visual observer", "Using a preflight checklist"],
-          correctIndex: 1,
-          a: "BVLOS is not authorized under standard Part 107 without an appropriate waiver or exemption (compare to §107.31).",
-          sources: [
-            { label: "14 CFR §107.31 — Visual line of sight", url: EXAM_SRC.s107_31 },
-            { label: "FAA — Part 107 waivers", url: "https://www.faa.gov/uas/commercial_operators/part_107_waivers" }
-          ]
-        },
-        {
-          q: "What does \"MEF\" on a sectional chart quadrant generally represent?",
-          choices: ["Minimum en route altitude for IFR", "Maximum elevation figure for obstacle clearance in that quadrant", "Mean sea level of the airport", "Military exercise floor"],
-          correctIndex: 1,
-          a: "MEF (maximum elevation figure) helps identify the highest elevation in a chart quadrant for obstacle awareness (chart legend).",
-          sources: [{ label: "PHAK — Navigation & charts (PDF)", url: EXAM_SRC.phak }]
-        },
-        {
-          q: "A Military Operations Area (MOA) on a chart indicates what?",
-          choices: ["Flight is always prohibited", "Military training activity may occur; exercise caution", "Only gliders may enter", "Drone flights are automatically authorized"],
-          correctIndex: 1,
-          a: "MOAs denote areas where military training occurs; nonparticipating aircraft may fly through but should use caution (AIM).",
-          sources: [{ label: "AIM — Special use airspace", url: EXAM_SRC.aim }]
-        },
-        {
-          q: "What is the relationship between true heading and magnetic heading when magnetic variation is 10° east?",
-          choices: ["Magnetic = true + 10°", "Magnetic = true − 10°", "They are always equal", "Variation does not apply below 400 feet"],
-          correctIndex: 1,
-          a: "East is least (subtract east variation from true to get magnetic); verify with current mnemonic and chart (navigation).",
-          sources: [{ label: "PHAK — Navigation & charts (PDF)", url: EXAM_SRC.phak }]
-        },
-        {
-          q: "Thunderstorms can produce which hazard to aircraft and small UAS?",
-          choices: ["Calm winds only", "Severe turbulence, wind shear, hail, and lightning", "Improved visibility", "No hazards below the cloud base"],
-          correctIndex: 1,
-          a: "Thunderstorms pose multiple severe hazards; avoid operating in or near them.",
-          sources: [{ label: "PHAK — Weather theory (PDF)", url: EXAM_SRC.phak }]
-        },
-        {
-          q: "What is a microburst?",
-          choices: ["A slow steady wind", "A small, intense downdraft that can cause extreme wind shear", "A type of cloud above 18,000 feet", "A GPS error"],
-          correctIndex: 1,
-          a: "Microbursts are intense downdrafts associated with convective weather and are hazardous to low-altitude flight.",
-          sources: [{ label: "PHAK — Weather theory (PDF)", url: EXAM_SRC.phak }]
-        },
-        {
-          q: "If the dewpoint and temperature are close together near the surface, what might you expect?",
-          choices: ["Very dry air", "Fog or low visibility potential", "Always clear skies", "Higher density altitude only"],
-          correctIndex: 1,
-          a: "Small dewpoint spread suggests high relative humidity and fog or low ceilings are more likely.",
-          sources: [{ label: "PHAK — Weather theory (PDF)", url: EXAM_SRC.phak }]
-        },
-        {
-          q: "What must a remote PIC do if a small UAS operation would violate Part 107 except to the extent necessary to address an emergency?",
-          choices: ["Land immediately in all cases", "May deviate from rules to the extent necessary to handle that emergency", "Call the media", "Switch to recreational rules"],
-          correctIndex: 1,
-          a: "The remote PIC may deviate from any rule of Part 107 to the extent necessary to meet that emergency (14 CFR §107.21).",
-          sources: [{ label: "14 CFR §107.21 — In-flight emergency", url: EXAM_SRC.s107_21 }]
-        },
-        {
-          q: "Recreational flyers operating under 49 USC §44809 must complete which training, where applicable?",
-          choices: ["Part 107 knowledge test only", "The FAA TRUST (recreational safety test)", "An airline transport pilot checkride", "No training is required"],
-          correctIndex: 1,
-          a: "Recreational operators must pass The Recreational UAS Safety Test (TRUST) and follow community-based guidelines (FAA recreational rules).",
-          sources: [
-            { label: "FAA — TRUST (recreational)", url: EXAM_SRC.faaTrust },
-            { label: "14 CFR Part 107 — overview", url: EXAM_SRC.part107 }
-          ]
-        },
-        {
-          q: "Which is true about English language proficiency for U.S. pilot certificates including Remote Pilot?",
-          choices: ["Not required for drones", "Required — read, speak, write, and understand English", "Only required for night flight", "Only if flying internationally"],
-          correctIndex: 1,
-          a: "English language proficiency is required for U.S. pilot certificates as specified in the regulations.",
-          sources: [
-            { label: "14 CFR §107.12 — Certificate required", url: EXAM_SRC.s107_12 },
-            { label: "FAA — Testing & training", url: EXAM_SRC.faaTesting }
-          ]
-        },
-        {
-          q: "What is the primary risk of electromagnetic interference near power lines or large metal structures?",
-          choices: ["Improved battery life", "Compass and GPS errors affecting navigation", "Automatic Class B clearance", "Increased VLOS range"],
-          correctIndex: 1,
-          a: "EMI can affect magnetometers, GPS, and datalinks — plan flights to mitigate interference.",
-          sources: [
-            { label: "FAA — Remote Pilot ACS (PDF)", url: EXAM_SRC.acsUas },
-            { label: "PHAK — Human factors (PDF)", url: EXAM_SRC.phak }
-          ]
-        },
-        {
-          q: "Why is a preflight inspection important for small UAS?",
-          choices: ["It replaces registration", "To verify the aircraft is in a condition for safe operation", "It is only needed once per year", "It is optional for flights under 15 minutes"],
-          correctIndex: 1,
-          a: "The remote PIC must ensure the small UAS is in a condition for safe operation before flight (14 CFR §107.49).",
-          sources: [{ label: "14 CFR §107.49 — Preflight", url: EXAM_SRC.s107_49 }]
-        },
-        {
-          q: "What does \"situational awareness\" include in aviation decision making?",
-          choices: ["Only aircraft speed", "Perceiving, comprehending, and projecting the state of the flight and environment", "Only reading METARs", "Only battery voltage"],
-          correctIndex: 1,
-          a: "Situational awareness is perceiving, comprehending, and projecting future states — critical for safe UAS operations.",
-          sources: [
-            { label: "PHAK — Human factors (PDF)", url: EXAM_SRC.phak },
-            { label: "FAA — Remote Pilot ACS (PDF)", url: EXAM_SRC.acsUas }
-          ]
-        },
-        {
-          q: "When may a small UAS be operated from a moving vehicle under Part 107?",
-          choices: ["Anytime in cities", "Never", "Only in sparsely populated areas and without certain carriage-for-hire operations — see §107.29", "Whenever using a visual observer"],
+          q: "UA.II.A.K1b According to 14 CFR part 107 the remote PIC of a small UA planning to operate within Class C airspace",
+          choices: [
+            "must use a visual observer.",
+            "is required to file a flight plan.",
+            "is required to receive ATC authorization.",
+            "may operate without authorization below 400 feet.",
+          ],
           correctIndex: 2,
-          a: "Operation from a moving vehicle has strict limits in §107.29 — read the rule for populated vs sparsely populated and other conditions.",
-          sources: [{ label: "14 CFR §107.29 — Moving vehicle/aircraft", url: EXAM_SRC.s107_29 }]
-        },
-        {
-          q: "Operations over people under Part 107 may depend on which of the following?",
-          choices: ["Only aircraft color", "Category of operation and aircraft compliance with applicable rules (e.g., operations over people provisions)", "Only pilot age", "Only wind speed"],
-          correctIndex: 1,
-          a: "Operations over people have specific requirements; aircraft may need to meet declared categories and operational limitations (14 CFR §107.39 and related rules).",
+          a: "§107.41 requires prior authorization for Class C operations (e.g., LAANC).",
           sources: [
-            { label: "14 CFR §107.39 — Operation over human beings", url: EXAM_SRC.s107_39 },
-            { label: "FAA — Operations over people", url: "https://www.faa.gov/uas/commercial_operators/operations_over_people/" }
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "14 CFR §107.41 — Certain airspace", url: EXAM_SRC.s107_41 }
           ]
         },
         {
-          q: "What is the role of the Airman Certification Standards (ACS) for Remote Pilot?",
-          choices: ["It replaces all regulations", "It describes knowledge and risk areas tested for certification", "It is only for manned aircraft", "It waives Part 107"],
-          correctIndex: 1,
-          a: "The UAS ACS outlines the knowledge, skill, and risk management elements for the Remote Pilot certificate (FAA testing standards).",
-          sources: [{ label: "FAA — Remote Pilot ACS (PDF)", url: EXAM_SRC.acsUas }]
+          q: "UA.II.A.K1c What type of airport is Pueblo Airport?",
+          choices: [
+            "Class B.",
+            "Class C.",
+            "Class D.",
+            "Class E at the surface only.",
+          ],
+          correctIndex: 2,
+          a: "Airspace classification by chart symbology (use current figure).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "AIM — Airspace (Ch. 3)", url: EXAM_SRC.aimCh3 }
+          ]
         },
         {
-          q: "A SIGMET is issued for which type of condition?",
-          choices: ["Routine VFR weather", "Significant meteorological phenomena such as severe turbulence or icing", "TFRs only", "Airport lighting outages only"],
+          q: "UA.II.A.K1d (Refer to FAA-CT-8080-2H, Figure 20, Area 1.) The Fentress NALF Airport (NFE) is in what type of airspace?",
+          choices: [
+            "Class C.",
+            "Class E.",
+            "Class G.",
+            "Class B.",
+          ],
           correctIndex: 1,
-          a: "SIGMETs advise of significant weather including severe turbulence, icing, dust storms, etc.",
+          a: "Dashed magenta often denotes Class E to the surface — interpret using the figure legend.",
           sources: [
-            { label: "PHAK — Weather theory (PDF)", url: EXAM_SRC.phak },
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "AIM — Airspace (Ch. 3)", url: EXAM_SRC.aimCh3 }
+          ]
+        },
+        {
+          q: "UA.II.A.K2 (Refer to FAA-CT-8080-2H, Figure 59, area 2.) The chart shows VR routes. Could this area present a hazard to a small UA?",
+          choices: [
+            "No — all operations will be above 400 feet.",
+            "Yes — this is a Military Training Route; low-altitude traffic may be present.",
+            "Yes — the route guarantees separation from all drones.",
+            "No — VR routes are for drones only.",
+          ],
+          correctIndex: 1,
+          a: "MTRs can have low-altitude military traffic — exercise caution (AIM).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
             { label: "AIM", url: EXAM_SRC.aim }
           ]
         },
         {
-          q: "What is wake turbulence?",
-          choices: ["Turbulence from solar wind", "Vortices generated by aircraft wings in flight", "Turbulence only in Class A", "GPS multipath"],
+          q: "UA.II.A.K2 (Refer to FAA-CT-8080-2H, Figure 75, Area 6.) During preflight planning, you plan to operate in R-2305. Where would you find additional information regarding this airspace?",
+          choices: [
+            "In the Aeronautical Information Manual only.",
+            "In the Chart Supplements U.S.",
+            "In the Small UAS database.",
+            "Only on the airport diagram.",
+          ],
           correctIndex: 1,
-          a: "Wake turbulence is vortex energy behind aircraft; large aircraft produce strong vortices — avoid flight paths behind heavy traffic near airports.",
+          a: "Restricted areas: Chart Supplement often has detailed notes; check NOTAMs for activity.",
           sources: [
-            { label: "PHAK — Aerodynamics (PDF)", url: EXAM_SRC.phak },
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
             { label: "AIM", url: EXAM_SRC.aim }
           ]
         },
         {
-          q: "Why must a remote PIC avoid operating a small UAS in a careless or reckless manner?",
-          choices: ["Because it voids warranty only", "Because it can endanger the life or property of another", "Because LAANC requires it", "Because Class G prohibits all flight"],
+          q: "UA.II.A.K2 (Refer to FAA-CT-8080-2H, Figure 21.) You survey crops in Devil’s Lake West MOA, east of area 2. How would you find out if the MOA is active?",
+          choices: [
+            "Refer to the legend for special use airspace phone number.",
+            "Check NOTAMs / flight service / controlling agency information for the MOA.",
+            "Use only a recreational app with no NOTAM data.",
+            "MOAs are never active below 10,000 feet.",
+          ],
           correctIndex: 1,
-          a: "Careless or reckless operation that endangers life or property of another is prohibited (14 CFR §107.23).",
-          sources: [{ label: "14 CFR §107.23 — Hazardous operation", url: EXAM_SRC.s107_23 }]
-        },
-        {
-          q: "What is typically required to register a small UAS with the FAA for Part 107 operations (subject to current rules)?",
-          choices: ["Only a state driver license", "Compliance with 14 CFR Part 48 and marking requirements where applicable", "Only an insurance policy", "Registration is never required"],
-          correctIndex: 1,
-          a: "Aircraft registration under Part 48 and proper marking are required for applicable sUAS (verify current weight and rule thresholds on the FAA site).",
+          a: "MOA status: use NOTAMs, FSS, or controlling agency as appropriate (AIM).",
           sources: [
-            { label: "14 CFR Part 48 — Registration", url: EXAM_SRC.part48 },
-            { label: "FAA — Register your drone", url: EXAM_SRC.faaRegister }
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "FAA NOTAM search", url: EXAM_SRC.notamSearch }
           ]
         },
         {
-          q: "What best describes Class G airspace in many areas?",
-          choices: ["Always requires LAANC", "Uncontrolled airspace where ATC authorization is not typically required for Part 107 unless other restrictions apply", "Same as Class B", "Prohibited to all aircraft"],
-          correctIndex: 1,
-          a: "Class G is uncontrolled; Part 107 still requires compliance with all other rules and any NOTAMs/TFRs.",
+          q: "UA.II.A.K3 What does the dashed magenta line in a circle east of Pueblo Airport represent?",
+          choices: [
+            "Class E at the surface airspace.",
+            "An isogonic line.",
+            "A national security area.",
+            "A MOA boundary.",
+          ],
+          correctIndex: 2,
+          a: "Chart symbols: national security area vs Class E surface — read the legend carefully.",
           sources: [
-            { label: "AIM — Airspace (Ch. 3)", url: EXAM_SRC.aimCh3 },
-            { label: "14 CFR Part 107", url: EXAM_SRC.part107 }
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "AIM — Airspace (Ch. 3)", url: EXAM_SRC.aimCh3 }
           ]
         },
         {
-          q: "When two manned aircraft are approaching head-on, what is the general rule for altering course?",
-          choices: ["Both turn left", "Both alter course to the right", "The faster aircraft has priority", "The drone has priority"],
+          q: "UA.II.A.K3 You decide to video the Indianapolis 500. A TFR covers the area. In this situation",
+          choices: [
+            "you may fly because your company sponsors a team.",
+            "the TFR applies; you may not operate without appropriate authorization/waiver.",
+            "you may fly if you notify spectators.",
+            "TFRs apply only to manned aircraft.",
+          ],
           correctIndex: 1,
-          a: "General aviation right-of-way: converging/head-on traffic typically alters course to the right (14 CFR §91.113 — know manned rules for see-and-avoid context).",
-          sources: [{ label: "14 CFR §91.113 — Right-of-way", url: EXAM_SRC.s91_113 }]
+          a: "TFRs restrict flight for all aircraft including sUAS unless authorized.",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "FAA NOTAM search", url: EXAM_SRC.notamSearch }
+          ]
         },
         {
-          q: "What is the primary purpose of crew resource management (CRM) concepts when using a visual observer?",
-          choices: ["To replace VLOS", "Clear roles, communication, and shared understanding of hazards", "To allow BVLOS without waiver", "To eliminate preflight checks"],
-          correctIndex: 1,
-          a: "CRM emphasizes communication and teamwork between PIC and VO to maintain safety.",
+          q: "UA.II.B.K1 (Refer to FAA-CT-8080-2H, Figure 23, Area 4.) What is the required flight visibility for a remote pilot operating near Plantation Airport (JYL)?",
+          choices: [
+            "5 statute miles.",
+            "1 statute mile.",
+            "3 statute miles.",
+            "10 statute miles.",
+          ],
+          correctIndex: 2,
+          a: "Part 107 visibility minimum is 3 statute miles from the control station (§107.51).",
           sources: [
-            { label: "PHAK — Human factors (PDF)", url: EXAM_SRC.phak },
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "14 CFR §107.51 — Operating limitations", url: EXAM_SRC.s107_51 }
+          ]
+        },
+        {
+          q: "UA.II.B.K4 (Refer to FAA-CT-8080-2H, Figure 20, area 2.) Why would the small flag at Lake Drummond on the sectional be important?",
+          choices: [
+            "VFR checkpoint — expect higher traffic volume.",
+            "GPS checkpoint for drones only.",
+            "Obstruction on next chart revision only.",
+            "Military training route identifier.",
+          ],
+          correctIndex: 0,
+          a: "Checkpoints are used by pilots; expect traffic in the area.",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "PHAK (PDF)", url: EXAM_SRC.phak }
+          ]
+        },
+        {
+          q: "UA.II.B.K5 (Refer to FAA-CT-8080-2H, Figure 20, area 5.) How would a remote PIC “CHECK NOTAMS” as noted in the CAUTION box regarding the unmarked balloon?",
+          choices: [
+            "Using B4UFLY only.",
+            "By contacting the FAA district office only.",
+            "By obtaining a briefing via an official briefing source (e.g., 1800wxbrief.com).",
+            "NOTAMs are optional for drones.",
+          ],
+          correctIndex: 2,
+          a: "Preflight: official weather/NOTAM briefings for hazards and restrictions.",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "FAA NOTAM search", url: EXAM_SRC.notamSearch }
+          ]
+        },
+        {
+          q: "UA.III.A.K2 (Refer to FAA-CT-8080-2H, Figure 12.) What are the current conditions for Chicago Midway Airport (KMDW) in the sample METAR?",
+          choices: [
+            "Sky 700 feet overcast, visibility 1½ SM, rain.",
+            "Sky 7000 feet overcast, visibility 1½ SM, heavy rain.",
+            "Sky 700 feet overcast, visibility 11 SM with rain.",
+            "Calm wind, unlimited visibility.",
+          ],
+          correctIndex: 0,
+          a: "METAR decode: OVC007 = 700 ft overcast; visibility in statute miles.",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "PHAK (PDF)", url: EXAM_SRC.phak }
+          ]
+        },
+        {
+          q: "UA.III.A.K2 (Refer to FAA-CT-8080-2H, Figure 12.) The wind direction and velocity at KJFK in the sample METAR is from",
+          choices: [
+            "180° true at 4 knots.",
+            "180° magnetic at 4 knots.",
+            "040° true at 18 knots.",
+            "250° true at 4 knots.",
+          ],
+          correctIndex: 0,
+          a: "METAR wind: first three digits are direction the wind is from (degrees true in the report).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "PHAK (PDF)", url: EXAM_SRC.phak }
+          ]
+        },
+        {
+          q: "UA.III.B.K1a What effect does high density altitude have on the efficiency of a UA propeller?",
+          choices: [
+            "Propeller efficiency is increased.",
+            "Propeller efficiency is decreased.",
+            "Density altitude does not affect propellers.",
+            "Efficiency improves in cold weather only.",
+          ],
+          correctIndex: 1,
+          a: "Higher density altitude = thinner air → reduced performance for props/rotors (PHAK).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "PHAK (PDF)", url: EXAM_SRC.phak }
+          ]
+        },
+        {
+          q: "UA.III.B.K1c What are the characteristics of stable air?",
+          choices: [
+            "Good visibility and steady precipitation.",
+            "Poor visibility and steady precipitation.",
+            "Poor visibility and intermittent precipitation only.",
+            "Severe turbulence and hail.",
+          ],
+          correctIndex: 1,
+          a: "Stable air: stratiform clouds, smooth air, steady precip, often poor visibility in haze (PHAK).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "PHAK (PDF)", url: EXAM_SRC.phak }
+          ]
+        },
+        {
+          q: "UA.III.B.K1d What are characteristics of a moist, unstable air mass?",
+          choices: [
+            "Turbulence and showery precipitation.",
+            "Poor visibility and smooth air.",
+            "Haze and smoke only.",
+            "Steady freezing rain.",
+          ],
+          correctIndex: 0,
+          a: "Unstable: cumuliform clouds, turbulence, showery precip (PHAK).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "PHAK (PDF)", url: EXAM_SRC.phak }
+          ]
+        },
+        {
+          q: "UA.III.B.K1j A briefing indicates a low-level temperature inversion with high relative humidity. What weather would you expect?",
+          choices: [
+            "Smooth air, poor visibility, fog, haze, or low clouds.",
+            "Light wind shear only.",
+            "Turbulent air with showery precipitation only.",
+            "Clear skies and gusty winds.",
+          ],
+          correctIndex: 0,
+          a: "Inversions trap moisture → fog/stratus, smooth air, poor visibility.",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "PHAK (PDF)", url: EXAM_SRC.phak }
+          ]
+        },
+        {
+          q: "UA.IV.A.K1b To ensure CG limits are not exceeded, follow loading instructions specified in the",
+          choices: [
+            "Pilot’s Operating Handbook or UAS flight manual.",
+            "AIM only.",
+            "Aircraft Weight and Balance Handbook only for all aircraft.",
+            "LAANC authorization letter.",
+          ],
+          correctIndex: 0,
+          a: "Manufacturer documents define loading and CG for the aircraft.",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "PHAK (PDF)", url: EXAM_SRC.phak }
+          ]
+        },
+        {
+          q: "UA.IV.A.K1b A stall occurs when smooth airflow over the wing is disrupted and lift degenerates. This is caused when the wing",
+          choices: [
+            "exceeds the maximum speed.",
+            "exceeds maximum allowable operating weight only.",
+            "exceeds its critical angle of attack.",
+            "flies below maneuvering speed only.",
+          ],
+          correctIndex: 2,
+          a: "Stall is caused by exceeding critical angle of attack (PHAK).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "PHAK (PDF)", url: EXAM_SRC.phak }
+          ]
+        },
+        {
+          q: "UA.IV.A.K1a When operating an unmanned airplane, load factor on the wings may be increased anytime",
+          choices: [
+            "the CG is shifted rearward to the aft limit.",
+            "the airplane is subjected to maneuvers other than straight-and-level flight.",
+            "gross weight is reduced.",
+            "density altitude decreases.",
+          ],
+          correctIndex: 1,
+          a: "Turns and maneuvers increase load factor (PHAK).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "PHAK (PDF)", url: EXAM_SRC.phak }
+          ]
+        },
+        {
+          q: "UA.IV.A.K1a (Refer to FAA-CT-8080-2H, Figure 2.) If an unmanned airplane weighs 33 pounds, what approximate weight must the structure support in a 30° banked turn while maintaining altitude?",
+          choices: [
+            "34 pounds.",
+            "47 pounds.",
+            "38 pounds.",
+            "33 pounds.",
+          ],
+          correctIndex: 2,
+          a: "Load factor ≈ 1/cos(bank); at 30° bank, about 1.15 G → 33 × 1.15 ≈ 38 lb.",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "PHAK (PDF)", url: EXAM_SRC.phak }
+          ]
+        },
+        {
+          q: "UA.V.A.K3 (Refer to FAA-CT-8080-2H, Figure 26, area 2.) You hear an aircraft midfield left downwind to RWY 13. Where is the aircraft relative to the runway?",
+          choices: [
+            "East of the runway.",
+            "South of the runway.",
+            "West of the runway.",
+            "Over the runway threshold only.",
+          ],
+          correctIndex: 0,
+          a: "Left traffic: downwind is parallel and opposite the landing direction; interpret using runway heading (sample: RWY 13).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "AIM", url: EXAM_SRC.aim }
+          ]
+        },
+        {
+          q: "UA.V.B.K2 (Refer to FAA-CT-8080-2H, Figure 21, Area 1.) After ATC authorization near Minot International (MOT) with tower operational, which frequency could monitor ATC/CTAF communications?",
+          choices: [
+            "UNICOM 122.95.",
+            "ASOS 118.725.",
+            "CTAF / tower frequency listed for the airport (e.g., 118.2 in the figure).",
+            "121.5 MHz only.",
+          ],
+          correctIndex: 2,
+          a: "Use chart/airport data for CTAF or tower frequency (figure-specific).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "AIM", url: EXAM_SRC.aim }
+          ]
+        },
+        {
+          q: "UA.V.B.K6a (Refer to FAA-CT-8080-2H, Figure 21.) What airport is at approximately 47°40′ N, 101°26′ W?",
+          choices: [
+            "Mercer County Regional Airport.",
+            "Semshenko Airport.",
+            "Garrison Airport.",
+            "Minot International Airport.",
+          ],
+          correctIndex: 2,
+          a: "Latitude/longitude plotting on sectional (figure-specific).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "AIM", url: EXAM_SRC.aim }
+          ]
+        },
+        {
+          q: "UA.V.B.K6a (Refer to FAA-CT-8080-2H, Figure 22, area 2.) At Coeur D’Alene which frequency should be used as CTAF?",
+          choices: [
+            "122.05 MHz.",
+            "135.075 MHz.",
+            "122.8 MHz.",
+            "118.1 MHz.",
+          ],
+          correctIndex: 2,
+          a: "CTAF frequency from airport information block (figure-specific).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "AIM", url: EXAM_SRC.aim }
+          ]
+        },
+        {
+          q: "UA.V.B.K6a (Refer to FAA-CT-8080-2H, Figure 20, Area 4.) A small UA is launched 2 NM northeast of Hertford. What is the height of the highest obstacle?",
+          choices: [
+            "399 feet MSL.",
+            "500 feet MSL.",
+            "500 feet AGL.",
+            "The chart does not show obstacles.",
+          ],
+          correctIndex: 2,
+          a: "Obstacle elevations on sectionals — read chart user’s guide; note MSL vs AGL in the question stem.",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "AIM", url: EXAM_SRC.aim }
+          ]
+        },
+        {
+          q: "UA.V.B.K6a (Refer to FAA-CT-8080-2H, Figure 24, Area 6.) What type of airport is Card Airport?",
+          choices: [
+            "Public towered.",
+            "Public non-towered.",
+            "Private non-towered.",
+            "Military.",
+          ],
+          correctIndex: 2,
+          a: "Private airport chart symbols (figure-specific).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "AIM", url: EXAM_SRC.aim }
+          ]
+        },
+        {
+          q: "UA.V.B.K6a (Refer to FAA-CT-8080-2H, Figure 20, area 3.) With ATC authorization, 4 SM southeast of Elizabeth City Regional (ECG), what hazard is indicated?",
+          choices: [
+            "High density military operations.",
+            "Unmarked balloon on a cable up to 3,008 feet AGL.",
+            "Unmarked balloon on a cable up to 3,008 feet MSL.",
+            "No hazards in this area.",
+          ],
+          correctIndex: 2,
+          a: "Chart caution symbols — obstacle/hazard heights are typically MSL on sectionals.",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "AIM", url: EXAM_SRC.aim }
+          ]
+        },
+        {
+          q: "UA.V.B.K6a (Refer to FAA-CT-8080-2H, Figure 26.) What does the line of latitude at area 4 measure?",
+          choices: [
+            "Degrees east and west of the Prime Meridian.",
+            "Degrees north and south from the equator.",
+            "Degrees east and west of Greenwich only.",
+            "Magnetic heading only.",
+          ],
+          correctIndex: 1,
+          a: "Latitude measures north/south of the equator (PHAK).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "PHAK (PDF)", url: EXAM_SRC.phak }
+          ]
+        },
+        {
+          q: "UA.V.B.K6b The most comprehensive information on a given airport is provided by",
+          choices: [
+            "Chart Supplements U.S. (formerly Airport / Facility Directory).",
+            "NOTAMs only.",
+            "Terminal Area Chart only.",
+            "B4UFLY only.",
+          ],
+          correctIndex: 0,
+          a: "Chart Supplement has detailed airport data (hours, communications, services).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "AIM", url: EXAM_SRC.aim }
+          ]
+        },
+        {
+          q: "UA.V.B.K6a (Refer to FAA-CT-8080-2H, Figure 78.) What class of airspace is associated with Sioux Gateway/COL DAY (SUX) Airport?",
+          choices: [
+            "Class B.",
+            "Class C.",
+            "Class D.",
+            "Class E to the surface everywhere.",
+          ],
+          correctIndex: 2,
+          a: "Blue dashed circle → Class D in typical symbology (figure-specific).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "AIM — Airspace (Ch. 3)", url: EXAM_SRC.aimCh3 }
+          ]
+        },
+        {
+          q: "UA.V.B.K6a (Refer to FAA-CT-8080-2H, Figure 24, Area 3, and Legend 1.) For parachute operations at Tri-County Airport, refer to",
+          choices: [
+            "notes on the border of the chart only.",
+            "Chart Supplements U.S.",
+            "NOTAM publication only.",
+            "the aircraft POH.",
+          ],
+          correctIndex: 1,
+          a: "Parachute activity details often in Chart Supplement.",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "AIM", url: EXAM_SRC.aim }
+          ]
+        },
+        {
+          q: "UA.V.B.K6a (Refer to FAA-CT-8080-2H, Figure 24, Area 6.) Near Jamestown Regional (JMS), what must you receive prior to flying at 46.9N 98.6W near a tower under construction?",
+          choices: [
+            "Authorization from the military.",
+            "Authorization from ATC (controlled airspace / surface E as applicable).",
+            "Authorization from the National Park Service.",
+            "A state drone permit only.",
+          ],
+          correctIndex: 1,
+          a: "§107.41 authorization in certain Class E surface areas and controlled airspace (verify chart/authorization).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "14 CFR §107.41 — Certain airspace", url: EXAM_SRC.s107_41 }
+          ]
+        },
+        {
+          q: "UA.V.C.K1 When using a small UA in a commercial operation, who is responsible for briefing participants about emergency procedures?",
+          choices: [
+            "The FAA inspector-in-charge.",
+            "The lead visual observer.",
+            "The remote PIC.",
+            "The aircraft owner only.",
+          ],
+          correctIndex: 2,
+          a: "Remote PIC is responsible for the operation including safety briefings.",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "14 CFR §107.15 — Remote PIC", url: EXAM_SRC.s107_15 }
+          ]
+        },
+        {
+          q: "UA.V.C.K1 To avoid collision you climb above 600 feet AGL in an emergency. To whom must you report the deviation?",
+          choices: [
+            "Air Traffic Control immediately.",
+            "The NTSB within 24 hours.",
+            "Upon request of the Federal Aviation Administration.",
+            "Only your employer.",
+          ],
+          correctIndex: 2,
+          a: "§107.21 emergency deviation; reporting may be required under §107.9 or upon FAA request for deviations.",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "14 CFR §107.21 — Emergency", url: EXAM_SRC.s107_21 }
+          ]
+        },
+        {
+          q: "UA.V.C.K2 What precautions should a remote PIC take to prevent inflight emergencies with lithium-based batteries?",
+          choices: [
+            "Store batteries in a freezer before flight.",
+            "Follow the manufacturer’s recommendations for safe battery handling.",
+            "Charge until batteries reach 100°C.",
+            "Use only third-party chargers with no labels.",
+          ],
+          correctIndex: 1,
+          a: "Follow manufacturer guidance for charging, storage, and inspection.",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "PHAK (PDF)", url: EXAM_SRC.phak }
+          ]
+        },
+        {
+          q: "UA.V.D.K1 To prevent the final link in the accident chain, a remote pilot must consider which methodology?",
+          choices: [
+            "Crew Resource Management only.",
+            "Safety Management System only.",
+            "Risk management.",
+            "Checklist memorization only.",
+          ],
+          correctIndex: 2,
+          a: "ADM: risk management integrates situational awareness and judgment (PHAK/ACS).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
             { label: "FAA — Remote Pilot ACS (PDF)", url: EXAM_SRC.acsUas }
           ]
         },
         {
-          q: "Under Part 107, may a person operate a small UAS under the influence of alcohol or drugs that impair safety?",
-          choices: ["Yes, if under 400 feet", "Yes, if a VO is used", "No", "Only on weekends"],
+          q: "UA.V.D.K1 A TV station’s remote pilot has multiple near-misses and accidents. What improves safety culture?",
+          choices: [
+            "Allow no more than five crashes per 6 months.",
+            "No changes needed.",
+            "Recognize hazardous attitudes and develop SOPs emphasizing safety.",
+            "Replace the drone brand only.",
+          ],
           correctIndex: 2,
-          a: "No person may operate a small UAS in a manner that violates §107.17 (alcohol or drugs) or while impaired — verify current 14 CFR §107.17 text.",
-          sources: [{ label: "14 CFR §107.17 — Alcohol or drugs", url: EXAM_SRC.s107_17 }]
+          a: "Hazardous attitudes + standardized procedures reduce risk (ADM).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "PHAK (PDF)", url: EXAM_SRC.phak }
+          ]
         },
         {
-          q: "What does an AIRMET often communicate?",
-          choices: ["SIGMET-level convection only", "Moderate turbulence, icing, IFR conditions, or sustained surface winds in some cases", "Presidential TFRs only", "Runway closures"],
+          q: "UA.V.D.K2 When adapting CRM concepts to small UA, CRM must be integrated into",
+          choices: [
+            "the flight portion only.",
+            "all phases of the operation.",
+            "communications only.",
+            "post-flight billing only.",
+          ],
           correctIndex: 1,
-          a: "AIRMETs advise of moderate turbulence, icing, IFR conditions, and sustained surface winds per chart products.",
+          a: "CRM applies to planning, execution, and debrief (human factors).",
           sources: [
-            { label: "PHAK — Weather theory (PDF)", url: EXAM_SRC.phak },
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "PHAK (PDF)", url: EXAM_SRC.phak }
+          ]
+        },
+        {
+          q: "UA.V.D.K2 When PIC and VO define roles before and during flight, this is good use of",
+          choices: [
+            "Crew Resource Management.",
+            "Authoritarian Resource Management.",
+            "Single Pilot Resource Management only.",
+            "LAANC coordination.",
+          ],
+          correctIndex: 0,
+          a: "CRM: clear roles and communication.",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "PHAK (PDF)", url: EXAM_SRC.phak }
+          ]
+        },
+        {
+          q: "UA.V.D.K4 Which hazardous attitude involves taking risks to impress others?",
+          choices: [
+            "Impulsivity.",
+            "Invulnerability.",
+            "Macho.",
+            "Resignation.",
+          ],
+          correctIndex: 2,
+          a: "Macho: proving oneself (PHAK hazardous attitudes).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "PHAK (PDF)", url: EXAM_SRC.phak }
+          ]
+        },
+        {
+          q: "UA.V.D.K4 A manager says “fly first, ask questions later.” This represents",
+          choices: [
+            "Macho.",
+            "Invulnerability.",
+            "Impulsivity.",
+            "Anti-authority.",
+          ],
+          correctIndex: 2,
+          a: "Impulsivity: rush to act without assessing (PHAK).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "PHAK (PDF)", url: EXAM_SRC.phak }
+          ]
+        },
+        {
+          q: "UA.V.E.K2 Which is true regarding alcohol in the human body?",
+          choices: [
+            "A small amount increases visual acuity.",
+            "Drinking water eliminates alcohol faster.",
+            "Judgment can be impaired by even small amounts of alcohol.",
+            "Alcohol improves night vision.",
+          ],
+          correctIndex: 2,
+          a: "Alcohol impairs judgment and performance (PHAK).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "PHAK (PDF)", url: EXAM_SRC.phak }
+          ]
+        },
+        {
+          q: "UA.V.E.K5 After a long drive, fatigue affects your assignment. Fatigue can be recognized",
+          choices: [
+            "easily by any experienced pilot without error.",
+            "as being in an impaired state.",
+            "as overcome with caffeine only.",
+            "as unrelated to performance.",
+          ],
+          correctIndex: 1,
+          a: "Fatigue impairs performance like other stressors (IMSAFE).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "PHAK (PDF)", url: EXAM_SRC.phak }
+          ]
+        },
+        {
+          q: "UA.V.E.K6 Which technique should a remote pilot use to scan for traffic?",
+          choices: [
+            "Systematically focus on different sky segments for short intervals.",
+            "Rely only on peripheral vision.",
+            "Scan continuously left-to-right only without pausing.",
+            "Stare at one point to detect motion.",
+          ],
+          correctIndex: 0,
+          a: "AIM: short, systematic scans with time to focus each segment.",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
             { label: "AIM", url: EXAM_SRC.aim }
           ]
         },
         {
-          q: "Why is magnetic variation important when using a sectional chart for navigation?",
-          choices: ["It changes fuel burn", "It converts between true and magnetic directions", "It sets transponder codes", "It is only used above FL180"],
+          q: "UA.V.E.K8 When preparing for night flight, what should you know after using a bright work light during preflight?",
+          choices: [
+            "Eyes are immune to bright light after dark adaptation.",
+            "Full dark adaptation can take on the order of 30 minutes.",
+            "LED flashlights always preserve night vision.",
+            "Night vision returns in 1 minute.",
+          ],
           correctIndex: 1,
-          a: "Isogonic lines show variation between true north and magnetic north for heading conversions.",
-          sources: [{ label: "PHAK — Navigation & charts (PDF)", url: EXAM_SRC.phak }]
-        },
-        {
-          q: "What is a common effect of high density altitude on aircraft and sUAS performance?",
-          choices: ["Improved climb performance", "Reduced performance — thinner air", "Lower stall speed only for drones", "No effect below 400 feet"],
-          correctIndex: 1,
-          a: "High density altitude reduces performance margins — motors/props work harder; batteries may drain faster.",
-          sources: [{ label: "PHAK — Aerodynamics (PDF)", url: EXAM_SRC.phak }]
-        },
-        {
-          q: "What is the minimum age to take the initial FAA aeronautical knowledge test for a Remote Pilot Certificate (before receiving the certificate)?",
-          choices: ["14", "15", "16", "18"],
-          correctIndex: 1,
-          a: "You must be at least 15 years old to take the initial knowledge test; 16 to receive the certificate (verify current FAA testing eligibility).",
+          a: "Night adaptation takes significant time (PHAK/AIM).",
           sources: [
-            { label: "FAA — Testing & training", url: EXAM_SRC.faaTesting },
-            { label: "14 CFR §107.12 — Certificate required", url: EXAM_SRC.s107_12 }
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "PHAK (PDF)", url: EXAM_SRC.phak }
           ]
-        }
+        },
+        {
+          q: "UA.V.F.K1 Under what condition should the operator establish scheduled maintenance protocol?",
+          choices: [
+            "When the manufacturer does not provide a maintenance schedule.",
+            "When the FAA mails a letter.",
+            "Never — drones need no maintenance.",
+            "Only after an accident.",
+          ],
+          correctIndex: 0,
+          a: "If no schedule exists, establish one based on manufacturer guidance / best practice (AC 107-2 concepts).",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "FAA — Remote Pilot ACS (PDF)", url: EXAM_SRC.acsUas }
+          ]
+        },
+        {
+          q: "UA.V.F.K1 If the manufacturer does not provide scheduled maintenance information, the operator should",
+          choices: [
+            "contact the FAA for a minimum equipment list.",
+            "establish a scheduled maintenance protocol.",
+            "contact the NTSB for failure rates.",
+            "skip maintenance.",
+          ],
+          correctIndex: 1,
+          a: "Establish inspection/maintenance practices appropriate to the aircraft.",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "FAA — Remote Pilot ACS (PDF)", url: EXAM_SRC.acsUas }
+          ]
+        },
+        {
+          q: "UA.V.F.K2 According to 14 CFR part 107, responsibility to inspect the small UAS for safe operation rests with the",
+          choices: [
+            "remote pilot-in-command.",
+            "visual observer.",
+            "owner only.",
+            "the client hiring the flight.",
+          ],
+          correctIndex: 0,
+          a: "§107.49 preflight requirements; PIC ensures condition for safe operation.",
+          sources: [
+            { label: "14 CFR / FAA (verify current rules)", url: EXAM_SRC.part107 },
+            { label: "Rupprecht Law — FAA sample questions (attribution)", url: EXAM_SRC.rupprechtLaw },
+            { label: "14 CFR §107.49 — Preflight", url: EXAM_SRC.s107_49 }
+          ]
+        },
       ];
 
       const EXAM_MC_COUNT = EXAM_MC_BANK.length;
