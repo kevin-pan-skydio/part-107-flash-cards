@@ -1829,9 +1829,9 @@
           );
         }
         elCard.classList.add("flipped");
-        elCard.classList.add("no-flip");
-        elFlip.disabled = true;
-        elFlip.textContent = "Answer shown";
+        elCard.classList.remove("no-flip");
+        elFlip.disabled = false;
+        updateExamFlipButtonLabel();
         elExamGrade.hidden = false;
         const buttons = elExamMcOptions.querySelectorAll(".exam-choice-btn");
         for (let i = 0; i < buttons.length; i++) {
@@ -1912,7 +1912,7 @@
         elExamResults.hidden = true;
         document.body.classList.add("exam-active");
         elSubLine.innerHTML =
-          "Exam mode uses the <strong>FAA-style practice bank</strong> (not flashcards). Choose <strong>A–D</strong> (or <kbd>1</kbd>–<kbd>4</kbd>), review the explanation, then <strong>Next</strong> or <kbd>Enter</kbd>.";
+          "Exam mode uses the <strong>FAA-style practice bank</strong> (not flashcards). Choose <strong>A–D</strong> (or <kbd>1</kbd>–<kbd>4</kbd>), review the explanation, then <strong>Next</strong> or <kbd>Enter</kbd>. Use <strong>Flip</strong> or <kbd>Space</kbd> to switch between question and answer.";
         if (examTimerId !== null) clearInterval(examTimerId);
         examTimerId = setInterval(updateExamHud, 1000);
         showExamQuestion();
@@ -1999,8 +1999,20 @@
         show();
       }
 
+      function updateExamFlipButtonLabel() {
+        if (!examActive || !examAnswerShown) return;
+        elFlip.textContent = elCard.classList.contains("flipped")
+          ? "Show question"
+          : "Show answer";
+      }
+
       function flip() {
-        if (examActive) return;
+        if (examActive) {
+          if (!examAnswerShown) return;
+          elCard.classList.toggle("flipped");
+          updateExamFlipButtonLabel();
+          return;
+        }
         if (filtered.length === 0) return;
         elCard.classList.toggle("flipped");
       }
@@ -2067,11 +2079,20 @@
       });
 
       elCard.addEventListener("click", function () {
-        if (examActive) return;
+        if (examActive && !examAnswerShown) return;
         flip();
       });
       elCard.addEventListener("keydown", function (e) {
-        if (e.key === " " || e.key === "Enter") {
+        if (e.key === " " || e.key === "Spacebar") {
+          e.preventDefault();
+          if (examActive && !examAnswerShown) return;
+          flip();
+          return;
+        }
+        if (e.key === "Enter") {
+          if (examActive && examAnswerShown) {
+            return;
+          }
           e.preventDefault();
           if (examActive) return;
           flip();
@@ -2087,6 +2108,12 @@
             if (e.key === "Enter") {
               e.preventDefault();
               advanceExam();
+              return;
+            }
+            if (e.key === " " || e.key === "Spacebar") {
+              e.preventDefault();
+              flip();
+              return;
             }
             return;
           }
