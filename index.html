@@ -495,401 +495,534 @@
       background: #ffeef0;
       color: #7a1a1a;
     }
+
+    .home-view {
+      width: min(100%, 52rem);
+      text-align: center;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem auto;
+      padding: 0;
+    }
+
+    .category-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1.5rem 1rem;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      text-decoration: none;
+      color: var(--text);
+      transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+      box-shadow: 0 2px 12px rgba(0, 50, 100, 0.06);
+    }
+
+    .category-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 28px rgba(0, 50, 100, 0.13);
+      border-color: var(--skydio-blue);
+    }
+
+    .category-card:active {
+      transform: translateY(-1px);
+    }
+
+    .category-icon {
+      font-size: 2.2rem;
+      line-height: 1;
+    }
+
+    .category-label {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--skydio-blue-darkest);
+    }
+
+    .category-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .category-count {
+      font-size: 0.78rem;
+      color: var(--skydio-blue);
+      font-weight: 600;
+      margin-top: 0.25rem;
+    }
+
+    .study-view {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      color: var(--skydio-blue);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+      transition: background 0.15s;
+    }
+
+    .back-link:hover {
+      background: var(--surface-hover);
+    }
+
+    .category-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--skydio-blue-darkest);
+      margin: 0 0 0.25rem;
+    }
   </style>
 </head>
 
 <body>
   <h1>Part 107 flashcards</h1>
-  <p class="sub" id="subLine">FAA small UAS (sUAS) — tap card or press <kbd>Space</kbd> to flip ·
-    <kbd>←</kbd><kbd>→</kbd> navigate ·
-    <kbd>S</kbd> shuffle · <kbd>R</kbd> random · references (eCFR, FAA, PHAK) on the back
-  </p>
-  <div class="exam-setup" id="examSetup">
-    <label for="examLength">Practice exam</label>
-    <select id="examLength" aria-label="Number of practice exam questions">
-      <option value="10">10 questions</option>
-      <option value="25" selected>25 questions</option>
-      <option value="50">50 questions</option>
-      <option value="60">60 questions</option>
-      <option value="72">72 questions (full bank)</option>
-    </select>
-    <button type="button" class="primary" id="examStart">Start exam</button>
+
+  <div id="homeView" class="home-view" hidden>
+    <p class="sub">Choose a category to study</p>
+    <div class="category-grid" id="categoryGrid"></div>
   </div>
-  <div class="exam-hud" id="examHud" hidden>
-    <span id="examHudText"></span>
-    <button type="button" id="examEnd">End exam</button>
-  </div>
-  <div class="exam-results" id="examResults" hidden>
-    <h2>Exam complete</h2>
-    <p class="exam-pct" id="examResultPct"></p>
-    <p class="exam-stat" id="examResultDetail"></p>
-    <p class="exam-stat" id="examResultTime"></p>
-    <button type="button" class="primary" id="examDismiss">Back to study</button>
-  </div>
-  <div class="search"><input type="search" id="filter" placeholder="Filter cards (question or answer)…"
-      autocomplete="off" /></div>
-  <div class="progress" id="progress"></div>
-  <div class="toolbar" id="mainToolbar">
-    <button type="button" id="prev">← Prev</button>
-    <button type="button" class="primary" id="flip">Flip</button>
-    <button type="button" id="next">Next →</button>
-    <button type="button" id="shuffle">Shuffle deck</button>
-    <button type="button" id="random">Random card</button>
-  </div>
-  <div class="wrap" id="cardWrap">
-    <div class="card" id="card" role="button" tabindex="0" aria-label="Flashcard. Click to flip.">
-      <div class="face front">
-        <span class="face-label">Question</span>
-        <p class="face-body" id="q"></p>
-      </div>
-      <div class="face back">
-        <div class="back-inner">
-          <span class="face-label">Answer</span>
-          <p class="answer-text" id="a"></p>
-          <div class="refs" id="refs" aria-label="Reference literature"></div>
+
+  <div id="studyView" class="study-view" hidden>
+    <a href="index.html" class="back-link" id="backLink">&larr; All categories</a>
+    <p class="category-title" id="categoryTitle"></p>
+    <p class="sub" id="subLine">FAA small UAS (sUAS) — tap card or press <kbd>Space</kbd> to flip ·
+      <kbd>←</kbd><kbd>→</kbd> navigate ·
+      <kbd>S</kbd> shuffle · <kbd>R</kbd> random · references (eCFR, FAA, PHAK) on the back
+    </p>
+    <div class="exam-setup" id="examSetup">
+      <label for="examLength">Practice exam</label>
+      <select id="examLength" aria-label="Number of practice exam questions">
+        <option value="10">10 questions</option>
+        <option value="25" selected>25 questions</option>
+        <option value="50">50 questions</option>
+        <option value="60">60 questions</option>
+        <option value="72">72 questions (full bank)</option>
+      </select>
+      <button type="button" class="primary" id="examStart">Start exam</button>
+    </div>
+    <div class="exam-hud" id="examHud" hidden>
+      <span id="examHudText"></span>
+      <button type="button" id="examEnd">End exam</button>
+    </div>
+    <div class="exam-results" id="examResults" hidden>
+      <h2>Exam complete</h2>
+      <p class="exam-pct" id="examResultPct"></p>
+      <p class="exam-stat" id="examResultDetail"></p>
+      <p class="exam-stat" id="examResultTime"></p>
+      <button type="button" class="primary" id="examDismiss">Back to study</button>
+    </div>
+    <div class="search"><input type="search" id="filter" placeholder="Filter cards (question or answer)…"
+        autocomplete="off" /></div>
+    <div class="progress" id="progress"></div>
+    <div class="toolbar" id="mainToolbar">
+      <button type="button" id="prev">← Prev</button>
+      <button type="button" class="primary" id="flip">Flip</button>
+      <button type="button" id="next">Next →</button>
+      <button type="button" id="shuffle">Shuffle deck</button>
+      <button type="button" id="random">Random card</button>
+    </div>
+    <div class="wrap" id="cardWrap">
+      <div class="card" id="card" role="button" tabindex="0" aria-label="Flashcard. Click to flip.">
+        <div class="face front">
+          <span class="face-label">Question</span>
+          <p class="face-body" id="q"></p>
+        </div>
+        <div class="face back">
+          <div class="back-inner">
+            <span class="face-label">Answer</span>
+            <p class="answer-text" id="a"></p>
+            <div class="refs" id="refs" aria-label="Reference literature"></div>
+          </div>
         </div>
       </div>
     </div>
+    <div class="exam-figures" id="examFigures" hidden aria-label="Figure images for this question"></div>
+    <div class="exam-mc" id="examMc" hidden>
+      <p class="exam-mc-label" id="examMcLabel">Choose the best answer</p>
+      <div class="exam-mc-options" id="examMcOptions"></div>
+    </div>
+    <div class="exam-grade" id="examGrade" hidden>
+      <button type="button" class="primary exam-grade-btn" id="examNextBtn">Next question →</button>
+    </div>
+    <p class="hint" id="count"></p>
   </div>
-  <div class="exam-figures" id="examFigures" hidden aria-label="Figure images for this question"></div>
-  <div class="exam-mc" id="examMc" hidden>
-    <p class="exam-mc-label" id="examMcLabel">Choose the best answer</p>
-    <div class="exam-mc-options" id="examMcOptions"></div>
-  </div>
-  <div class="exam-grade" id="examGrade" hidden>
-    <button type="button" class="primary exam-grade-btn" id="examNextBtn">Next question →</button>
-  </div>
-  <p class="hint" id="count"></p>
 
   <script>
     (function () {
-      const CARDS = [
-        { q: "Maximum takeoff weight for a small UAS under Part 107?", a: "55 pounds (25 kg) including everything onboard at takeoff." },
-        { q: "Must a Part 107 pilot hold a manned aircraft pilot certificate?", a: "No. You need a Remote Pilot Certificate (passed knowledge test) or be under direct supervision of someone who holds it." },
-        { q: "What certificate is required to act as remote PIC under Part 107?", a: "Remote Pilot Certificate with a small UAS rating (or sport/recreational pilot with applicable privileges per 107.12 in limited cases — most operators use Remote Pilot)." },
-        { q: "Standard maximum altitude AGL for Part 107?", a: "400 feet AGL unless in the immediate vicinity of a structure, then up to 400 feet above the structure’s uppermost height." },
-        { q: "Flying near a 200 ft tower — how high may you fly?", a: "Up to 400 ft above the tower (600 ft AGL in that immediate vicinity), if the operation stays within the structure’s immediate vicinity." },
-        { q: "Define 'immediate vicinity' of a structure (practical rule of thumb).", a: "Close enough that the flight is necessary to inspect/work on the structure — stay within a reasonable lateral distance; FAA emphasizes the operation must be tied to the structure." },
-        { q: "Minimum weather visibility for Part 107?", a: "3 statute miles from your control station." },
-        { q: "Minimum distance from clouds (below 10,000 ft MSL)?", a: "500 feet below clouds, 2,000 feet horizontally from clouds." },
-        { q: "Can you fly in Class B airspace under Part 107?", a: "Only with prior authorization (e.g., LAANC or other FAA authorization)." },
-        { q: "Class C airspace — Part 107 requirement?", a: "Prior authorization required before operating in controlled airspace." },
-        { q: "Class D airspace — Part 107 requirement?", a: "Prior authorization required." },
-        { q: "Class E surface area around an airport — Part 107?", a: "Generally requires authorization if it’s controlled airspace designated for the airport." },
-        { q: "Class G (uncontrolled) — need LAANC?", a: "Usually no authorization needed unless other restrictions (TFR, etc.) apply." },
-        { q: "What is LAANC?", a: "Low Altitude Authorization and Notification Capability — near-real-time authorization in controlled airspace." },
-        { q: "Maximum groundspeed under Part 107?", a: "100 mph (87 knots)." },
-        { q: "Visual line of sight (VLOS) — what must the remote PIC ensure?", a: "The small UAS must be visible to the remote PIC or visual observer without binoculars (except corrective lenses)." },
-        { q: "Can a visual observer (VO) satisfy VLOS?", a: "Yes, if coordinated with the remote PIC and communication is maintained." },
-        { q: "How many sUAS may one remote PIC operate at once?", a: "One at a time (single aircraft per remote PIC)." },
-        { q: "Yield right-of-way — to whom?", a: "All manned aircraft; the sUAS must give way." },
-        { q: "Operations from a moving vehicle — allowed?", a: "Generally not in populated areas; allowed in sparsely populated areas only if it does not transport property for hire (special rules apply — know the nuance)." },
-        { q: "Operations from a moving aircraft?", a: "Prohibited for Part 107 (with very narrow exceptions not typical for standard ops)." },
-        { q: "Careless or reckless operation?", a: "Prohibited — must not endanger life or property." },
-        { q: "Flying under the influence?", a: "Prohibited — no drugs/alcohol that impair safe operation." },
-        { q: "When must you report an accident to the FAA?", a: "Within 10 days if any person suffers serious injury, loss of consciousness, or property damage (excluding the sUAS) exceeds $500 (verify current threshold in 107.9)." },
-        { q: "Serious injury reporting threshold concept?", a: "Reportable if it meets the regulatory definition of serious injury or the property damage monetary threshold." },
-        { q: "Remote ID — when required for standard Part 107?", a: "Most operations require Standard Remote ID or broadcast from FAA-Recognized Identification Area (FRIA) per current rules — check aircraft compliance." },
-        { q: "What does Standard Remote ID broadcast?", a: "ID, location, altitude, velocity, takeoff location, remote PIC status, etc. (per FAA remote ID rule)." },
-        { q: "Night operations — prior to recent updates, were they allowed?", a: "Historically required waiver; now allowed under specific conditions (anti-collision lighting visible for 3 statute miles, etc.)." },
-        { q: "Anti-collision lighting for night operations — visibility?", a: "Must be visible for at least 3 statute miles (per current Part 107 night rules)." },
-        { q: "Operations over people — categories?", a: "Operations over people rules categorize exposure (e.g., Category 1–4) with aircraft performance/fragility requirements — know your aircraft’s category." },
-        { q: "Sustained flight over open-air assemblies?", a: "Generally prohibited unless meeting specific operations-over-people requirements / applicable category." },
-        { q: "What is a TFR?", a: "Temporary Flight Restriction — must be checked and complied with (NOTAMs)." },
-        { q: "Where do you check TFRs and NOTAMs?", a: "FAA NOTAM system, briefing tools (FAA NOTAM Search, apps that use official data)." },
-        { q: "MOA on a sectional — what is it?", a: "Military Operations Area — exercise caution; contact controlling agency when advised." },
-        { q: "Restricted area (R-####)?", a: "Flight is restricted when active — check NOTAMs and chart legend." },
-        { q: "Prohibited area (P-####)?", a: "Flight prohibited — no operations without specific permission." },
-        { q: "National Security UAS flight restrictions (e.g., stadiums)?", a: "Temporary flight limits around stadiums during events — check FAA stadium TFR guidance." },
-        { q: "Sectional chart — magenta vs blue airport symbols?", a: "Magenta = non-towered (Class E surface or other); blue = towered (often Class D/C/B context) — always read the chart legend." },
-        { q: "Class E airspace starting at 700 ft AGL (depicted)?", a: "Shown with fuzzy magenta boundary; understand floor vs ceiling from legend." },
-        { q: "Density altitude — why it matters for sUAS?", a: "Higher density altitude = thinner air → reduced performance, shorter battery life, less lift margin." },
-        { q: "Load factor in turns?", a: "Banking increases load — batteries and motors work harder; stall margins apply to fixed-wing thinking; multirotor power margin matters." },
-        { q: "Wind gradient near obstacles?", a: "Turbulence and rotor/wake effects near buildings, trees, terrain — expect gusts." },
-        { q: "IMSAFE checklist — what does I stand for?", a: "Illness — self-assessment for fitness to fly." },
-        { q: "IMSAFE — M?", a: "Medication — side effects affecting judgment or alertness." },
-        { q: "Hypoxia — risk for typical Part 107 low-altitude ops?", a: "Usually not at low altitudes; mainly awareness for high-terrain operations." },
-        { q: "Spatial disorientation — risk?", a: "Flying VLOS at distance — easy to misjudge altitude/position; use observers and clear references." },
-        { q: "METAR vs TAF?", a: "METAR = current observation; TAF = forecast." },
-        { q: "VFR minimums in Class G below 1,200 ft AGL (day) — aircraft?", a: "1 sm visibility, clear of clouds (below 10,000 ft) — sUAS uses 3 sm / cloud clearance per 107; don’t confuse manned vs sUAS minimums." },
-        { q: "Why memorize both manned VFR and Part 107 minimums?", a: "You must see and avoid manned aircraft operating under their rules; integrate with traffic." },
-        { q: "ATC contact — when might you call?", a: "If instructed, in emergencies, or when operating in coordinated environments — follow local procedures." },
-        { q: "Emergency — PIC authority?", a: "Remote PIC may deviate from any rule to the extent necessary to meet that emergency." },
-        { q: "Preflight inspection — what must you verify?", a: "Aircraft is in condition for safe operation (airframe, props, motors, battery, firmware, control links)." },
-        { q: "Lost link procedures?", a: "Programmed behavior (RTH, hover, land) — must be predictable and safe." },
-        { q: "EMI — Electromagnetic interference?", a: "Power lines, transmitters, metal structures can affect compass/GPS — plan mitigation." },
-        { q: "Geofencing / software limits?", a: "Tools to help compliance; PIC remains responsible for regulatory compliance." },
-        { q: "Hazardous attitudes (ADM) — Anti-authority?", a: "'Rules don’t apply to me' — dangerous for aviation decision-making." },
-        { q: "ADM — Impulsivity?", a: "Rushing without thinking — leads to errors." },
-        { q: "ADM — Invulnerability?", a: "'It won’t happen to me.'" },
-        { q: "ADM — Macho?", a: "Taking risks to prove skill." },
-        { q: "ADM — Resignation?", a: "'What’s the use' — giving up on safe options." },
-        { q: "DECIDE model — first step?", a: "Detect the need for a decision." },
-        { q: "5 hazardous attitudes — antidotes?", a: "Each has a stated antidote (e.g., follow rules, not so fast, it could happen to me, taking chances is foolish, I’m not helpless)." },
-        { q: "Aeronautical chart symbology — maximum elevation figures (MEF)?", a: "Highest elevation in a quadrant quadrant — obstacle clearance planning." },
-        { q: "Isogonic lines on charts?", a: "Show magnetic variation — important for heading vs true." },
-        { q: "True vs magnetic heading?", a: "Convert using magnetic variation for navigation with sectional." },
-        { q: "GPS 'mode' confusion (GPS vs ATTI)?", a: "Understand failure modes — ATTI mode without GPS may drift." },
-        { q: "Battery storage — general guidance?", a: "Follow manufacturer; avoid extreme temps; storage charge ~40–60% for LiPo longevity (manufacturer-specific)." },
-        { q: "Thermal runaway risk?", a: "Damaged LiPo cells — fire risk; have mitigation plan." },
-        { q: "Center of gravity on sUAS?", a: "Affects stability — improper payload attachment can cause loss of control." },
-        { q: "Wake turbulence — relevance?", a: "Low for small drones vs large aircraft, but rotor wash near helipads/helicopters matters." },
-        { q: "Right-of-way near airport traffic pattern?", a: "Stay clear; yield; do not interfere with manned traffic." },
-        { q: "Flying in national parks?", a: "NPS generally prohibits launching/landing in parks; takeoff/landing rules vary by jurisdiction — check agency rules." },
-        { q: "State/local drone laws?", a: "Must comply where not preempted; FAA has broad airspace authority — know interplay." },
-        { q: "Part 107 vs recreational (Exception)?", a: "Recreational uses §44809 with TRUST and community guidelines; Part 107 is commercial / broader operational flexibility." },
-        { q: "Commercial vs non-commercial — which rule?", a: "If not purely recreational under §44809, typically Part 107 (or waiver)." },
-        { q: "Certificate of Waiver or Authorization (COA)?", a: "Alternative path for certain public aircraft / specific ops — know it exists." },
-        { q: "BVLOS today for routine Part 107?", a: "Generally requires waiver — not standard." },
-        { q: "Operations over moving vehicles?", a: "Restricted — must meet specific operational requirements (rule details specify conditions)." },
-        { q: "Carrying external loads?", a: "Allowed if securely attached, does not adversely affect flight characteristics, and within weight limits." },
-        { q: "Dropping objects?", a: "Allowed if it does not create an undue hazard." },
-        { q: "Aeronautical decision making (ADM) purpose?", a: "Structured approach to reduce human error." },
-        { q: "Risk — hazard vs risk?", a: "Hazard is a condition; risk is the likelihood and severity of outcome." },
-        { q: "Mitigate risk — example controls?", a: "Briefing, maintain VLOS, abort if weather degrades, buffer from people/property." },
-        { q: "Crew resource management (CRM) for UAS?", a: "Clear roles between PIC and VO; closed-loop communication." },
-        { q: "Sterile cockpit concept?", a: "Minimize distractions during critical phases (takeoff/landing near obstacles)." },
-        { q: "Scanning for aircraft — technique?", a: "Systematic scan; use VO; listen if available." },
-        { q: "Phonetic alphabet — first three?", a: "Alpha, Bravo, Charlie." },
-        { q: "Phonetic — R, S, T?", a: "Romeo, Sierra, Tango." },
-        { q: "Squawk codes — relevance to sUAS?", a: "Limited direct use; awareness for coordination in integrated ops." },
-        { q: "Class A airspace floor in US?", a: "Generally 18,000 ft MSL — sUAS typically far below." },
-        { q: "Mode C veil?", a: "30 NM from Class B primary airport — transponder requirements for manned aircraft; situational awareness for drone ops near busy airspace." },
-        { q: "Helipad chart symbol awareness?", a: "Expect helicopter traffic — avoid conflicts." },
-        { q: "Obstruction lights on towers?", a: "May indicate tall structures — obstacle clearance." },
-        { q: "VFR sectional effective dates?", a: "Check chart currency — airspace changes." },
-        { q: "FDC NOTAM?", a: "Flight Data Center NOTAM — regulatory changes, temporary rules." },
-        { q: "GPS RAIM / GNSS health?", a: "For IFR manned; for sUAS, know GPS can degrade or jam." },
-        { q: "Sun position and glare?", a: "Can lose visual contact with aircraft — adjust position." },
-        { q: "Fog and visibility?", a: "If you can’t maintain 3 sm visibility from your position, don’t launch or land safely per 107." },
-        { q: "Wind shear near ground?", a: "Sudden changes in wind — affects small aircraft near obstacles." },
-        { q: "Precipitation and electronics?", a: "Many sUAS not rated for heavy rain — check IP rating." },
-        { q: "Cold weather — battery effect?", a: "Reduced capacity; warm batteries before flight per manufacturer." },
-        { q: "Hot weather — density altitude?", a: "Performance reduction." },
-        { q: "NFZ in manufacturer app vs regulatory?", a: "Manufacturer zones are not a substitute for knowing actual FAA airspace." },
-        { q: "Insurance for commercial ops?", a: "Often required by clients; good practice though not always FAA-mandated for all ops." },
-        { q: "Privacy considerations?", a: "Avoid invasive imaging; follow laws and ethics." },
-        { q: "Copyright / surveying client data?", a: "Understand data handling agreements." },
-        { q: "FAA enforcement — compliance philosophy?", a: "Education and enforcement; PIC responsible for violations." },
-        { q: "Accident preservation — after incident?", a: "Report if required; preserve evidence; secure scene." },
-        { q: "FAA registration — Part 107 aircraft weight threshold?", a: "0.55 lb (250 g) and above must be registered (with exceptions — verify current rule for recreation vs Part 107)." },
-        { q: "Registration marking — must be?", a: "Visible and legible on aircraft (per registration rules) — know current marking requirements." },
-        { q: "Part 107 knowledge test — recurrent training?", a: "Recurrent training required every 24 months (online or other FAA-approved method — verify current FAA policy)." },
-        { q: "IACRA — what is it?", a: "Integrated Airman Certification and Rating Application — used for pilot certificate applications." },
-        { q: "FSDO — role?", a: "Flight Standards District Office — FAA local offices for questions/enforcement context." },
-        { q: "ASRS — NASA report?", a: "Aviation Safety Reporting System — voluntary reporting for manned; awareness for safety culture." },
-        { q: "CRM — 'I’m unsafe' antidote?", a: "Related to macho/impulsivity — use standard antidotes in ADM study materials." },
-        { q: "Stall — applies to multirotor?", a: "No wing stall like fixed-wing; instead motor saturation, vortex ring state in helicopters — know platform limits." },
-        { q: "Vortex ring state (settling with power)?", a: "Helicopter phenomenon; some multirotor behaviors analogous — avoid descending too fast in own downwash." },
-        { q: "Ground effect?", a: "Increased efficiency near ground — affects hover power and behavior." },
-        { q: "Bernoulli vs Newton for lift — exam level?", a: "High-level: pressure differential and momentum change contribute; not deep thermodynamics on Part 107." },
-        { q: "Weight vs balance — fuel analogy for sUAS?", a: "Battery as energy storage; as voltage sags, performance changes." },
-        { q: "Chart legend — blue numbers in parentheses?", a: "Often MSL elevations of obstacles — confirm on legend." },
-        { q: "Victor airways — relevance?", a: "IFR routes; low-altitude sUAS should avoid interfering with IFR traffic corridors near airports." },
-        { q: "Class E 'extension'?", a: "Class E surface extensions from Class C/D — understand chart." },
-        { q: "Mode C veil — drone pilot practical takeaway?", a: "High manned traffic density — extra vigilance." },
-        { q: "Emergency locator — sUAS?", a: "Not typically ELT-required like manned; know distinction." },
-        { q: "Part 107 minimum age for remote pilot certificate?", a: "16 years old." },
-        { q: "English language proficiency?", a: "Required for US pilot certificates — read, speak, write, understand English." },
-        { q: "Physiological — dehydration?", a: "Impairs judgment — treat fitness seriously." },
-        { q: "Stress — effects on performance?", a: "Tunnel vision, errors — use ADM and breaks." },
-        { q: "Checklist usage?", a: "Reduces missed steps — consistent preflight." },
-        { q: "Situational awareness definition?", a: "Perceiving, comprehending, projecting future state of flight and environment." },
-        { q: "Automation complacency?", a: "Over-trusting GPS/autopilot — stay engaged." },
-        { q: "Geoid vs ellipsoid — exam depth?", a: "Usually minimal; know GPS altitude can differ from baro." },
-        { q: "AGL vs MSL?", a: "AGL = above ground level; MSL = mean sea level — charts often MSL." },
-        { q: "QNH vs QFE?", a: "Barometric settings — manned IFR context; be aware altimeter settings exist." },
-        { q: "Wake from large jet — low altitude near runway?", a: "Avoid flight paths close behind departing/arriving large aircraft." },
-        { q: "Bird strikes?", a: "Risk to sUAS and wildlife — avoid nesting areas when possible; follow regulations." },
-        { q: "Wildfire TFRs?", a: "Strict temporary flight restrictions — no interference with firefighting aircraft." },
-        { q: "Hurricane response TFRs?", a: "Common — check NOTAMs." },
-        { q: "Presidential TFR?", a: "Large restricted areas — check NOTAMs for VIP movement." },
-        { q: "Sporting event TFR (3 nm / 3,000 ft)?", a: "FAA restrictions around stadiums during events — verify dimensions in current NOTAM guidance." },
-        { q: "FAA LAANC altitude grids?", a: "Authorization may be zero in some cells — read UAS Facility Maps." },
-        { q: "UAS Facility Maps — purpose?", a: "Show maximum altitudes around airports where LAANC auto-approvals may apply." },
-        { q: "B4UFLY app purpose?", a: "FAA-sourced awareness tool for airspace and advisories (verify before flight)." },
-        { q: "FAA TRUST for recreational?", a: "The Recreational UAS Safety Test — not a substitute for Part 107 cert for commercial ops." },
-        { q: "Part 107 record retention — maintenance logs?", a: "Good practice; certain operations may require records — follow operator policies." },
-        { q: "Hazardous materials on drone?", a: "Shipping regs (IATA) for batteries; operational common sense for payloads." },
-        { q: "Flying near prisons?", a: "May have local restrictions; security concerns — check laws." },
-        { q: "Flying near critical infrastructure?", a: "Security and state laws — caution." },
-        { q: "Foreign pilot — operate in US?", a: "Generally need FAA certificate or follow foreign validation rules — verify FAA guidance." },
-        { q: "Night currency training requirement (Part 107)?", a: "Remote PIC must complete updated initial or recurrent training including night operations (per current rule)." },
-        { q: "Anti-collision light color requirements?", a: "Per FAA rule — typically red or red/white flashing; verify current 107 night rule text." },
-        { q: "Can VO use binoculars for VLOS?", a: "No — binoculars cannot be used to maintain VLOS per 107.31 (corrective lenses OK)." },
-        { q: "Simultaneous operation with another PIC?", a: "One aircraft per remote PIC — cannot control two at once." },
-        { q: "Yield to balloon?", a: "Yes — all manned aircraft; balloons have right-of-way in many contexts." },
-        { q: "Glider vs powered?", a: "Right-of-way rules favor gliders in many scenarios — general awareness." },
-        { q: "Aircraft in distress?", a: "You must yield — clear the area." },
-        { q: "Flying in haze — visibility assessment?", a: "If you cannot discern 3 statute miles, regulatory minimums not met." },
-        { q: "Flying over moving vehicles — core risk?", a: "Risk to people in vehicles if aircraft falls — addressed in over-people/vehicle rules." },
-        { q: "Category 1 over people — injury threshold?", a: "Rules reference kinetic energy and rigid/blunt trauma — low mass/impact energy." },
-        { q: "Declared compliance for over-people categories?", a: "Manufacturer may declare; operator must operate within stated conditions." },
-        { q: "Shielded operations concept?", a: "Certain operations near structures may reduce ground risk in specific contexts — study FAA diagrams." },
-        { q: "Flight over open water — VLOS challenge?", a: "Hard to judge distance/altitude; maintain visual references." },
-        { q: "Magnetic interference at bridges?", a: "Steel structures can affect compass." },
-        { q: "Solar storms / GNSS?", a: "Rare degradation of GPS — have contingency." },
-        { q: "Jamming — illegal for pilots?", a: "Yes; also interferes with safety — report interference." },
-        { q: "Cybersecurity on drones?", a: "Firmware updates; secure links; DJI/other security settings." },
-        { q: "Data link loss — first concern?", a: "Aircraft behavior (fail-safe), people/property underneath." },
-        { q: "Return to home altitude setting?", a: "Must clear obstacles — set higher than tallest obstacle in area." },
-        { q: "Geofence breach — PIC responsibility?", a: "PIC still responsible for regulatory compliance." },
-        { q: "Flying in wind near max rated speed?", a: "Groundspeed vs airspeed confusion — battery drain, control margin." },
-        { q: "Flying downwind — illusion?", a: "Groundspeed high; may misjudge energy — especially fixed-wing mindset." },
-        { q: "Controlled flight into terrain (CFIT) — drone context?", a: "Hitting obstacles/trees while focused on screen — maintain obstacle clearance." },
-        { q: "Task saturation?", a: "Too many tasks → errors — simplify, use VO." },
-        { q: "Fatigue circadian?", a: "Performance lows at night for some — plan rest." },
-        { q: "Alcohol — 8 hours bottle to throttle (manned rule of thumb)?", a: "Part 107: no operation under influence; manned uses 8 hr guideline — be fit for flight." },
-        { q: "Over-the-counter meds?", a: "Check side effects (drowsiness) — IMSAFE." },
-        { q: "Carbon monoxide — sUAS cockpit?", a: "Usually N/A; for truck-based ops with engines running, be aware in enclosed spaces." },
-        { q: "Hypoxia types — exam?", a: "Basic recognition that hypoxia impairs night vision early — mainly high altitude relevance." },
-        { q: "Night vision — rod cells?", a: "30 minutes to adapt; avoid bright lights before night flying." },
-        { q: "Scanning at night?", a: "Peripheral vision better for dim objects — systematic scan." },
-        { q: "Urban canyon GPS?", a: "Multipath errors — position jumps." },
-        { q: "RTK/PPK for mapping?", a: "Survey accuracy — beyond basic 107 but appears in advanced ops." },
-        { q: "Part 107.29 — Operation from moving aircraft or vehicle summary?", a: "Know the prohibition exceptions for sparse populations and no carriage for hire nuances." },
-        { q: "Part 107.39 — Operation over human beings — operative concept?", a: "Operations must comply with operations-over-person categories or meet shielded/low-risk conditions per rule." },
-        { q: "Part 107.31 — VLOS requirements in one line?", a: "Know where the aircraft is, see it unaided (except corrective lenses), scan for traffic." },
-        { q: "Part 107.51 — Operating limitations list?", a: "Speed, altitude, visibility, cloud clearance — memorize numbers." },
-        { q: "107.51(a) speed?", a: "100 mph groundspeed." },
-        { q: "107.51(b) altitude?", a: "400 ft AGL except structure exception." },
-        { q: "107.51(c) visibility?", a: "3 statute miles." },
-        { q: "107.51(d) cloud clearance?", a: "500 ft below, 2000 ft horizontal from clouds." },
-        { q: "Eligibility for knowledge test — age?", a: "Must be at least 15 to take the initial aeronautical knowledge test; 16 to receive remote pilot cert." },
-        { q: "Recency — failed test retake?", a: "After additional studying per FAA guidance." },
-        { q: "Exam: stable vs unstable air?", a: "Stable: resistance to vertical motion; unstable: cumulus development, turbulence." },
-        { q: "Cold front vs warm front — weather?", a: "Cold front: steep, gusty; warm front: widespread stratiform, lower vis." },
-        { q: "Thunderstorm hazards?", a: "Wind shear, hail, lightning, heavy rain — avoid." },
-        { q: "SIGMET?", a: "Significant meteorological advisory — severe/extreme conditions." },
-        { q: "AIRMET?", a: "Moderate turbulence, icing, IFR conditions, sustained surface winds — check charts." },
-        { q: "Wind triangle — Part 107 depth?", a: "Basic vector awareness: wind affects ground track." },
-        { q: "Isogonic value 5W — meaning?", a: "Magnetic variation 5° west — true heading = magnetic + 5° (east is least, west is best mnemonic)." },
-        { q: "True + variation = ?", a: "Magnetic: East is least (subtract), West is best (add) — verify mnemonic direction." },
-        { q: "Sectional scale typical?", a: "1:500,000 — distance measurement with plotter/nautical miles." },
-        { q: "Nautical mile vs statute mile?", a: "1 NM ≈ 1.15 SM; Part 107 visibility in statute miles." },
-        { q: "Knot vs mph?", a: "1 knot ≈ 1.15 mph; 87 knots ≈ 100 mph." },
-        { q: "Feet per minute vs mph — climb?", a: "Know basic conversions for performance questions." },
-        { q: "Density altitude formula on test?", a: "Usually conceptual: pressure altitude corrected for temperature." },
-        { q: "Standard pressure?", a: "29.92 inHg / 1013.25 hPa at sea level reference in ISA." },
-        { q: "Altimeter setting from METAR 'A2992'?", a: "29.92 inches — often high-altitude; field elevation settings at airports." },
-        { q: "METAR visibility '10SM'?", a: "10 statute miles." },
-        { q: "Few clouds at 2500 — 'FEW025'?", a: "Few at 2500 ft AGL height indicator in METAR format (context)." },
-        { q: "TAF validity?", a: "Forecast periods with FM, BECMG, TEMPO lines." },
-        { q: "Convective SIGMET?", a: "Severe convection — avoid area." },
-        { q: "Icing risk for sUAS?", a: "Props/airspeed sensors can ice in manned aircraft; small drones may lose lift in cold moist conditions — operational caution." },
-        { q: "Dew point close to temperature?", a: "High relative humidity — fog risk." },
-        { q: "Adiabatic cooling?", a: "Rising air expands and cools — cloud formation basics." },
-        { q: "Lapse rate?", a: "Temperature decrease with altitude — stability implications." },
-        { q: "Wind direction reported as?", a: "Direction FROM which wind blows (e.g., 270 = west wind)." },
-        { q: "Crosswind takeoff/landing — drone?", a: "Hand launch/recovery in wind — control margins." },
-        { q: "Turbulence near mountains?", a: "Mountain wave, rotors — strong turbulence." },
-        { q: "Microburst?", a: "Severe downdraft — large hazard to low-altitude aircraft." },
-        { q: "Wake turbulence — vortices sink?", a: "Yes — stay above glide path behind heavy aircraft." },
-        { q: "Runway numbering?", a: "Magnetic heading rounded to nearest 10° — runway 27 ≈ 270°." },
-        { q: "Left traffic pattern direction?", a: "Typically left turns unless right traffic published." },
-        { q: "Upwind vs downwind leg?", a: "Pattern awareness near airports — stay out of pattern unless authorized." },
-        { q: "CTAF / UNICOM — meaning?", a: "Common Traffic Advisory Frequency / air-to-ground station at non-towered fields — listen for traffic." },
-        { q: "See-and-avoid responsibility?", a: "Remote PIC must see manned aircraft and maneuver to avoid." },
-        { q: "Right-of-way from below?", a: "Aircraft lower on approach has right of way in some cases — study 14 CFR right-of-way for aircraft (general)." },
-        { q: "Converging aircraft — who yields?", a: "Aircraft to the other’s right has right of way (general aviation rule — awareness)." },
-        { q: "Overtaking?", a: "Overtaking aircraft alters course to right (general)." },
-        { q: "Two aircraft head-on?", a: "Both alter course to the right (general)." },
-        { q: "sUAS vs manned — practical?", a: "sUAS yields to all manned aircraft." },
-        { q: "FAA airspace Class G surface — chart?", a: "May be uncontrolled to surface; understand magenta vs shaded areas." },
-        { q: "SVFR — relevant to Part 107?", a: "Generally Part 107 requires basic VFR minimums; SVFR is manned context." },
-        { q: "IFR traffic in clouds — drone?", a: "You must remain clear of clouds — you cannot see IFR traffic inside clouds." },
-        { q: "ADS-B Out — sUAS?", a: "Not generally required like manned in certain airspace — Remote ID separate rule." },
-        { q: "Part 107.15 — who is responsible?", a: "The remote PIC is directly responsible for the operation." },
-        { q: "Part 107.16 — mental / physical condition?", a: "No operation if unable safely (illness, meds, fatigue, alcohol, etc.)." },
-        { q: "Part 107.17 — alcohol / drugs?", a: "8 hours since alcohol consumption is common knowledge test distractor; rule prohibits operation while impaired and specific alcohol thresholds may be cited — study current 107.17 text." },
-        { q: "Part 107.19 — PIC responsibilities checklist items?", a: "Assess local conditions, ensure VO if used, ensure compliance, etc. — read summary sheet." },
-        { q: "Preflight assessment includes?", a: "Location, obstacles, people, airspace, weather, NOTAMs." },
-        { q: "Hazard model — PAVE?", a: "Pilot, Aircraft, enVironment, External pressures." },
-        { q: "TEAM checklist — 5 hazardous attitudes?", a: "Tie to antidotes in exam prep." },
-        { q: "IMC for drone?", a: "If you can’t maintain VLOS and VFR minimums, operation not compliant." },
-        { q: "Ceiling definition?", a: "Height above ground of lowest cloud layer covering more than half the sky." },
-        { q: "VFR flight in Class E below 10,000 MSL — manned visibility?", a: "3 SM (below 10,000 ft) except specific airspaces — compare to sUAS 3 SM." },
-        { q: "Class B VFR — manned?", a: "3 SM clear of clouds (below 10,000) in some B sectors — varies by altitude; know sUAS is separate." },
-        { q: "Special use airspace — Alert Area?", a: "A-### — high volume training; caution." },
-        { q: "Warning Area?", a: "International waters hazard — usually not inland." },
-        { q: "National Security Area?", a: "Request to avoid — charted." },
-        { q: "Military Training Route (MTR)?", a: "Low-altitude high-speed military traffic — check chart." },
-        { q: "Maximum elevation on sectional — obstacle?", a: "Obstacle heights MSL for clearance." },
-        { q: "Charted heliport — magenta vs blue?", a: "Use legend; be aware of helicopter operations." },
-        { q: "Distance from airport without authorization?", a: "If in controlled airspace, you need authorization regardless of distance inside that airspace." },
-        { q: "GRIDS in controlled airspace — zero?", a: "Authorization may still be possible via manual process or not at all — check map." },
-        { q: "FRIA — what?", a: "FAA-Recognized Identification Area where aircraft without standard Remote ID may operate with limitations." },
-        { q: "Standard Remote ID — broadcast range?", a: "Rule specifies performance — study Remote ID exam questions." },
-        { q: "Session ID (Remote ID)?", a: "Privacy option in some implementations — exam awareness." },
-        { q: "EU vs US rules — exam?", a: "Focus on FAA Part 107 for US test." },
-        { q: "Canada RPAS — exam?", a: "Not on US Part 107 unless comparative trick — focus FAA." },
-        { q: "Insurance liability — strict FAA requirement?", a: "Not universally mandated by Part 107 for all ops — often business requirement." },
-        { q: "Sectional legend — airport elevation?", a: "Often in feet MSL next to airport symbol." },
-        { q: "Lighted obstacle — chart?", a: "Obstacle symbols with elevation." },
-        { q: "VOR symbol?", a: "Navigation aid — may indicate busy airspace." },
-        { q: "Class E 700 ft floor transition?", a: "Understand shaded areas vs lines on sectional." },
-        { q: "Class B shelf?", a: "Upside-down wedding cake — multiple tiers." },
-        { q: "Mode C veil inner area?", a: "30 NM — transponder for manned; situational awareness." },
-        { q: "ATC authorization vs LAANC?", a: "LAANC is a method for authorization in participating facilities." },
-        { q: "Emergency frequency 121.5?", a: "Guard frequency — manned context; know it exists." },
-        { q: "Mayday vs Pan-Pan?", a: "Distress vs urgency — manned comms." },
-        { q: "FAA phone for accident reporting?", a: "Follow 107.9 procedures — nearest FSDO / NTSB rules for certain events." },
-        { q: "NTSB Part 830 — relevance?", a: "Certain incidents require NTSB reporting — know overlap with 107.9." },
-        { q: "Property damage $500 threshold — verify?", a: "Confirm current dollar amount in 14 CFR 107.9 — amounts can be updated." },
-        { q: "Serious injury definition — FAA?", a: "Hospitalization >48 hrs, bone fracture (except simple), severe hemorrhage, etc. — read regulatory definition." },
-        { q: "Lost aircraft — report?", a: "If injury/property thresholds met; otherwise follow local law and safety." },
-        { q: "Flying for charity — commercial?", a: "Often considered commercial — Part 107." },
-        { q: "YouTube monetized flights?", a: "Likely commercial — Part 107." },
-        { q: "Real estate photos for MLS — commercial?", a: "Yes — compensation." },
-        { q: "Flying for fun with camera — recreational?", a: "If purely recreational and complies with §44809 — TRUST, etc." },
-        { q: "Educational institution flights?", a: "May have specific provisions — verify FAA guidance." },
-        { q: "Public entity COA vs Part 107?", a: "Government ops may use COA; many use Part 107." },
-        { q: "First responder drone teams?", a: "Often public aircraft rules + COA or Part 107 depending on org." },
-        { q: "FAA waiver — what can you waive?", a: "Certain provisions of Part 107 via Part 107.200 (e.g., night before rule change, BVLOS in some cases)." },
-        { q: "FAA waiver application — who reviews?", a: "FAA; must show mitigations." },
-        { q: "FAASTeam?", a: "FAA Safety Team — education resources." },
-        { q: "ACS — what?", a: "Airman Certification Standards — outlines knowledge areas for Remote Pilot." },
-        { q: "Exam pass score approximate?", a: "70% on knowledge test (verify current testing standards)." },
-        { q: "Testing authorization — FTN?", a: "FAA Tracking Number via IACRA before knowledge test." },
-        { q: "PSI / CAT exam centers?", a: "Where FAA knowledge tests are administered." },
-        { q: "Remote pilot certificate expiration?", a: "Does not expire; recurrent training required every 24 months to exercise privileges." },
-        { q: "Currency — if recurrent lapses?", a: "Cannot operate under Part 107 until recurrent completed again." },
-        { q: "Pilot deviates in emergency?", a: "Must submit report when requested — manned 91.3; emergency authority concept in 107." },
-        { q: "FAA compliance philosophy 2024+", a: "Education and enforcement; Remote ID compliance phased — verify dates." },
-        { q: "Sunrise/sunset tables?", a: "For night boundary calculations — use official tables for ops." },
-        { q: "Civil twilight end?", a: "Often used in older rules; night now defined in 107 — follow current definitions." },
-        { q: "Lighting for night — strobe rate?", a: "Must meet anti-collision light requirements per rule — verify strobing vs solid in current text." },
-        { q: "VO at night?", a: "Still valid if VLOS maintained per rule." },
-        { q: "Flying over own property — still Part 107?", a: "If commercial operation, yes; airspace rules still apply." },
-        { q: "State privacy torts — FAA preempt?", a: "Some state laws stand; complex — exam usually FAA-focused." },
-        { q: "Critical infrastructure aerial photos — restrictions?", a: "Some state laws; security concerns." },
-        { q: "Airport diagram vs sectional?", a: "Diagram for runway/taxi; sectional for airspace." },
-        { q: "GPS constellation minimum satellites?", a: "Typically need several for good fix; exam may ask generic GNSS concepts." },
-        { q: "Barometer vs GPS altitude?", a: "Baro pressure altitude vs GPS ellipsoid — can differ." },
-        { q: "Geofencing database update?", a: "Frequent — still verify NOTAMs." },
-        { q: "Battery fire — extinguisher?", a: "Class D / LiPo guidance — follow local fire guidance; sand, containment." },
-        { q: "Prop strike — action?", a: "Inspect for cracks; replace if damaged." },
-        { q: "Firmware bug — PIC?", a: "PIC responsible to use known-good configuration." },
-        { q: "Flyaway — report FAA?", a: "If accident thresholds met; also return home community reporting in some apps." },
-        { q: "Insurance subrogation?", a: "Business concept — liability." },
-        { q: "Client indemnity clause?", a: "Contract concept — not FAA regulatory." },
-        { q: "FAR vs AIM vs AC?", a: "FAR is regulatory; AIM advisory; AC advisory circular guidance." },
-        { q: "AC 107-2 — topic?", a: "sUAS guidance documents — awareness." },
-        { q: "Part 107 effective history?", a: "2016 initial; many amendments since — study current ACS." },
-        { q: "TRUST certificate — carry?", a: "Recreational operators may need proof — not Remote Pilot substitute." },
-        { q: "LAANC denial — options?", a: "Manual authorization request through FAA DroneZone or adjust plan." },
-        { q: "Airport operator permission vs FAA authorization?", a: "Both may be needed — FAA controls airspace; airport property is local." },
-        { q: "Flying from national forest land?", a: "USFS rules for takeoff/landing — check agency." },
-        { q: "BLM land?", a: "Agency-specific rules." },
-        { q: "Coastal wildlife — marine mammals?", a: "NOAA/Marine Mammal Protection — harassment distances." },
-        { q: "FAA wildlife strike database — relevance?", a: "Manned focus; still safety culture." },
-        { q: "Final exam tip — memorize numbers?", a: "100 mph, 400 ft, 3 sm, 500/2000 clouds, 55 lb, 16 yr cert, 15 test." },
-        { q: "Final tip — read questions carefully?", a: "Many misses are from misreading AGL vs MSL or statute vs nautical miles." }
+const CARDS = [
+        // ═══════════════════════════════════════════════════════════════
+        // CFR — Subpart A: General (§107.1–§107.21)
+        // ═══════════════════════════════════════════════════════════════
+        { q: "What does 14 CFR Part 107 govern?", a: "Registration, airman certification, and operation of civil small unmanned aircraft systems within the United States, including eligibility to operate over human beings." },
+        { q: "§107.3 — What is a 'small unmanned aircraft'?", a: "An unmanned aircraft weighing less than 55 pounds on takeoff, including everything on board or otherwise attached to the aircraft." },
+        { q: "What is the maximum takeoff weight for a small UAS under Part 107?", a: "Less than 55 pounds (25 kg), including everything on board or attached at takeoff." },
+        { q: "Does Part 107 apply to recreational flights under 49 U.S.C. §44809?", a: "No — Part 107 does not apply to aircraft subject to §44809 (recreational exception with TRUST test and community guidelines)." },
+        { q: "§107.3 — Define 'control station.'", a: "An interface used by the remote pilot to control the flight path of the small unmanned aircraft." },
+        { q: "§107.3 — Define 'corrective lenses.'", a: "Spectacles or contact lenses. Binoculars are NOT corrective lenses." },
+        { q: "§107.3 — Define 'small unmanned aircraft system' (small UAS).", a: "A small unmanned aircraft and its associated elements (communication links and control components) required for safe and efficient operation in the national airspace system." },
+        { q: "§107.3 — Define 'unmanned aircraft.'", a: "An aircraft operated without the possibility of direct human intervention from within or on the aircraft." },
+        { q: "§107.3 — Define 'visual observer.'", a: "A person designated by the remote PIC to assist the remote PIC and person manipulating the flight controls to see and avoid other air traffic or objects aloft or on the ground." },
+        { q: "§107.3 — What is a 'declaration of compliance'?", a: "A record submitted to the FAA certifying the small unmanned aircraft conforms to the Category 2 or Category 3 requirements under subpart D." },
+        { q: "§107.5 — What happens if you falsify records or reports under Part 107?", a: "Your remote pilot certificate may be suspended or revoked, and your application may be denied." },
+        { q: "§107.7 — Must you carry your remote pilot certificate when flying?", a: "Yes — the remote PIC must have the certificate with small UAS rating in physical possession and readily accessible when exercising privileges." },
+        { q: "§107.7 — To whom must you present your remote pilot certificate on request?", a: "The FAA Administrator, NTSB authorized representative, any federal/state/local law enforcement officer, or TSA authorized representative." },
+        { q: "§107.7 — Can the FAA inspect your small UAS?", a: "Yes — you must allow the Administrator to make any test or inspection of the sUAS, remote PIC, person manipulating controls, and visual observer to determine compliance." },
+        { q: "§107.9 — When must you report a safety event to the FAA?", a: "No later than 10 calendar days after the operation." },
+        { q: "§107.9 — What triggers mandatory safety event reporting?", a: "(a) Serious injury to any person or any loss of consciousness, OR (b) damage to any property (other than the sUAS) exceeding $500 in repair cost or fair market value." },
+        { q: "§107.9 — What is the dollar threshold for property damage reporting?", a: "$500 — either the cost of repair (materials + labor) exceeds $500, or the fair market value exceeds $500 in the event of total loss." },
+        { q: "§107.9 — Does the $500 damage threshold include damage to the drone itself?", a: "No — the $500 threshold applies to property OTHER than the small unmanned aircraft." },
+        { q: "§107.9 — How many calendar days do you have to report an accident?", a: "10 calendar days." },
+        { q: "§107.9 — Is loss of consciousness of any person reportable?", a: "Yes — serious injury to any person OR any loss of consciousness triggers the reporting requirement." },
+        { q: "§107.12 — Who must hold a remote pilot certificate?", a: "The remote PIC must hold a remote pilot certificate with small UAS rating and satisfy recency requirements — unless someone manipulating controls is under direct supervision of a certificated remote PIC." },
+        { q: "§107.12 — Can you fly without a remote pilot certificate?", a: "Only if you are under the direct supervision of a remote PIC who holds the certificate AND that remote PIC has the ability to immediately take direct control of the flight." },
+        { q: "§107.12 — Can a foreign pilot operate a civil foreign-registered sUAS in the US?", a: "Only if authorized by the Administrator, consistent with international standards, without an FAA-issued remote pilot certificate." },
+        { q: "§107.13 — Must sUAS be registered with the FAA?", a: "Yes — a person operating a civil sUAS must comply with §91.203(a)(2) (registration requirements)." },
+        { q: "§107.15 — What must the remote PIC ensure about the aircraft before flight?", a: "That the sUAS is in a condition for safe operation. Prior to each flight, the remote PIC must check the sUAS to determine this." },
+        { q: "§107.15 — Can you continue flying if you discover an unsafe condition?", a: "No — no person may continue flight when they know or have reason to know the sUAS is no longer in a condition for safe operation." },
+        { q: "§107.17 — When may you NOT operate or act as remote PIC?", a: "When you know or have reason to know that you have a physical or mental condition that would interfere with safe operation of the sUAS." },
+        { q: "§107.17 — Is an FAA medical certificate required for Part 107?", a: "No medical certificate is required, but you must self-assess that you have no physical or mental condition interfering with safe operation." },
+        { q: "§107.19 — Who is directly responsible for the sUAS operation?", a: "The remote pilot in command is directly responsible for and is the final authority as to the operation." },
+        { q: "§107.19 — When must a remote PIC be designated?", a: "Before or during the flight of the small unmanned aircraft." },
+        { q: "§107.19 — What must the remote PIC ensure regarding loss of control?", a: "That the sUAS will pose no undue hazard to other people, other aircraft, or other property in the event of a loss of control for any reason." },
+        { q: "§107.19 — Must the remote PIC ensure compliance with all applicable regulations?", a: "Yes — the remote PIC must ensure the sUAS operation complies with all applicable regulations of 14 CFR." },
+        { q: "§107.19 — Can the remote PIC delegate final authority?", a: "No — the remote PIC is always the final authority as to the operation of the sUAS." },
+        { q: "§107.21 — In an emergency, can the remote PIC deviate from Part 107?", a: "Yes — the remote PIC may deviate from any rule of Part 107 to the extent necessary to meet that emergency." },
+        { q: "§107.21 — After deviating from rules in an emergency, what must you do?", a: "Upon request of the Administrator, send a written report of the deviation." },
+        // ═══════════════════════════════════════════════════════════════
+        // CFR — Subpart B: Operating Rules (§107.23–§107.51)
+        // ═══════════════════════════════════════════════════════════════
+        { q: "§107.23 — What does the hazardous operation rule prohibit?", a: "(a) Operating a sUAS in a careless or reckless manner so as to endanger the life or property of another, and (b) dropping an object in a manner that creates an undue hazard." },
+        { q: "§107.23 — Can you drop objects from a drone under Part 107?", a: "Yes, but not in a manner that creates an undue hazard to persons or property." },
+        { q: "§107.25 — Can you operate a sUAS from a moving aircraft?", a: "No — operating from a moving aircraft is prohibited." },
+        { q: "§107.25 — Can you operate a sUAS from a moving vehicle?", a: "Only if the sUAS is flown over a sparsely populated area and is NOT transporting another person's property for compensation or hire." },
+        { q: "§107.25 — Two conditions for operating from a moving vehicle?", a: "(1) Over a sparsely populated area, and (2) not transporting another person's property for compensation or hire." },
+        { q: "§107.27 — What alcohol/drug rules apply to Part 107 operations?", a: "You must comply with §§91.17 and 91.19 — same alcohol/drug prohibitions as manned aircraft." },
+        { q: "§107.29 — What training is required for night operations?", a: "The remote PIC must have completed initial knowledge test or training under §107.65 after April 6, 2021." },
+        { q: "§107.29 — What lighting is required for night operations?", a: "Anti-collision lighting visible for at least 3 statute miles with a flash rate sufficient to avoid a collision." },
+        { q: "Under Part 107, how far must anti-collision lights be visible for night or twilight sUAS flight?", a: "At least 3 statute miles." },
+        { q: "§107.29 — Can the remote PIC reduce anti-collision light intensity?", a: "Yes — the PIC may reduce intensity (but not extinguish) the anti-collision lighting if operating conditions make it in the interest of safety." },
+        { q: "§107.29 — Must anti-collision lighting be used during civil twilight?", a: "Yes — the sUAS must have lighted anti-collision lighting visible for at least 3 statute miles during civil twilight." },
+        { q: "§107.29 — What is civil twilight (except Alaska)?", a: "Morning: 30 minutes before official sunrise to official sunrise. Evening: official sunset to 30 minutes after official sunset." },
+        { q: "Civil twilight begins how many minutes before sunrise?", a: "30 minutes before official sunrise (and ends at sunrise)." },
+        { q: "Civil twilight ends how many minutes after sunset?", a: "30 minutes after official sunset (begins at sunset)." },
+        { q: "§107.31 — What does VLOS require?", a: "The remote PIC, VO, or person manipulating controls must be able to see the unmanned aircraft throughout the entire flight with vision unaided by any device other than corrective lenses." },
+        { q: "§107.31 — Can you use binoculars to maintain VLOS?", a: "No — only corrective lenses (spectacles or contact lenses) are permitted. Binoculars are not corrective lenses." },
+        { q: "§107.31 — What four things must you determine by VLOS?", a: "(1) The aircraft's location, (2) its attitude, altitude, and direction of flight, (3) observe airspace for other traffic or hazards, (4) determine it doesn't endanger life or property." },
+        { q: "§107.31 — Who can satisfy the VLOS requirement?", a: "Either (1) the remote PIC and person manipulating controls, or (2) a visual observer." },
+        { q: "Under Part 107, can FPV (first-person view) goggles satisfy the visual line of sight requirement?", a: "No — a person with unaided visual line of sight (PIC or VO) is always required." },
+        { q: "§107.33 — Is a visual observer required?", a: "No — a VO is optional, but if used, specific requirements apply." },
+        { q: "§107.33 — What communication is required when using a VO?", a: "The remote PIC, person manipulating controls, and VO must maintain effective communication with each other at all times." },
+        { q: "§107.33 — What must the VO do?", a: "Be able to see the aircraft per §107.31, and coordinate with the PIC/crew to scan for collision hazards and maintain awareness of the aircraft's position through direct visual observation." },
+        { q: "§107.35 — How many sUAS may one person operate at once?", a: "One — a person may not manipulate controls or act as PIC or VO in the operation of more than one unmanned aircraft at the same time." },
+        { q: "§107.36 — Can a small unmanned aircraft carry hazardous material?", a: "No — a small unmanned aircraft may not carry hazardous material as defined in 49 CFR 171.8." },
+        { q: "§107.37 — To whom must a sUAS yield right-of-way?", a: "All aircraft, airborne vehicles, and launch and reentry vehicles. Must give way and not pass over, under, or ahead unless well clear." },
+        { q: "§107.37 — How close can you fly to another aircraft?", a: "You may not operate so close to another aircraft as to create a collision hazard." },
+        { q: "§107.39 — When can you fly over a human being?", a: "Only when: (a) that person is directly participating in the operation, (b) they are under a covered structure or inside a stationary vehicle providing reasonable protection, or (c) the operation meets a Category 1–4 requirement." },
+        { q: "§107.39 — Can you fly over a person inside a building?", a: "Yes — a person under a covered structure or inside a stationary vehicle that provides reasonable protection from a falling sUAS is not subject to operations-over-people restrictions." },
+        { q: "§107.41 — What airspace requires prior ATC authorization?", a: "Class B, Class C, Class D, and Class E airspace designated for an airport (surface area)." },
+        { q: "§107.41 — In what class of airspace can you fly without prior authorization?", a: "Class G (uncontrolled) airspace — no ATC authorization required." },
+        { q: "§107.43 — What is prohibited regarding airports?", a: "No person may operate a sUAS in a manner that interferes with operations and traffic patterns at any airport, heliport, or seaplane base." },
+        { q: "§107.45 — Can you fly in prohibited or restricted areas?", a: "Only with permission from the using or controlling agency." },
+        { q: "§107.47 — What flight restrictions must a remote PIC comply with?", a: "Provisions of §§91.137–91.145 and 99.7 — including TFRs, disaster areas, presidential movements, space operations, and national defense airspace." },
+        { q: "§107.49 — What must the remote PIC do before flight?", a: "Assess the operating environment considering risks to persons and property — including (1) local weather, (2) local airspace and restrictions, (3) location of persons and property on the surface, and (4) other ground hazards." },
+        { q: "§107.49 — Must crew be briefed before flight?", a: "Yes — the remote PIC must ensure all persons directly participating are informed about operating conditions, emergency procedures, contingency procedures, roles and responsibilities, and potential hazards." },
+        { q: "§107.49 — What must be checked regarding control links?", a: "Ensure all control links between the ground control station and the sUAS are working properly." },
+        { q: "§107.49 — What must be checked regarding power?", a: "If the sUAS is powered, ensure there is enough available power for the intended operational time." },
+        { q: "§107.49 — What must be checked about objects attached to the aircraft?", a: "Any object attached or carried must be secure and must not adversely affect flight characteristics or controllability." },
+        { q: "§107.51(a) — What is the maximum groundspeed for a small UAS?", a: "87 knots (100 miles per hour)." },
+        { q: "Under Part 107, what is the maximum groundspeed for a sUAS in miles per hour?", a: "100 mph." },
+        { q: "Under Part 107, what is the maximum groundspeed for a sUAS in knots?", a: "87 knots." },
+        { q: "§107.51(b) — What is the maximum altitude for a small UAS?", a: "400 feet above ground level (AGL)." },
+        { q: "How high can a UAS fly under Part 107?", a: "400 feet AGL, unless within a 400-foot radius of a structure — then up to 400 feet above the structure's immediate uppermost limit." },
+        { q: "§107.51(b) — Structure exception to the 400 ft altitude limit?", a: "The sUAS may fly higher than 400 ft AGL if (1) it is within a 400-foot radius of a structure, and (2) does not fly higher than 400 feet above the structure's immediate uppermost limit." },
+        { q: "What is the lateral limit for the structure altitude exception?", a: "400-foot radius from the structure." },
+        { q: "If a tower is 300 feet tall, what is the max altitude within its vicinity?", a: "700 feet AGL (300 ft structure + 400 ft above it), if within a 400-foot radius." },
+        { q: "If a building is 500 feet tall, what is the max altitude within its vicinity?", a: "900 feet AGL (500 ft structure + 400 ft above it), if within a 400-foot radius." },
+        { q: "If a structure is 100 feet tall, what is the max altitude in its vicinity?", a: "500 feet AGL (100 ft + 400 ft), if within a 400-foot radius." },
+        { q: "§107.51(c) — What is the minimum flight visibility for Part 107 operations?", a: "3 statute miles, as observed from the location of the control station." },
+        { q: "How is flight visibility defined under Part 107?", a: "The average slant distance from the control station at which prominent unlighted objects may be seen and identified by day and prominent lighted objects by night." },
+        { q: "If visibility is 2.5 statute miles, can you fly?", a: "No — minimum flight visibility is 3 statute miles." },
+        { q: "§107.51(d) — How far below clouds must a small UAS stay?", a: "500 feet below the cloud." },
+        { q: "§107.51(d) — How far horizontally from clouds must a small UAS stay?", a: "2,000 feet horizontally from the cloud." },
+        { q: "What are the cloud clearance requirements (vertical and horizontal) under Part 107?", a: "500 feet below and 2,000 feet horizontal." },
+        { q: "If clouds are at 800 ft AGL, what is your maximum altitude?", a: "300 feet AGL (800 − 500 = 300 ft, to maintain 500 ft below clouds)." },
+        { q: "If clouds are at 450 ft AGL, can you legally fly?", a: "Only below 0 ft AGL (450 − 500 = −50), which is impossible — so no, you effectively cannot fly (insufficient cloud clearance below 400 ft)." },
+        { q: "§107.52 — Can you operate a sUAS with a transponder?", a: "No — unless otherwise authorized by the Administrator, you may not operate with a transponder on." },
+        { q: "§107.53 — Can you operate a sUAS with ADS-B Out transmitting?", a: "No — unless otherwise authorized by the Administrator, you may not operate with ADS-B Out in transmit mode." },
+        // ═══════════════════════════════════════════════════════════════
+        // CFR — Subpart C: Remote Pilot Certification (§107.56–§107.79)
+        // ═══════════════════════════════════════════════════════════════
+        { q: "§107.57 — What happens if convicted of a drug-related offense?", a: "Grounds for (1) denial of application for up to 1 year after final conviction, or (2) suspension or revocation of remote pilot certificate." },
+        { q: "§107.59 — What happens if you refuse an alcohol test?", a: "Grounds for (1) denial of application for up to 1 year, or (2) suspension or revocation of remote pilot certificate." },
+        { q: "§107.61 — Minimum age for a remote pilot certificate?", a: "16 years old." },
+        { q: "§107.61 — Language requirement for remote pilot certificate?", a: "Must be able to read, speak, write, and understand English." },
+        { q: "§107.61 — What are the eligibility requirements for a remote pilot certificate?", a: "(a) At least 16, (b) read/speak/write/understand English, (c) no known physical or mental condition interfering with safe operation, (d) demonstrate aeronautical knowledge." },
+        { q: "§107.61 — How do you demonstrate aeronautical knowledge?", a: "Either (1) pass an initial aeronautical knowledge test under §107.73, or (2) if you hold a pilot certificate (not student) with current flight review, complete training under §107.74." },
+        { q: "§107.63 — What must accompany an application for a remote pilot certificate?", a: "Evidence of passing the initial knowledge test (airman knowledge test report) OR certificate of completion of initial training (if holder of another pilot certificate with current flight review)." },
+        { q: "§107.64 — How long is a temporary remote pilot certificate valid?", a: "Up to 120 calendar days." },
+        { q: "§107.64 — When does a temporary certificate expire?", a: "(1) On the expiration date shown, (2) upon receipt of the permanent certificate, or (3) upon notice that the certificate is denied or revoked." },
+        { q: "§107.65 — How often must you complete recurrent training or testing?", a: "Within the previous 24 calendar months." },
+        { q: "How often must a Part 107 remote pilot complete recurrent training or testing?", a: "Every 24 calendar months." },
+        { q: "§107.65 — What satisfies the aeronautical knowledge recency requirement?", a: "(a) Passed initial knowledge test, (b) completed recurrent training under §107.73, or (c) if holding another pilot certificate with current flight review, completed training under §107.74." },
+        { q: "Does the remote pilot certificate expire?", a: "No — but you cannot exercise privileges unless you have completed recurrent training/testing within the previous 24 calendar months." },
+        { q: "§107.67 — What ID is required for a knowledge test?", a: "Proper identification with: (1) photograph, (2) signature, (3) date of birth, and (4) permanent mailing address." },
+        { q: "§107.69 — Penalty for cheating on a knowledge test?", a: "Prohibited from applying for any certificate/rating/authorization AND from taking any test for 1 year. Existing certificates may also be suspended or revoked." },
+        { q: "§107.69 — For how long are you banned from testing after cheating?", a: "1 year after the date of the prohibited act." },
+        { q: "§107.71 — How long must you wait to retake a failed knowledge test?", a: "14 calendar days after failing." },
+        { q: "After failing the Part 107 knowledge test, how long must you wait to retake it?", a: "14 calendar days." },
+        { q: "§107.73 — What knowledge areas does the initial test and recurrent training cover?", a: "(a) Regulations, (b) airspace classification and restrictions, (c) weather sources and effects, (d) sUAS loading, (e) emergency procedures, (f) CRM, (g) radio comms, (h) performance, (i) drugs/alcohol effects, (j) ADM, (k) airport operations, (l) maintenance/preflight, (m) night operations." },
+        { q: "How many knowledge areas are on the Part 107 test?", a: "13 areas: regulations, airspace, weather, loading, emergency, CRM, radio comms, performance, drugs/alcohol, ADM/judgment, airport ops, maintenance/preflight, and night operations." },
+        { q: "§107.77 — How soon must you notify the FAA of an address change?", a: "Within 30 days — you may not exercise privileges after 30 days from the change unless the FAA has been notified." },
+        { q: "After changing your permanent address, how long do you have to notify the FAA?", a: "30 days." },
+        { q: "§107.79 — Can you voluntarily surrender your remote pilot certificate?", a: "Yes — you may voluntarily surrender it for cancellation, but it will not be reissued unless you again complete all requirements of §§107.61 and 107.63." },
+        // ═══════════════════════════════════════════════════════════════
+        // CFR — Subpart D: Operations Over Human Beings (§107.100–§107.145)
+        // ═══════════════════════════════════════════════════════════════
+        { q: "What are the four categories for operations over human beings?", a: "Category 1, Category 2, Category 3, and Category 4 — each with increasing capability requirements." },
+        { q: "§107.110 — For Category 1 operations over human beings, what is the max aircraft weight?", a: "0.55 pounds (250 grams) or less on takeoff and throughout the operation, including everything on board or attached." },
+        { q: "Operations over people — Category 1 weight limit is 0.55 lbs. How many grams is that?", a: "250 grams." },
+        { q: "§107.110 — For Category 1 operations over human beings, what is the rotating parts requirement?", a: "Must not contain any exposed rotating parts that would lacerate human skin upon impact." },
+        { q: "§107.110 — Can a Category 1 sUAS (operations over people) fly over open-air assemblies of human beings?", a: "Yes — but only if the operation meets Remote ID requirements (§89.110 or §89.115(a)). No sustained flight over open-air assemblies without Remote ID compliance." },
+        { q: "§107.120 — For Category 2 operations over human beings, what is the kinetic energy impact limit?", a: "Must not cause injury equivalent to or greater than a transfer of 11 foot-pounds of kinetic energy upon impact from a rigid object." },
+        { q: "What is the kinetic energy threshold for Category 2 operations over human beings?", a: "11 foot-pounds." },
+        { q: "§107.120 — What three design requirements must a sUAS meet for Category 2 operations over human beings?", a: "(1) Kinetic energy ≤ 11 ft-lbs, (2) no exposed rotating parts that would lacerate skin, (3) no safety defects." },
+        { q: "§107.120 — What does the manufacturer/applicant need for Category 2 operations over human beings?", a: "An FAA-accepted declaration of compliance, a label on the aircraft, remote pilot operating instructions, and a product support/notification process." },
+        { q: "§107.115 — Can a Category 2 sUAS (operations over people) fly over open-air assemblies?", a: "Yes — if it meets Remote ID requirements." },
+        { q: "§107.130 — For Category 3 operations over human beings, what is the kinetic energy impact limit?", a: "Must not cause injury equivalent to or greater than a transfer of 25 foot-pounds of kinetic energy upon impact from a rigid object." },
+        { q: "What is the kinetic energy threshold for Category 3 operations over human beings?", a: "25 foot-pounds." },
+        { q: "§107.125 — Can a Category 3 sUAS (operations over people) fly over open-air assemblies?", a: "No — Category 3 may NOT operate over open-air assemblies of human beings." },
+        { q: "§107.125 — Under Category 3 operations over human beings, what are the restrictions on flying over people?", a: "May only fly over people if: (1) within a closed/restricted-access site where people are on notice, OR (2) does not maintain sustained flight over anyone not directly participating or not under cover/in a stationary vehicle." },
+        { q: "Operations over people — what are the kinetic energy limits for Category 2 vs Category 3?", a: "Category 2: ≤ 11 ft-lbs. Category 3: ≤ 25 ft-lbs." },
+        { q: "Operations over people — how do Category 2 and Category 3 differ regarding open-air assemblies?", a: "Category 2 CAN fly over open-air assemblies (with Remote ID). Category 3 CANNOT." },
+        { q: "§107.130 — For operations over people, what is the product-notification difference between Category 2 and Category 3?", a: "Category 2 product support must notify about defects causing 'low probability of casualty.' Category 3 must notify about 'low probability of fatality.'" },
+        { q: "§107.135 — For operations over people, what must the PIC do if the Category 2 or 3 label is damaged or missing?", a: "The remote PIC must label the aircraft in English (legible, prominent) before conducting operations over human beings. Must correctly identify the category." },
+        { q: "§107.140 — What are the aircraft requirements for Category 4 operations over human beings?", a: "Must (1) have an airworthiness certificate under part 21, (2) be operated per the approved Flight Manual, (3) have maintenance per part 43/91 or §107.140(c)." },
+        { q: "§107.140 — What makes Category 4 (operations over human beings) unique compared to Categories 1–3?", a: "It requires an actual airworthiness certificate — the same type of certification used for manned aircraft." },
+        { q: "§107.140 — For Category 4 operations over people, how long must maintenance records be retained?", a: "Maintenance records: 1 year after work is completed or until superseded. Life-limited part records and inspection status: retained and transferred with the aircraft on change of ownership." },
+        { q: "§107.145 — Under operations-over-people rules, can you fly over people inside moving vehicles?", a: "Only if (a) the operation meets Cat 1–4 requirements, AND (b) for Cat 1/2/3, either the site is closed/restricted-access with people on notice, or the aircraft doesn't maintain sustained flight over the vehicle." },
+        { q: "§107.145 — What are the Category 4 restrictions for flying over people in moving vehicles?", a: "Category 4 operations over moving vehicles must simply meet §107.140 requirements — no additional closed-site restriction." },
+        // ═══════════════════════════════════════════════════════════════
+        // CFR — Waivers & General Regulatory (§107.200+)
+        // ═══════════════════════════════════════════════════════════════
+        { q: "§107.200 — Can Part 107 rules be waived?", a: "Yes — the Administrator may issue a certificate of waiver authorizing deviation from certain provisions if the operation can be safely conducted." },
+        { q: "What rules CANNOT be waived under Part 107?", a: "Registration, alcohol/drug, accident reporting, hazardous operation (§107.23), and certain fundamental safety requirements." },
+        { q: "How do you apply for a Part 107 waiver?", a: "Through FAA DroneZone, demonstrating you can conduct the operation safely under the proposed conditions." },
+        { q: "What is LAANC (Low Altitude Authorization and Notification Capability)?", a: "Low Altitude Authorization and Notification Capability — near-real-time automated airspace authorization for controlled airspace." },
+        { q: "What is the purpose of UAS Facility Maps?", a: "Show maximum altitudes around airports where LAANC auto-approvals may apply." },
+        // ═══════════════════════════════════════════════════════════════
+        // CFR — Key Numbers Summary (rapid-fire drill)
+        // ═══════════════════════════════════════════════════════════════
+        { q: "NUMBER: What is the max takeoff weight for a small UAS under Part 107?", a: "Less than 55 lbs (25 kg)." },
+        { q: "NUMBER: What is the max groundspeed for a sUAS under Part 107?", a: "100 mph (87 knots)." },
+        { q: "NUMBER: What is the max altitude AGL for a sUAS under Part 107?", a: "400 feet." },
+        { q: "NUMBER: What is the minimum flight visibility required under Part 107?", a: "3 statute miles." },
+        { q: "NUMBER: What is the minimum distance a sUAS must maintain below clouds?", a: "500 feet." },
+        { q: "NUMBER: What is the minimum horizontal distance a sUAS must maintain from clouds?", a: "2,000 feet." },
+        { q: "NUMBER: How far must anti-collision lights be visible for night sUAS operations?", a: "3 statute miles." },
+        { q: "NUMBER: How long before sunrise / after sunset does civil twilight last?", a: "30 minutes before sunrise / 30 minutes after sunset." },
+        { q: "NUMBER: How many days do you have to report a sUAS accident to the FAA?", a: "10 calendar days." },
+        { q: "NUMBER: What dollar amount of property damage triggers mandatory FAA accident reporting?", a: "$500 (other than the sUAS)." },
+        { q: "NUMBER: What is the minimum age to obtain a Part 107 remote pilot certificate?", a: "16 years old." },
+        { q: "NUMBER: How often must Part 107 recurrent training or testing be completed?", a: "24 calendar months." },
+        { q: "NUMBER: How long must you wait to retake the Part 107 knowledge test after failing?", a: "14 calendar days." },
+        { q: "NUMBER: After moving, how many days do you have to notify the FAA of your new address?", a: "30 days." },
+        { q: "NUMBER: How long is a temporary remote pilot certificate valid?", a: "Up to 120 calendar days." },
+        { q: "NUMBER: Max weight for Category 1 operations over human beings?", a: "0.55 lbs (250 g)." },
+        { q: "NUMBER: Kinetic energy limit for Category 2 operations over human beings?", a: "11 foot-pounds." },
+        { q: "NUMBER: Kinetic energy limit for Category 3 operations over human beings?", a: "25 foot-pounds." },
+        { q: "NUMBER: How far from a structure can you use the altitude exception above 400 ft AGL?", a: "400-foot radius." },
+        { q: "NUMBER: How long can your remote pilot certificate application be denied after a drug conviction?", a: "Up to 1 year." },
+        { q: "NUMBER: How long are you banned from FAA tests after cheating on a knowledge test?", a: "1 year from the date of the act." },
+        // ═══════════════════════════════════════════════════════════════
+        // CFR — Scenario-Based & Cross-Reference
+        // ═══════════════════════════════════════════════════════════════
+        { q: "Your drone weighs 54.9 lbs at takeoff — legal under Part 107?", a: "Yes — must be less than 55 lbs." },
+        { q: "Your drone weighs exactly 55 lbs at takeoff — legal?", a: "No — must weigh LESS than 55 pounds." },
+        { q: "You discover a cracked propeller during preflight — can you fly?", a: "No — §107.15 requires the sUAS to be in condition for safe operation." },
+        { q: "Your VO calls out a manned helicopter approaching — what do you do?", a: "Yield right-of-way per §107.37 — give way, do not pass over/under/ahead unless well clear." },
+        { q: "You're flying at night and your anti-collision light fails — what must you do?", a: "Land immediately — you cannot operate at night without lighted anti-collision lighting per §107.29." },
+        { q: "A bystander walks under your drone during a commercial shoot — is this legal?", a: "Only if the bystander is under a covered structure, directly participating in the operation, or your aircraft meets a Category 1–4 requirement for operations over people." },
+        { q: "You crash your drone into a car causing $600 damage — must you report?", a: "Yes — damage to property other than the sUAS exceeds $500, so you must report within 10 calendar days." },
+        { q: "You crash your drone causing $400 damage to a fence — must you report?", a: "No — the $500 threshold is not met." },
+        { q: "You're near a 200 ft cell tower — what's the max altitude?", a: "600 ft AGL (200 + 400), if within a 400-foot radius of the tower." },
+        { q: "Your recurrent training expired 2 months ago — can you fly?", a: "No — you may not exercise remote PIC privileges until recurrent training is completed (§107.65)." },
+        { q: "You failed the knowledge test yesterday — when can you retake?", a: "14 calendar days after the failed test (§107.71)." },
+        { q: "A police officer asks to see your certificate — must you show it?", a: "Yes — §107.7 requires presenting your certificate upon request from law enforcement." },
+        { q: "Can a 15-year-old get a remote pilot certificate?", a: "No — must be at least 16 years old (§107.61)." },
+        { q: "You moved last week — when must you notify the FAA?", a: "Within 30 days. After 30 days without notification, you cannot exercise certificate privileges (§107.77)." },
+        { q: "Part 107 vs §44809 recreational — what's the difference?", a: "Part 107 covers commercial and non-recreational operations with a remote pilot certificate. §44809 covers purely recreational flying with TRUST test and community guidelines." },
+        { q: "Must you comply with TFRs when flying under Part 107?", a: "Yes — §107.47 requires compliance with §§91.137–91.145 (TFRs, disaster areas, VIP movement, etc.)." },
+        { q: "Can you fly a sUAS with a transponder turned on?", a: "No — §107.52 prohibits operating with a transponder on unless authorized by the Administrator." },
+        { q: "Can you fly a sUAS with ADS-B Out transmitting?", a: "No — §107.53 prohibits operating with ADS-B Out in transmit mode unless authorized." },
+        { q: "What does IACRA stand for and what is it used for?", a: "Integrated Airman Certification and Rating Application — used for pilot certificate applications." },
+        { q: "What is an FSDO (Flight Standards District Office)?", a: "Flight Standards District Office — FAA local offices for questions and enforcement context." },
+        // ═══════════════════════════════════════════════════════════════
+        // CFR — ADM, Human Factors & Safety Culture
+        // ═══════════════════════════════════════════════════════════════
+        { q: "IMSAFE checklist — what does each letter stand for?", a: "Illness, Medication, Stress, Alcohol, Fatigue, Emotion (or Eating) — self-assessment for fitness to fly." },
+        { q: "What are the five hazardous attitudes in Aeronautical Decision Making (ADM)?", a: "Anti-authority, Impulsivity, Invulnerability, Macho, Resignation." },
+        { q: "Antidote for Anti-authority attitude?", a: "Follow the rules — they are usually right." },
+        { q: "Antidote for Impulsivity?", a: "Not so fast — think first." },
+        { q: "Antidote for Invulnerability?", a: "It could happen to me." },
+        { q: "Antidote for Macho?", a: "Taking chances is foolish." },
+        { q: "Antidote for Resignation?", a: "I'm not helpless — I can make a difference." },
+        { q: "What are the six steps of the DECIDE model for aeronautical decision making?", a: "Detect, Estimate, Choose, Identify, Do, Evaluate." },
+        { q: "What do the four letters in the PAVE hazard assessment model stand for?", a: "Pilot, Aircraft, enVironment, External pressures." },
+        { q: "What is crew resource management (CRM) for UAS?", a: "Clear roles between PIC and VO/crew; closed-loop communication; shared situational awareness." },
+        { q: "What is the sterile cockpit concept?", a: "Minimize distractions during critical phases of flight (takeoff, landing, near obstacles)." },
+        { q: "Aeronautical decision making (ADM) purpose?", a: "A structured approach to reduce human error in aviation decision-making." },
+        { q: "In aviation risk management, what is the difference between a risk and a hazard?", a: "A hazard is a condition or situation; risk is the likelihood and severity of the outcome." },
+        { q: "What is situational awareness in the context of sUAS operations?", a: "Perceiving, comprehending, and projecting the future state of the flight and environment." },
+        // ═══════════════════════════════════════════════════════════════
+        // Airspace
+        // ═══════════════════════════════════════════════════════════════
+        { q: "What is the floor of Class A airspace in the US?", a: "Generally 18,000 ft MSL — sUAS typically operate far below." },
+        { q: "What does Part 107 require to fly a sUAS in Class B airspace?", a: "Prior ATC authorization required (e.g., LAANC)." },
+        { q: "What does Part 107 require to fly a sUAS in Class C airspace?", a: "Prior ATC authorization required." },
+        { q: "What does Part 107 require to fly a sUAS in Class D airspace?", a: "Prior ATC authorization required." },
+        { q: "What does Part 107 require to fly a sUAS in Class E surface area airspace?", a: "Prior authorization required if designated for an airport." },
+        { q: "Does a sUAS need ATC authorization to fly in Class G airspace?", a: "No — uncontrolled airspace does not require ATC authorization (but check for other restrictions like TFRs)." },
+        { q: "What is a TFR (Temporary Flight Restriction)?", a: "Temporary Flight Restriction — must be checked and complied with via NOTAMs." },
+        { q: "Where do you check TFRs and NOTAMs?", a: "FAA NOTAM system, briefing tools, B4UFLY app." },
+        { q: "What is a Military Operations Area (MOA) on a sectional chart?", a: "Military Operations Area — exercise caution; contact controlling agency when advised." },
+        { q: "What is a Restricted Area (R-####) on a sectional chart?", a: "Flight restricted when active — check NOTAMs and chart legend. Need permission from controlling agency." },
+        { q: "What is a Prohibited Area (P-####) on a sectional chart?", a: "Flight prohibited — no operations without specific permission from controlling agency." },
+        { q: "What is the Mode C veil around Class B airports and why does it matter for sUAS?", a: "30 NM from Class B primary airport — transponder requirement for manned aircraft; high traffic density for drone awareness." },
+        { q: "What is an Alert Area (A-###) in special use airspace?", a: "A-### — high volume training activity; exercise caution." },
+        { q: "What is a Warning Area (W-###) in special use airspace?", a: "International waters hazard — usually not inland." },
+        { q: "What is a National Security Area on a sectional chart?", a: "Request to avoid — charted as national security sensitive." },
+        { q: "What is a Military Training Route (MTR) and why does it matter for sUAS pilots?", a: "Low-altitude high-speed military traffic — check chart for routes." },
+        { q: "What is an FDC NOTAM (Flight Data Center NOTAM)?", a: "Flight Data Center NOTAM — regulatory changes, temporary rules." },
+        { q: "How is Class E airspace starting at 700 ft AGL shown on a sectional chart?", a: "Shown with fuzzy magenta boundary on sectional charts." },
+        { q: "What is a Class E surface extension on a sectional chart?", a: "Surface extensions from Class C/D airspace — understand on the chart." },
+        { q: "What are wildfire TFRs and why are they critical for drone pilots?", a: "Strict temporary flight restrictions — no interference with firefighting aircraft." },
+        { q: "What is a Presidential TFR and how does it affect sUAS operations?", a: "Large restricted areas — check NOTAMs for VIP movement." },
+        { q: "What are the typical dimensions of a sporting event TFR?", a: "FAA restrictions around stadiums during events — typically 3 NM radius, 3,000 ft AGL." },
+        { q: "What do FAA LAANC altitude grids (UAS Facility Maps) show?", a: "Authorization may be zero in some cells — read UAS Facility Maps." },
+        { q: "What is the B4UFLY app and what does it do for drone pilots?", a: "FAA-sourced awareness tool for airspace and advisories." },
+        { q: "Is Special VFR (SVFR) relevant to Part 107 sUAS operations?", a: "Generally not — Part 107 requires basic VFR minimums (3 SM, cloud clearance). SVFR is for manned operations." },
+        { q: "What is the 'Class B shelf' shape on a sectional chart?", a: "Upside-down wedding cake — multiple altitude tiers of controlled airspace." },
+        // ═══════════════════════════════════════════════════════════════
+        // Sectional Charts
+        // ═══════════════════════════════════════════════════════════════
+        { q: "On a sectional chart, what do magenta vs blue airport symbols indicate?", a: "Magenta = non-towered; blue = towered — always verify on chart legend." },
+        { q: "What are Maximum Elevation Figures (MEF) on a sectional chart?", a: "Highest elevation in a quadrant (in thousands and hundreds of feet MSL) — used for obstacle clearance planning." },
+        { q: "What are isogonic lines on a sectional chart and why do they matter?", a: "Lines of equal magnetic variation — important for converting between true and magnetic heading." },
+        { q: "How do you convert between true heading and magnetic heading using magnetic variation?", a: "Convert using magnetic variation. East is least (subtract), West is best (add)." },
+        { q: "On a sectional chart, what does an isogonic line labeled 5°W mean?", a: "Magnetic variation is 5° west — add 5° to true heading to get magnetic heading." },
+        { q: "What is the scale of a VFR sectional chart?", a: "1:500,000 — standard for VFR navigation." },
+        { q: "What is the difference between a nautical mile and a statute mile?", a: "1 NM ≈ 1.15 SM. Part 107 visibility measured in statute miles." },
+        { q: "What is the relationship between knots and mph?", a: "1 knot ≈ 1.15 mph. 87 knots ≈ 100 mph." },
+        { q: "What does a VOR symbol on a sectional chart indicate for sUAS pilots?", a: "Navigation aid marker — may indicate busy airspace nearby." },
+        { q: "What are Victor airways on a sectional chart and why do sUAS pilots care?", a: "IFR routes between VORs — sUAS should avoid interfering with IFR traffic corridors." },
+        { q: "What do obstruction light symbols on a sectional chart tell sUAS pilots?", a: "May indicate tall structures — obstacle clearance awareness." },
+        { q: "What does a lighted obstacle symbol on a sectional chart show?", a: "Shows obstacle location and elevation — aids obstacle clearance planning." },
+        { q: "On a sectional chart, what do blue numbers in parentheses typically represent?", a: "Often MSL elevations of obstacles — confirm on legend." },
+        { q: "What is the difference between AGL (above ground level) and MSL (mean sea level)?", a: "AGL = above ground level; MSL = mean sea level. Charts typically show MSL." },
+        { q: "Why should sUAS pilots check VFR sectional chart effective dates?", a: "Check chart currency — airspace can change between editions." },
+        { q: "Why should drone pilots pay attention to charted heliports?", a: "Expect helicopter traffic — plan to avoid conflicts." },
+        // ═══════════════════════════════════════════════════════════════
+        // Airport Operations
+        // ═══════════════════════════════════════════════════════════════
+        { q: "How are runway numbers determined at airports?", a: "Magnetic heading rounded to nearest 10° — runway 27 ≈ 270°." },
+        { q: "What is the standard (left) traffic pattern at airports?", a: "Standard — all turns are left turns unless right traffic is published." },
+        { q: "What are CTAF and UNICOM at non-towered airports?", a: "Common Traffic Advisory Frequency / air-to-ground station at non-towered fields — listen for traffic." },
+        { q: "What are the upwind and downwind legs of an airport traffic pattern?", a: "Know traffic pattern legs for awareness near airports — stay out of pattern unless authorized." },
+        { q: "What is the see-and-avoid responsibility for sUAS remote pilots?", a: "Remote PIC must see manned aircraft and maneuver to avoid." },
+        { q: "When aircraft are converging, who has the right of way?", a: "General rule: aircraft to the other's right has right of way. sUAS must yield to ALL manned aircraft." },
+        { q: "What is the right-of-way rule when aircraft are head-on?", a: "Both alter course to the right (general aviation rule)." },
+        { q: "What is the right-of-way rule for an overtaking aircraft?", a: "Overtaking aircraft alters course to the right (general aviation rule)." },
+        { q: "What should sUAS pilots know about wake turbulence near airports?", a: "Vortices sink — stay above glide path behind heavy aircraft. Avoid flight paths behind departing/arriving large aircraft." },
+        { q: "In the ICAO phonetic alphabet, what are the first three letters?", a: "Alpha, Bravo, Charlie." },
+        { q: "What is the difference between an airport diagram and a sectional chart?", a: "Diagram shows runway/taxi detail; sectional shows airspace context." },
+        // ═══════════════════════════════════════════════════════════════
+        // Weather
+        // ═══════════════════════════════════════════════════════════════
+        { q: "What is the difference between a METAR and a TAF weather report?", a: "METAR = current weather observation; TAF = terminal aerodrome forecast." },
+        { q: "In a METAR, what does the visibility notation '10SM' mean?", a: "10 statute miles visibility." },
+        { q: "In a METAR, what does the cloud notation FEW025 mean?", a: "Few clouds at 2,500 ft AGL." },
+        { q: "In a METAR, what does the altimeter setting 'A2992' mean?", a: "Altimeter setting 29.92 inches of mercury." },
+        { q: "How are TAF forecast periods structured (FM, BECMG, TEMPO)?", a: "Forecast periods with FM (from), BECMG (becoming), TEMPO (temporary) lines." },
+        { q: "What is a SIGMET weather advisory and what conditions does it cover?", a: "Significant meteorological advisory — severe/extreme conditions (severe turbulence, icing, volcanic ash)." },
+        { q: "What is an AIRMET weather advisory and what conditions does it cover?", a: "Moderate turbulence, icing, IFR conditions, sustained surface winds ≥ 30 knots." },
+        { q: "What is a Convective SIGMET and what severe conditions does it warn about?", a: "Severe convection — tornadoes, severe thunderstorms, heavy precipitation." },
+        { q: "What is the difference between stable and unstable air masses?", a: "Stable: resists vertical motion, smooth air. Unstable: cumulus development, turbulence, good visibility." },
+        { q: "What are the weather differences between a cold front and a warm front?", a: "Cold front: steep, narrow band, gusty winds, cumulus. Warm front: widespread, stratiform clouds, lower visibility." },
+        { q: "What are the primary hazards of thunderstorms for sUAS operations?", a: "Wind shear, hail, lightning, heavy rain, turbulence — avoid." },
+        { q: "What is a microburst and why is it dangerous for aircraft?", a: "Severe downdraft — extremely hazardous to low-altitude aircraft." },
+        { q: "What does it mean when the dew point is close to the temperature?", a: "High relative humidity — fog and low visibility likely." },
+        { q: "What is adiabatic cooling and how does it cause cloud formation?", a: "Rising air expands and cools — basis for cloud formation." },
+        { q: "What is the atmospheric temperature lapse rate?", a: "Temperature decrease with altitude — affects stability." },
+        { q: "In aviation weather reports, how is wind direction expressed?", a: "Direction FROM which wind blows (e.g., 270° = wind from the west)." },
+        { q: "What is the standard atmospheric pressure at sea level?", a: "29.92 inHg / 1013.25 hPa." },
+        { q: "What is density altitude and why does it matter for sUAS performance?", a: "Higher density altitude = thinner air → reduced performance, less lift, shorter battery life." },
+        { q: "How is density altitude calculated?", a: "Pressure altitude corrected for non-standard temperature. Higher temp = higher density altitude." },
+        { q: "How does cold weather affect sUAS battery performance?", a: "Reduced capacity and voltage sag — warm batteries before flight." },
+        { q: "How does hot weather affect sUAS performance?", a: "Higher density altitude → reduced motor/prop performance." },
+        { q: "How does fog affect Part 107 flight legality?", a: "If you cannot maintain 3 SM visibility, you cannot legally fly under Part 107." },
+        { q: "What is wind shear near the ground and how does it affect sUAS?", a: "Sudden wind changes near surface and obstacles — affects small aircraft significantly." },
+        { q: "What types of turbulence occur near mountains?", a: "Mountain wave, rotor turbulence — can be severe." },
+        { q: "How long do rod cells (night vision) take to adapt, and what should pilots avoid?", a: "30 minutes to adapt to dark; avoid bright lights before night operations." },
+        { q: "What scanning technique works best for detecting objects at night?", a: "Off-center viewing — peripheral vision (rod cells) detects dim objects better than direct gaze." },
+        { q: "What icing risks affect sUAS in cold, moist conditions?", a: "Props and sensors can accumulate ice in cold, moist conditions — reduced lift and control." }
       ];
 
       const CARDS_CLEAN = CARDS.filter(function (c) {
         return c && typeof c.q === "string" && typeof c.a === "string";
       });
+
+      var CATEGORIES = [
+        { id: "cfr", label: "CFR", icon: "§", desc: "14 CFR Part 107 regulations, certificates, waivers & compliance" },
+        { id: "airspace", label: "Airspace", icon: "◎", desc: "Airspace classifications, TFRs, NOTAMs & flight restrictions" },
+        { id: "sectional", label: "Sectional Charts", icon: "🗺️", desc: "Chart reading, symbology, navigation & map interpretation" },
+        { id: "airport", label: "Airport", icon: "✈️", desc: "Airport operations, traffic patterns & communication" },
+        { id: "weather", label: "Weather", icon: "☁️", desc: "Weather theory, reports, forecasts & environmental effects" },
+      ];
+
+      var CAT_RULES = [
+        {
+          id: "weather",
+          re: /\bmetar\b|\btaf\b|\bsigmet\b|\bairmet\b|convective|thunderstorm|cold front|warm front|microburst|wind shear|wind gradient|density altitude|precipitation|dew point|lapse rate|adiabatic|icing risk|fog\b|haze\b|humidity|stable.*unstable|unstable.*air|barometer|altimeter setting|standard pressure|\b29\.92\b|1013|wind direction|turbulence.*mountain|cold weather|hot weather|battery.*cold|battery.*effect|night vision|rod cell|scanning at night|sun.*glare|ceiling definition|cloud formation|temperature|weather|solar storm/i
+        },
+        {
+          id: "sectional",
+          re: /\bsectional\b|chart.*symbol|chart.*legend|isogonic|maximum elevation figure|\bmef\b|victor airway|magenta.*blue|blue.*magenta|obstruction light.*chart|lighted obstacle|vor symbol|nautical mile|statute mile|1:500|magnetic variation|true.*magnetic|magnetic.*heading|true.*heading|\bagl\b.*\bmsl\b|chart currency|class e.*700|class e.*extension|class e.*floor|class b shelf|blue.*parenthes|knot vs|nautical.*statute|distance measurement|charted heli/i
+        },
+        {
+          id: "airport",
+          re: /\brunway\b|traffic pattern|upwind.*downwind|downwind.*leg|crosswind.*takeoff|\bctaf\b|\bunicom\b|helipad|heliport|airport.*diagram|airport.*elevation|left traffic|right traffic|converging.*aircraft|overtaking\b|head-on\b|wake turbulence|wake.*vortex|phonetic alphabet|romeo.*sierra|squawk|emergency.*frequency|121\.5|mayday|pan-pan|see-and-avoid|scanning for aircraft|airport operator/i
+        },
+        {
+          id: "airspace",
+          re: /\bclass [abcdeg]\b|controlled airspace|uncontrolled|mode c veil|\btfr\b|\bnotam\b|restricted area|prohibited area|military operations|\bmoa\b|alert area|warning area|national security area|stadium.*restrict|wildfire.*tfr|hurricane.*response|presidential.*tfr|sport.*event|laanc\b|uas facility|b4ufly|dronezone|special use airspace|30 nm|\bfria\b|fdc notam|svfr\b|ifr traffic|ads-b/i
+        },
+      ];
+
+      function classifyCard(c) {
+        var text = (c.q + " " + c.a).toLowerCase();
+        for (var i = 0; i < CAT_RULES.length; i++) {
+          if (CAT_RULES[i].re.test(text)) return CAT_RULES[i].id;
+        }
+        return "cfr";
+      }
 
       /** eCFR / FAA links for practice exam questions (same targets as literature links elsewhere). */
       const EXAM_SRC = {
@@ -2512,6 +2645,7 @@
       let examCurrentItem = null;
       let examStartMs = 0;
       let examTimerId = null;
+      var isExamPage = false;
 
       const elCard = document.getElementById("card");
       const elQ = document.getElementById("q");
@@ -2545,7 +2679,7 @@
         elExamFigures.hidden = true;
       }
 
-      const subLineStudyHtml = elSubLine.innerHTML;
+      let subLineStudyHtml = elSubLine.innerHTML;
 
       /** Uniform index in [0, maxExclusive), preferring crypto RNG when available. */
       function randomUintBelow(maxExclusive) {
@@ -2754,6 +2888,10 @@
         elCard.classList.remove("no-flip");
         elSubLine.innerHTML = subLineStudyHtml;
         examCurrentItem = null;
+        if (isExamPage) {
+          elExamDismiss.textContent = "Start another";
+          document.getElementById("mainToolbar").hidden = true;
+        }
       }
 
       function startExam() {
@@ -2776,6 +2914,9 @@
         document.body.classList.add("exam-active");
         elSubLine.innerHTML =
           "Exam mode uses the <strong>FAA-style practice bank</strong> (not flashcards). Choose <strong>A–D</strong> (or <kbd>1</kbd>–<kbd>4</kbd>), review the explanation, then <strong>Next</strong> or <kbd>Enter</kbd>. Use <strong>Flip</strong> or <kbd>Space</kbd> to switch between question and answer.";
+        if (isExamPage) {
+          document.getElementById("mainToolbar").hidden = false;
+        }
         if (examTimerId !== null) clearInterval(examTimerId);
         examTimerId = setInterval(updateExamHud, 1000);
         showExamQuestion();
@@ -2803,12 +2944,16 @@
         elCard.classList.remove("no-flip");
         elSubLine.innerHTML = subLineStudyHtml;
         examCurrentItem = null;
-        applyFilter();
+        if (isExamPage) {
+          elCardWrap.hidden = true;
+          document.getElementById("mainToolbar").hidden = true;
+        } else {
+          applyFilter();
+        }
       }
 
       function dismissExamResults() {
         elExamResults.hidden = true;
-        elCardWrap.hidden = false;
         elExamMc.hidden = true;
         elExamMcOptions.innerHTML = "";
         clearExamFigures();
@@ -2817,7 +2962,14 @@
         examCorrect = 0;
         examCurrentItem = null;
         elSubLine.innerHTML = subLineStudyHtml;
-        applyFilter();
+        if (isExamPage) {
+          elCardWrap.hidden = true;
+          elExamSetup.hidden = false;
+          document.getElementById("mainToolbar").hidden = true;
+        } else {
+          elCardWrap.hidden = false;
+          applyFilter();
+        }
       }
 
       function show() {
@@ -2997,6 +3149,83 @@
         else if (e.key === "s" || e.key === "S") shuffle();
         else if (e.key === "r" || e.key === "R") randomCard();
       });
+
+      var urlParams = new URLSearchParams(window.location.search);
+      var activeCat = urlParams.get("cat");
+      var elHomeView = document.getElementById("homeView");
+      var elStudyView = document.getElementById("studyView");
+      var elCategoryTitle = document.getElementById("categoryTitle");
+      var elBackLink = document.getElementById("backLink");
+
+      if (!activeCat) {
+        elHomeView.hidden = false;
+        elStudyView.hidden = true;
+        var grid = document.getElementById("categoryGrid");
+        CATEGORIES.forEach(function (cat) {
+          var count = CARDS_CLEAN.filter(function (c) { return classifyCard(c) === cat.id; }).length;
+          var a = document.createElement("a");
+          a.href = "?cat=" + cat.id;
+          a.className = "category-card";
+          a.innerHTML =
+            '<span class="category-icon">' + cat.icon + '</span>' +
+            '<span class="category-label">' + escapeHtml(cat.label) + '</span>' +
+            '<span class="category-desc">' + escapeHtml(cat.desc) + '</span>' +
+            '<span class="category-count">' + count + ' cards</span>';
+          grid.appendChild(a);
+        });
+        var examLink = document.createElement("a");
+        examLink.href = "?cat=exam";
+        examLink.className = "category-card";
+        examLink.innerHTML =
+          '<span class="category-icon">📝</span>' +
+          '<span class="category-label">Practice Exam</span>' +
+          '<span class="category-desc">FAA-style multiple choice practice test</span>' +
+          '<span class="category-count">' + EXAM_MC_COUNT + ' questions</span>';
+        grid.appendChild(examLink);
+        var allLink = document.createElement("a");
+        allLink.href = "?cat=all";
+        allLink.className = "category-card";
+        allLink.innerHTML =
+          '<span class="category-icon">📚</span>' +
+          '<span class="category-label">All Cards</span>' +
+          '<span class="category-desc">Study the complete deck</span>' +
+          '<span class="category-count">' + CARDS_CLEAN.length + ' cards</span>';
+        grid.appendChild(allLink);
+        return;
+      }
+
+      elHomeView.hidden = true;
+      elStudyView.hidden = false;
+
+      if (activeCat === "exam") {
+        isExamPage = true;
+        elCategoryTitle.textContent = "📝 Practice Exam";
+        document.title = "Practice Exam — Part 107 Flashcards";
+        elSubLine.innerHTML =
+          "FAA-style practice exam · Choose <strong>A–D</strong> (or <kbd>1</kbd>–<kbd>4</kbd>) · " +
+          "<kbd>Space</kbd> flip · <kbd>Enter</kbd> next question";
+        subLineStudyHtml = elSubLine.innerHTML;
+        document.querySelector(".search").hidden = true;
+        document.getElementById("mainToolbar").hidden = true;
+        elProgress.hidden = true;
+        elCount.hidden = true;
+        elCardWrap.hidden = true;
+        return;
+      }
+
+      elExamSetup.hidden = true;
+
+      if (activeCat !== "all") {
+        var catInfo = CATEGORIES.find(function (c) { return c.id === activeCat; });
+        if (catInfo) {
+          elCategoryTitle.textContent = catInfo.icon + " " + catInfo.label;
+          document.title = catInfo.label + " — Part 107 Flashcards";
+        }
+        deck = CARDS_CLEAN.filter(function (c) { return classifyCard(c) === activeCat; });
+        if (deck.length === 0) deck = CARDS_CLEAN.slice();
+      } else {
+        elCategoryTitle.textContent = "📚 All Cards";
+      }
 
       shuffleDeckInPlace(deck);
       filtered = deck.slice();
