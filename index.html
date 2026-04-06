@@ -405,6 +405,26 @@
       pointer-events: auto;
     }
 
+    .card-svg {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      width: 100%;
+    }
+
+    .card-svg svg {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+    }
+
+    .card-svg-label {
+      font-size: clamp(1rem, 3vw, 1.25rem);
+      text-align: center;
+    }
+
     .card.no-flip {
       cursor: default;
     }
@@ -1450,6 +1470,54 @@
         { q: "What is the difference between an airport diagram and a sectional chart?", a: "Airport diagram shows detailed runway/taxiway layout for ground operations. Sectional chart shows the surrounding airspace, boundaries, terrain, and navigation context." },
         { q: "Should you always contact ATC before flying a sUAS near an airport?", a: "In controlled airspace (Class B/C/D, Class E surface), you MUST get prior authorization (e.g., LAANC). Even in Class G near an airport, good practice is to contact the tower or monitor CTAF to maintain awareness of traffic." },
         // ═══════════════════════════════════════════════════════════════
+        // Airport Surface Markings (SVG visual cards)
+        // ═══════════════════════════════════════════════════════════════
+        {
+          q: "What airport marking is this?", a: "RUNWAY HOLD SHORT LINE — Two solid yellow lines and two dashed yellow lines across a taxiway. You must STOP before the solid lines and not cross onto the runway without ATC clearance (towered) or verifying no traffic (non-towered). The dashed side faces the runway. This is the most critical ground marking — never cross it without authorization.",
+          svg: '<svg viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg"><rect width="300" height="180" fill="#555" rx="4"/><rect x="0" y="0" width="300" height="180" fill="#666"/><rect x="135" y="0" width="30" height="180" fill="#999" opacity="0.3"/><line x1="0" y1="75" x2="300" y2="75" stroke="#ddb800" stroke-width="3"/><line x1="0" y1="81" x2="300" y2="81" stroke="#ddb800" stroke-width="3"/><line x1="0" y1="95" x2="20" y2="95" stroke="#ddb800" stroke-width="3" stroke-dasharray="8,6"/><line x1="20" y1="95" x2="60" y2="95" stroke="#ddb800" stroke-width="3" stroke-dasharray="8,6"/><line x1="60" y1="95" x2="100" y2="95" stroke="#ddb800" stroke-width="3" stroke-dasharray="8,6"/><line x1="100" y1="95" x2="140" y2="95" stroke="#ddb800" stroke-width="3" stroke-dasharray="8,6"/><line x1="140" y1="95" x2="180" y2="95" stroke="#ddb800" stroke-width="3" stroke-dasharray="8,6"/><line x1="180" y1="95" x2="220" y2="95" stroke="#ddb800" stroke-width="3" stroke-dasharray="8,6"/><line x1="220" y1="95" x2="260" y2="95" stroke="#ddb800" stroke-width="3" stroke-dasharray="8,6"/><line x1="260" y1="95" x2="300" y2="95" stroke="#ddb800" stroke-width="3" stroke-dasharray="8,6"/><line x1="0" y1="101" x2="300" y2="101" stroke="#ddb800" stroke-width="3" stroke-dasharray="8,6"/><text x="150" y="55" text-anchor="middle" fill="#ccc" font-size="13" font-family="sans-serif">← Taxiway</text><text x="150" y="135" text-anchor="middle" fill="#ccc" font-size="13" font-family="sans-serif">Runway →</text><text x="150" y="165" text-anchor="middle" fill="#aaa" font-size="10" font-family="sans-serif">solid lines │ dashed lines</text></svg>'
+        },
+        {
+          q: "What airport marking is this?", a: "RUNWAY THRESHOLD — White parallel stripes painted across the runway width at the beginning of the usable landing area. The number of stripes indicates the runway width (e.g., 4 stripes = 60 ft, 8 stripes = 100 ft, 16 stripes = 200 ft). This is where landing aircraft should touch down at or beyond.",
+          svg: '<svg viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg"><rect width="300" height="180" fill="#555" rx="4"/><line x1="150" y1="0" x2="150" y2="180" stroke="#fff" stroke-width="2" stroke-dasharray="12,8"/><rect x="55" y="10" width="8" height="60" fill="#fff"/><rect x="75" y="10" width="8" height="60" fill="#fff"/><rect x="95" y="10" width="8" height="60" fill="#fff"/><rect x="115" y="10" width="8" height="60" fill="#fff"/><rect x="135" y="10" width="8" height="60" fill="#fff"/><rect x="175" y="10" width="8" height="60" fill="#fff"/><rect x="195" y="10" width="8" height="60" fill="#fff"/><rect x="215" y="10" width="8" height="60" fill="#fff"/><rect x="235" y="10" width="8" height="60" fill="#fff"/><text x="150" y="105" text-anchor="middle" fill="#fff" font-size="36" font-weight="bold" font-family="sans-serif">27</text><text x="150" y="170" text-anchor="middle" fill="#aaa" font-size="10" font-family="sans-serif">Runway threshold stripes + number</text></svg>'
+        },
+        {
+          q: "What airport marking is this?", a: "DISPLACED THRESHOLD — White arrows pointing toward the threshold, followed by a threshold bar (solid white line across the runway). The area before the threshold (with arrows) can be used for taxiing, takeoff roll, and rollout, but NOT for landing. Landing must occur at or beyond the displaced threshold bar. Common when obstacles near the approach end require a higher landing point.",
+          svg: '<svg viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg"><rect width="300" height="180" fill="#555" rx="4"/><line x1="150" y1="0" x2="150" y2="180" stroke="#fff" stroke-width="2" stroke-dasharray="12,8"/><polygon points="140,50 150,20 160,50" fill="#fff"/><polygon points="140,90 150,60 160,90" fill="#fff"/><line x1="50" y1="110" x2="250" y2="110" stroke="#fff" stroke-width="4"/><rect x="70" y="120" width="6" height="45" fill="#fff"/><rect x="100" y="120" width="6" height="45" fill="#fff"/><rect x="130" y="120" width="6" height="45" fill="#fff"/><rect x="164" y="120" width="6" height="45" fill="#fff"/><rect x="194" y="120" width="6" height="45" fill="#fff"/><rect x="224" y="120" width="6" height="45" fill="#fff"/><text x="30" y="55" text-anchor="middle" fill="#aaa" font-size="9" font-family="sans-serif">No landing</text><text x="30" y="145" text-anchor="middle" fill="#aaa" font-size="9" font-family="sans-serif">Land here</text><text x="270" y="100" text-anchor="middle" fill="#aaa" font-size="9" font-family="sans-serif">Threshold</text><text x="270" y="110" text-anchor="middle" fill="#aaa" font-size="9" font-family="sans-serif">bar ↓</text></svg>'
+        },
+        {
+          q: "What airport marking is this?", a: "BLAST PAD / STOPWAY (CHEVRONS) — Yellow chevrons (arrows/V-shapes) painted before the runway threshold. This area is NOT usable for takeoff, landing, or taxiing. It exists to prevent erosion from jet blast or as a deceleration area beyond the runway end. Treat it as unusable pavement.",
+          svg: '<svg viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg"><rect width="300" height="180" fill="#555" rx="4"/><g stroke="#ddb800" stroke-width="4" fill="none"><polyline points="80,170 110,130 140,170"/><polyline points="140,170 170,130 200,170"/><polyline points="80,130 110,90 140,130"/><polyline points="140,130 170,90 200,130"/><polyline points="80,90 110,50 140,90"/><polyline points="140,90 170,50 200,90"/><polyline points="80,50 110,10 140,50"/><polyline points="140,50 170,10 200,50"/></g><text x="250" y="95" text-anchor="middle" fill="#aaa" font-size="11" font-family="sans-serif">Chevrons</text><text x="250" y="110" text-anchor="middle" fill="#aaa" font-size="9" font-family="sans-serif">(not usable)</text></svg>'
+        },
+        {
+          q: "What airport marking is this?", a: "CLOSED RUNWAY / TAXIWAY — A large yellow 'X' painted on the surface. This runway or taxiway is permanently or temporarily closed and must NOT be used for any purpose — no takeoff, landing, or taxiing. You may also see these on sectional charts.",
+          svg: '<svg viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg"><rect width="300" height="180" fill="#555" rx="4"/><line x1="150" y1="0" x2="150" y2="180" stroke="#fff" stroke-width="2" stroke-dasharray="12,8" opacity="0.3"/><line x1="75" y1="20" x2="225" y2="160" stroke="#ddb800" stroke-width="14"/><line x1="225" y1="20" x2="75" y2="160" stroke="#ddb800" stroke-width="14"/></svg>'
+        },
+        {
+          q: "What airport sign is this?", a: "RUNWAY HOLD POSITION SIGN — Red background with white runway numbers (e.g., 15-33). This mandatory instruction sign marks the hold short line. You must stop here and not enter the runway without clearance. Red signs are ALWAYS mandatory — they require compliance.",
+          svg: '<svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg"><rect x="40" y="15" width="220" height="90" rx="8" fill="#cc0000" stroke="#fff" stroke-width="3"/><text x="150" y="75" text-anchor="middle" fill="#fff" font-size="40" font-weight="bold" font-family="sans-serif">15-33</text></svg>'
+        },
+        {
+          q: "What airport sign is this?", a: "TAXIWAY LOCATION SIGN — Yellow/black background with a yellow border and black letter(s). Tells you which taxiway you are currently ON. Like a street name sign. Example: you are on Taxiway A. These are informational — no action required, just awareness of your position.",
+          svg: '<svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg"><rect x="90" y="15" width="120" height="90" rx="8" fill="#111" stroke="#ddb800" stroke-width="4"/><text x="150" y="80" text-anchor="middle" fill="#ddb800" font-size="52" font-weight="bold" font-family="sans-serif">A</text></svg>'
+        },
+        {
+          q: "What airport sign is this?", a: "TAXIWAY DIRECTION / DESTINATION SIGN — Black text on yellow background with an arrow. Tells you which direction to taxi to reach a specific taxiway, runway, or destination (e.g., terminal, FBO). Follow the arrow. These are guidance signs — they help you navigate.",
+          svg: '<svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg"><rect x="30" y="15" width="240" height="90" rx="8" fill="#ddb800"/><text x="85" y="78" text-anchor="middle" fill="#111" font-size="38" font-weight="bold" font-family="sans-serif">← B</text><rect x="155" y="25" width="4" height="70" fill="#111"/><text x="215" y="78" text-anchor="middle" fill="#111" font-size="38" font-weight="bold" font-family="sans-serif">27→</text></svg>'
+        },
+        {
+          q: "What airport marking is this?", a: "ILS CRITICAL AREA HOLD LINE — Alternating solid and dashed yellow lines in a 'ladder' pattern (two solid lines with perpendicular connecting bars). You must hold short of this line when ILS (Instrument Landing System) approaches are in progress to avoid interfering with the ILS signal. Similar to a hold short line but with the ladder/railroad-track pattern.",
+          svg: '<svg viewBox="0 0 300 140" xmlns="http://www.w3.org/2000/svg"><rect width="300" height="140" fill="#555" rx="4"/><line x1="0" y1="50" x2="300" y2="50" stroke="#ddb800" stroke-width="3"/><line x1="0" y1="90" x2="300" y2="90" stroke="#ddb800" stroke-width="3"/><line x1="30" y1="50" x2="30" y2="90" stroke="#ddb800" stroke-width="3"/><line x1="60" y1="50" x2="60" y2="90" stroke="#ddb800" stroke-width="3"/><line x1="90" y1="50" x2="90" y2="90" stroke="#ddb800" stroke-width="3"/><line x1="120" y1="50" x2="120" y2="90" stroke="#ddb800" stroke-width="3"/><line x1="150" y1="50" x2="150" y2="90" stroke="#ddb800" stroke-width="3"/><line x1="180" y1="50" x2="180" y2="90" stroke="#ddb800" stroke-width="3"/><line x1="210" y1="50" x2="210" y2="90" stroke="#ddb800" stroke-width="3"/><line x1="240" y1="50" x2="240" y2="90" stroke="#ddb800" stroke-width="3"/><line x1="270" y1="50" x2="270" y2="90" stroke="#ddb800" stroke-width="3"/><text x="150" y="30" text-anchor="middle" fill="#ccc" font-size="12" font-family="sans-serif">ILS Critical Area boundary</text><text x="150" y="125" text-anchor="middle" fill="#aaa" font-size="10" font-family="sans-serif">"Ladder" pattern — hold short when ILS active</text></svg>'
+        },
+        {
+          q: "What airport marking is this?", a: "TAXIWAY CENTERLINE — A continuous yellow dashed line down the center of a taxiway. Pilots taxi with the nosewheel on this line. All taxiway markings are YELLOW (runways use white). This helps pilots stay centered on the taxiway.",
+          svg: '<svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg"><rect width="300" height="120" fill="#555" rx="4"/><line x1="0" y1="60" x2="300" y2="60" stroke="#ddb800" stroke-width="4" stroke-dasharray="16,10"/><text x="150" y="100" text-anchor="middle" fill="#aaa" font-size="11" font-family="sans-serif">Yellow dashed line = taxiway center</text></svg>'
+        },
+        {
+          q: "What airport marking is this?", a: "RUNWAY CENTERLINE — White dashed line down the center of the runway. Unlike taxiway centerlines (yellow), runway markings are always WHITE. Pilots align with this line for takeoff and landing. The uniform dashed pattern extends the full length of the runway.",
+          svg: '<svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg"><rect width="300" height="120" fill="#555" rx="4"/><line x1="0" y1="60" x2="300" y2="60" stroke="#fff" stroke-width="4" stroke-dasharray="20,12"/><text x="150" y="100" text-anchor="middle" fill="#aaa" font-size="11" font-family="sans-serif">White dashed line = runway center</text></svg>'
+        },
+        { q: "What is the key color rule for airport markings?", a: "WHITE markings = runway (threshold stripes, centerline, numbers, touchdown zone). YELLOW markings = taxiway and hold lines (centerline, edge, hold short, ILS hold, closed X, blast pad chevrons). RED signs = mandatory (hold short, runway boundary — must obey). YELLOW signs = informational/guidance (direction, destination, location). Remember: white for runways, yellow for everything else on the ground." },
+        // ═══════════════════════════════════════════════════════════════
         // Weather
         // ═══════════════════════════════════════════════════════════════
         { q: "What is a METAR?", a: "A METAR (Meteorological Aerodrome Report) is a routine hourly weather observation for a specific airport. It tells you what the weather IS right now — wind, visibility, clouds, temperature, dewpoint, and pressure. Issued every hour (and as SPECI reports when conditions change rapidly). Always in Zulu (UTC) time." },
@@ -1604,7 +1672,7 @@
         },
         {
           id: "airport",
-          re: /\brunway\b|traffic pattern|upwind.*downwind|downwind.*leg|crosswind.*takeoff|\bctaf\b|\bunicom\b|helipad|heliport|airport.*diagram|airport.*elevation|left traffic|right traffic|converging.*aircraft|overtaking\b|head-on\b|wake turbulence|wake.*vortex|phonetic alphabet|romeo.*sierra|squawk|emergency.*frequency|121\.5|mayday|pan-pan|see-and-avoid|scanning for aircraft|airport operator|into the wind/i
+          re: /\brunway\b|traffic pattern|upwind.*downwind|downwind.*leg|crosswind.*takeoff|\bctaf\b|\bunicom\b|helipad|heliport|airport.*diagram|airport.*elevation|left traffic|right traffic|converging.*aircraft|overtaking\b|head-on\b|wake turbulence|wake.*vortex|phonetic alphabet|romeo.*sierra|squawk|emergency.*frequency|121\.5|mayday|pan-pan|see-and-avoid|scanning for aircraft|airport operator|into the wind|hold short|taxiway.*sign|taxiway.*center|runway.*marking|airport.*marking|airport.*sign|blast pad|chevron|displaced threshold|\bils\b.*hold|closed.*runway|closed.*taxiway|color rule.*airport/i
         },
         {
           id: "airspace",
@@ -3600,7 +3668,11 @@
         if (index >= filtered.length) index = filtered.length - 1;
         if (index < 0) index = 0;
         const c = filtered[index];
-        elQ.textContent = c.q;
+        if (c.svg) {
+          elQ.innerHTML = '<div class="card-svg">' + c.svg + '<div class="card-svg-label">' + escapeHtml(c.q) + '</div></div>';
+        } else {
+          elQ.textContent = c.q;
+        }
         elA.textContent = c.a;
         const links = collectRefs(c.q, c.a, c.links);
         elRefs.innerHTML = renderRefsHtml(links);
