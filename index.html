@@ -409,6 +409,98 @@
       cursor: default;
     }
 
+    .wx-ref {
+      width: min(100%, 42rem);
+      margin-top: 1rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      box-shadow: 0 4px 16px rgba(0, 50, 100, 0.08);
+      overflow: hidden;
+    }
+
+    .wx-ref-toggle {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.55rem 0.85rem;
+      background: linear-gradient(135deg, #eaf2ff, #f5f9ff);
+      border: none;
+      border-radius: 0;
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--skydio-blue-darkest);
+      letter-spacing: 0.02em;
+    }
+
+    .wx-ref-toggle:hover {
+      background: linear-gradient(135deg, #d8e8ff, #eaf2ff);
+    }
+
+    .wx-ref-toggle .arrow {
+      transition: transform 0.2s;
+      font-size: 0.7rem;
+    }
+
+    .wx-ref.open .wx-ref-toggle .arrow {
+      transform: rotate(180deg);
+    }
+
+    .wx-ref-body {
+      display: none;
+      padding: 0.65rem 0.85rem 0.85rem;
+      font-size: 0.78rem;
+      line-height: 1.55;
+      color: var(--text);
+    }
+
+    .wx-ref.open .wx-ref-body {
+      display: block;
+    }
+
+    .wx-ref-body h4 {
+      margin: 0.6rem 0 0.25rem;
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--skydio-blue-darker);
+    }
+
+    .wx-ref-body h4:first-child {
+      margin-top: 0;
+    }
+
+    .wx-ref-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.2rem 0;
+    }
+
+    .wx-ref-grid span {
+      flex: 0 0 50%;
+      min-width: 0;
+      box-sizing: border-box;
+      padding-right: 0.75rem;
+    }
+
+    @media (min-width: 40rem) {
+      .wx-ref-grid span {
+        flex: 0 0 33.33%;
+      }
+    }
+
+    .wx-ref-grid code {
+      font-family: "SFMono-Regular", "Consolas", "Liberation Mono", monospace;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--skydio-blue-darkest);
+      background: var(--skydio-blue-lightest);
+      padding: 0.05rem 0.3rem;
+      border-radius: 3px;
+    }
+
     .exam-figures {
       width: min(100%, 42rem);
       margin-top: 0.5rem;
@@ -651,6 +743,114 @@
             <p class="answer-text" id="a"></p>
             <div class="refs" id="refs" aria-label="Reference literature"></div>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="wx-ref" id="wxRef" hidden>
+      <button type="button" class="wx-ref-toggle" id="wxRefToggle">
+        ☁️ Weather Notation Quick Reference <span class="arrow">▼</span>
+      </button>
+      <div class="wx-ref-body">
+        <h4>Intensity</h4>
+        <div class="wx-ref-grid">
+          <span><code>-</code> Light</span>
+          <span><code> </code> (none) Moderate</span>
+          <span><code>+</code> Heavy</span>
+          <span><code>VC</code> Vicinity (5–10 statute miles)</span>
+        </div>
+        <h4>Descriptors</h4>
+        <div class="wx-ref-grid">
+          <span><code>MI</code> Shallow</span>
+          <span><code>PR</code> Partial</span>
+          <span><code>BC</code> Patches</span>
+          <span><code>DR</code> Drifting</span>
+          <span><code>BL</code> Blowing</span>
+          <span><code>SH</code> Showers</span>
+          <span><code>TS</code> Thunderstorm</span>
+          <span><code>FZ</code> Freezing</span>
+        </div>
+        <h4>Precipitation</h4>
+        <div class="wx-ref-grid">
+          <span><code>RA</code> Rain</span>
+          <span><code>DZ</code> Drizzle</span>
+          <span><code>SN</code> Snow</span>
+          <span><code>SG</code> Snow Grains</span>
+          <span><code>IC</code> Ice Crystals</span>
+          <span><code>PL</code> Ice Pellets</span>
+          <span><code>GR</code> Hail [grêle]</span>
+          <span><code>GS</code> Small Hail / Snow Pellets</span>
+          <span><code>UP</code> Unknown Precipitation</span>
+        </div>
+        <h4>Obscuration</h4>
+        <div class="wx-ref-grid">
+          <span><code>FG</code> Fog (&lt;⅝ SM)</span>
+          <span><code>BR</code> Mist [brume] (⅝–6 SM)</span>
+          <span><code>HZ</code> Haze</span>
+          <span><code>FU</code> Smoke [fumée]</span>
+          <span><code>SA</code> Sand</span>
+          <span><code>DU</code> Dust</span>
+          <span><code>VA</code> Volcanic Ash</span>
+          <span><code>PY</code> Spray</span>
+        </div>
+        <h4>Other Phenomena</h4>
+        <div class="wx-ref-grid">
+          <span><code>SQ</code> Squall</span>
+          <span><code>FC</code> Funnel Cloud / Tornado</span>
+          <span><code>SS</code> Sandstorm</span>
+          <span><code>DS</code> Duststorm</span>
+          <span><code>PO</code> Dust/Sand Whirls</span>
+        </div>
+        <h4>Sky Condition</h4>
+        <div class="wx-ref-grid">
+          <span><code>SKC</code> Sky Clear (manual obs)</span>
+          <span><code>CLR</code> Clear below 12,000 ft (automated)</span>
+          <span><code>FEW</code> Few clouds (1–2 oktas)</span>
+          <span><code>SCT</code> Scattered (3–4 oktas)</span>
+          <span><code>BKN</code> Broken (5–7 oktas) ★ ceiling</span>
+          <span><code>OVC</code> Overcast (8 oktas) ★ ceiling</span>
+          <span><code>VV</code> Vertical Visibility (sky obscured)</span>
+          <span><code>CB</code> Cumulonimbus (thunderstorm cloud)</span>
+          <span><code>TCU</code> Towering Cumulus (developing TS)</span>
+        </div>
+        <h4>METAR Structure Codes</h4>
+        <div class="wx-ref-grid">
+          <span><code>METAR</code> Meteorological Aerodrome Report</span>
+          <span><code>SPECI</code> Special (unscheduled) observation</span>
+          <span><code>AUTO</code> Automated observation (no human)</span>
+          <span><code>KT</code> Knots (nautical miles/hr)</span>
+          <span><code>SM</code> Statute Miles</span>
+          <span><code>G</code> Gust</span>
+          <span><code>VRB</code> Variable wind direction</span>
+          <span><code>P6SM</code> Plus (greater than) 6 statute miles</span>
+          <span><code>M</code> Minus (below 0 °C)</span>
+          <span><code>A</code> Altimeter setting (inches Hg)</span>
+          <span><code>RMK</code> Remarks section</span>
+          <span><code>AO1</code> Automated Observation type 1 (no precip sensor)</span>
+          <span><code>AO2</code> Automated Observation type 2 (has precip sensor)</span>
+          <span><code>SLP</code> Sea Level Pressure (hectopascals)</span>
+          <span><code>PRESRR</code> Pressure Rising Rapidly</span>
+          <span><code>PRESFR</code> Pressure Falling Rapidly</span>
+          <span><code>PK WND</code> Peak Wind</span>
+        </div>
+        <h4>TAF Codes</h4>
+        <div class="wx-ref-grid">
+          <span><code>TAF</code> Terminal Aerodrome Forecast</span>
+          <span><code>AMD</code> Amended (corrected forecast)</span>
+          <span><code>FM</code> From (abrupt change at time)</span>
+          <span><code>BECMG</code> Becoming (gradual change over period)</span>
+          <span><code>TEMPO</code> Temporary (fluctuation &lt;½ period)</span>
+          <span><code>PROB</code> Probability (percent chance)</span>
+          <span><code>NSW</code> No Significant Weather</span>
+        </div>
+        <h4>Other Reports</h4>
+        <div class="wx-ref-grid">
+          <span><code>SIGMET</code> Significant Meteorological Information</span>
+          <span><code>AIRMET</code> Airmen's Meteorological Information</span>
+          <span><code>PIREP</code> Pilot Report (prefix UA/UUA)</span>
+          <span><code>NOTAM</code> Notice to Air Missions</span>
+          <span><code>ATIS</code> Automatic Terminal Information Service</span>
+          <span><code>AWOS</code> Automated Weather Observing System</span>
+          <span><code>ASOS</code> Automated Surface Observing System</span>
         </div>
       </div>
     </div>
@@ -1099,19 +1299,19 @@
         { q: "What does a falling altimeter setting in successive METARs indicate?", a: "Decreasing pressure — approaching low-pressure system or front. Expect deteriorating weather. Also means true altitude is LOWER than your altimeter reads if not corrected." },
 
         // ── METAR remarks (RMK) ─────────────────────────────────────
-        { q: "METAR remarks: what does 'RMK AO2' mean?", a: "AO2 = automated station WITH a precipitation discriminator (can distinguish rain from snow). AO1 = automated WITHOUT precipitation discriminator." },
-        { q: "METAR remarks: what does 'RMK AO2 SLP982' mean?", a: "AO2 = automated with precip sensor. SLP982 = sea level pressure 998.2 hPa (add a 9 or 10 to the front — use whichever gives a value closest to 1013). Sea level pressure helps identify high/low pressure systems." },
-        { q: "METAR remarks: what does 'RMK AO2 RAB25' mean?", a: "Rain began at 25 minutes past the hour. B = began, E = ended. 'RAB25E45' would mean rain began at :25 and ended at :45." },
-        { q: "METAR remarks: what does 'RMK AO2 TSB20 PRESRR' mean?", a: "Thunderstorm began at 20 past the hour. PRESRR = pressure rising rapidly. Other pressure remarks: PRESFR = falling rapidly." },
-        { q: "METAR remarks: what does 'RMK AO2 PK WND 28045/1930' mean?", a: "Peak wind from 280° at 45 knots occurred at 1930Z. PK WND = peak wind. This tells you the strongest gust in the observation period." },
+        { q: "METAR remarks: what does 'RMK AO2' mean?", a: "RMK = remarks section begins. AO2 = Automated Observation station type 2 — it has a precipitation discriminator that can tell rain from snow from freezing rain. AO1 = type 1, no discriminator (reports 'UP' for unknown precipitation). Nearly all major airport stations are AO2. You'll see 'RMK AO2' on the vast majority of METARs." },
+        { q: "METAR remarks: what does 'RMK AO2 SLP982' mean?", a: "AO2 = automated station with precipitation discriminator. SLP982 = sea level pressure 998.2 hPa. To decode SLP: put a decimal before the last digit (98.2), then add 9 or 10 to the front — pick whichever is closest to 1013 (standard). So 982 → 998.2 hPa (low pressure — stormy). SLP159 → 1015.9 hPa (high pressure — fair). Sea level pressure helps identify high/low pressure systems and fronts." },
+        { q: "METAR remarks: what does 'RMK AO2 RAB25' mean?", a: "AO2 = automated station with precipitation discriminator. RAB25 = rain began at 25 minutes past the hour. B = began, E = ended. Examples: RAB25E45 = rain began at :25 and ended at :45. SNB10 = snow began at :10. TSB05 = thunderstorm began at :05. This tells you exactly when weather events started/stopped within the observation period." },
+        { q: "METAR remarks: what does 'RMK AO2 TSB20 PRESRR' mean?", a: "AO2 = automated station with precipitation discriminator. TSB20 = thunderstorm began at 20 minutes past the hour. PRESRR = pressure rising rapidly (storm may be passing). Other pressure remarks: PRESFR = pressure falling rapidly (weather deteriorating). Rapid pressure changes indicate significant weather events moving through." },
+        { q: "METAR remarks: what does 'RMK AO2 PK WND 28045/1930' mean?", a: "AO2 = automated station with precipitation discriminator. PK WND 28045/1930 = peak wind from 280° at 45 knots, occurred at 1930Z. Format: PK WND DDDSS/HHMM (direction + speed / time). This tells you the strongest gust recorded in the observation period — critical for sUAS: 45 kt gusts are extremely dangerous." },
 
         // ── Full METAR decode practice ───────────────────────────────
         { q: "Decode this full METAR: KJFK 121856Z 21016G24KT 10SM FEW250 27/17 A2990 RMK AO2 SLP132 T02720172", a: "Station: JFK airport. Date/Time: 12th at 1856 Zulu. Wind: from 210° at 16 kt gusting 24 kt. Visibility: 10 statute miles. Clouds: few at 25,000 ft. Temp: 27°C, dewpoint 17°C (spread 10° — dry). Altimeter: 29.90 inHg. Remarks: automated with precip sensor, sea level pressure 1013.2 hPa. Part 107 legal? Yes — vis > 3 SM, few clouds well above 400 ft." },
-        { q: "Decode this full METAR: KORD 051751Z 29015KT 6SM -RA BR OVC015 08/06 A2978 RMK AO2", a: "Station: O'Hare. Date/Time: 5th at 1751Z. Wind: from 290° at 15 kt. Visibility: 6 SM (light rain + mist). Clouds: overcast at 1,500 ft (ceiling). Temp: 8°C, dewpoint 6°C (spread 2° — very moist). Altimeter: 29.78 (below standard — low pressure). Part 107: legal (vis ≥ 3 SM), but max altitude limited by cloud rule: 1,500 − 500 = 1,000 ft, capped at 400 ft AGL." },
-        { q: "Decode this full METAR: KSFO 221556Z 28008KT 1/2SM FG VV002 12/12 A3001 RMK AO2", a: "Station: SFO. Date/Time: 22nd at 1556Z. Wind: from 280° at 8 kt. Visibility: 1/2 SM (FOG). Sky: vertical visibility 200 ft (sky obscured). Temp/dew: both 12°C (100% RH — saturated). Altimeter: 30.01. Part 107 legal? NO — visibility is 0.5 SM, far below the 3 SM minimum. Do not fly." },
-        { q: "Decode this full METAR: KATL 180953Z 00000KT 10SM CLR 22/18 A3000 RMK AO2 SLP159", a: "Station: Atlanta. Date/Time: 18th at 0953Z. Wind: calm. Visibility: 10 SM. Sky: clear below 12,000 ft. Temp: 22°C, dewpoint 18°C (spread 4° — moderate moisture). Altimeter: 30.00. Sea level pressure 1015.9 hPa. Part 107 legal? Yes — excellent conditions." },
-        { q: "Decode this full METAR: KDEN 091245Z 18025G38KT 3SM +TSRA BKN020CB OVC045 18/16 A2952 RMK AO2 TSB30 PRESRR", a: "Station: Denver. Date/Time: 9th at 1245Z. Wind: from 180° at 25 kt gusting 38 kt. Visibility: 3 SM (heavy thunderstorm rain). Clouds: broken cumulonimbus at 2,000 ft, overcast at 4,500 ft. Temp/dew spread 2°C. Altimeter: 29.52 (very low). Remarks: thunderstorm began at :30, pressure rising rapidly. Part 107 legal? Technically vis = 3 SM meets minimum, but absolutely DO NOT fly — active thunderstorm with 38 kt gusts and CB clouds." },
-        { q: "Decode this full METAR: KMIA 150056Z 09012KT 7SM SCT025 SCT250 28/23 A2987 RMK AO2", a: "Station: Miami. Date/Time: 15th at 0056Z. Wind: from 090° (east) at 12 kt. Visibility: 7 SM. Clouds: scattered at 2,500 ft, scattered at 25,000 ft. Temp: 28°C, dewpoint 23°C (spread 5° — tropical moisture). Altimeter: 29.87. No ceiling (SCT layers are not ceilings). Part 107 legal? Yes — good conditions." },
+        { q: "Decode this full METAR: KORD 051751Z 29015KT 6SM -RA BR OVC015 08/06 A2978 RMK AO2", a: "Station: O'Hare. Date/Time: 5th at 1751Z. Wind: from 290° at 15 kt. Visibility: 6 SM (light rain + mist). Clouds: overcast at 1,500 ft (ceiling). Temp: 8°C, dewpoint 6°C (spread 2° — very moist). Altimeter: 29.78 (below standard — low pressure). RMK AO2 = automated station with precipitation discriminator (can distinguish rain vs. snow). Part 107: legal (vis ≥ 3 SM), but max altitude limited by cloud rule: 1,500 − 500 = 1,000 ft, capped at 400 ft AGL." },
+        { q: "Decode this full METAR: KSFO 221556Z 28008KT 1/2SM FG VV002 12/12 A3001 RMK AO2", a: "Station: SFO. Date/Time: 22nd at 1556Z. Wind: from 280° at 8 kt. Visibility: 1/2 SM (FOG). Sky: vertical visibility 200 ft (sky obscured). Temp/dew: both 12°C (100% RH — saturated, dewpoint = temp means fog). Altimeter: 30.01. RMK AO2 = automated station with precipitation discriminator. Part 107 legal? NO — visibility is 0.5 SM, far below the 3 SM minimum. Do not fly." },
+        { q: "Decode this full METAR: KATL 180953Z 00000KT 10SM CLR 22/18 A3000 RMK AO2 SLP159", a: "Station: Atlanta. Date/Time: 18th at 0953Z. Wind: calm. Visibility: 10 SM. Sky: clear below 12,000 ft (CLR = automated station detected no clouds below 12,000). Temp: 22°C, dewpoint 18°C (spread 4° — moderate moisture). Altimeter: 30.00. RMK AO2 = automated station with precipitation discriminator. SLP159 = sea level pressure 1015.9 hPa (high pressure — fair weather). Part 107 legal? Yes — excellent conditions." },
+        { q: "Decode this full METAR: KDEN 091245Z 18025G38KT 3SM +TSRA BKN020CB OVC045 18/16 A2952 RMK AO2 TSB30 PRESRR", a: "Station: Denver. Date/Time: 9th at 1245Z. Wind: from 180° at 25 kt gusting 38 kt. Visibility: 3 SM (heavy thunderstorm rain). Clouds: broken cumulonimbus at 2,000 ft, overcast at 4,500 ft. Temp/dew spread 2°C. Altimeter: 29.52 (very low pressure). RMK AO2 = automated station with precipitation discriminator. TSB30 = thunderstorm began at :30 past the hour. PRESRR = pressure rising rapidly. Part 107 legal? Technically vis = 3 SM meets minimum, but absolutely DO NOT fly — active thunderstorm with 38 kt gusts and CB clouds." },
+        { q: "Decode this full METAR: KMIA 150056Z 09012KT 7SM SCT025 SCT250 28/23 A2987 RMK AO2", a: "Station: Miami. Date/Time: 15th at 0056Z. Wind: from 090° (east) at 12 kt. Visibility: 7 SM. Clouds: scattered at 2,500 ft, scattered at 25,000 ft. Temp: 28°C, dewpoint 23°C (spread 5° — tropical moisture). Altimeter: 29.87. RMK AO2 = automated station with precipitation discriminator. No ceiling (SCT layers are NOT ceilings — only BKN or OVC count). Part 107 legal? Yes — good conditions." },
 
         // ── TAF format & structure ───────────────────────────────────
         { q: "What is the standard format of a TAF report?", a: "TAF [AMD] STATION DDHHMMZ VALID_PERIOD WIND VISIBILITY WEATHER SKY [FM/BECMG/TEMPO groups]. Example: TAF KJFK 121720Z 1218/1324 21015G25KT P6SM FEW250 FM130200 33012KT P6SM SCT050." },
@@ -1134,28 +1334,31 @@
         { q: "Can you use a TAF alone to determine if a Part 107 flight is legal?", a: "A TAF is a forecast, not an observation — it tells you what conditions are expected, but actual conditions may differ. Check the current METAR for actual conditions at flight time. Use the TAF for pre-flight planning (will conditions stay above 3 SM vis? will clouds permit 500 ft clearance?). Always confirm with a fresh METAR before launch." },
         { q: "Both the METAR and TAF show wind — is there any difference in how they report it?", a: "Same format: direction (true north) + speed + gusts + KT. But METAR is the observed wind right now, while TAF is the forecasted wind. TAF does not include variable wind groups (like 150V210) — those are METAR-only." },
 
-        { q: "What is a SIGMET weather advisory and what conditions does it cover?", a: "Significant meteorological advisory — severe/extreme conditions (severe turbulence, icing, volcanic ash)." },
-        { q: "What is an AIRMET weather advisory and what conditions does it cover?", a: "Moderate turbulence, icing, IFR conditions, sustained surface winds ≥ 30 knots." },
-        { q: "What is a Convective SIGMET and what severe conditions does it warn about?", a: "Severe convection — tornadoes, severe thunderstorms, heavy precipitation." },
-        { q: "What is the difference between stable and unstable air masses?", a: "Stable: resists vertical motion, smooth air. Unstable: cumulus development, turbulence, good visibility." },
-        { q: "What are the weather differences between a cold front and a warm front?", a: "Cold front: steep, narrow band, gusty winds, cumulus. Warm front: widespread, stratiform clouds, lower visibility." },
-        { q: "What are the primary hazards of thunderstorms for sUAS operations?", a: "Wind shear, hail, lightning, heavy rain, turbulence — avoid." },
-        { q: "What is a microburst and why is it dangerous for aircraft?", a: "Severe downdraft — extremely hazardous to low-altitude aircraft." },
-        { q: "What does it mean when the dew point is close to the temperature?", a: "High relative humidity — fog and low visibility likely." },
-        { q: "What is adiabatic cooling and how does it cause cloud formation?", a: "Rising air expands and cools — basis for cloud formation." },
-        { q: "What is the atmospheric temperature lapse rate?", a: "Temperature decrease with altitude — affects stability." },
-        { q: "In aviation weather reports, how is wind direction expressed?", a: "Direction FROM which wind blows (e.g., 270° = wind from the west)." },
-        { q: "What is the standard atmospheric pressure at sea level?", a: "29.92 inHg / 1013.25 hPa." },
-        { q: "What is density altitude and why does it matter for sUAS performance?", a: "Higher density altitude = thinner air → reduced performance, less lift, shorter battery life." },
-        { q: "How is density altitude calculated?", a: "Pressure altitude corrected for non-standard temperature. Higher temp = higher density altitude." },
-        { q: "How does cold weather affect sUAS battery performance?", a: "Reduced capacity and voltage sag — warm batteries before flight." },
-        { q: "How does hot weather affect sUAS performance?", a: "Higher density altitude → reduced motor/prop performance." },
-        { q: "How does fog affect Part 107 flight legality?", a: "If you cannot maintain 3 SM visibility, you cannot legally fly under Part 107." },
-        { q: "What is wind shear near the ground and how does it affect sUAS?", a: "Sudden wind changes near surface and obstacles — affects small aircraft significantly." },
-        { q: "What types of turbulence occur near mountains?", a: "Mountain wave, rotor turbulence — can be severe." },
-        { q: "How long do rod cells (night vision) take to adapt, and what should pilots avoid?", a: "30 minutes to adapt to dark; avoid bright lights before night operations." },
-        { q: "What scanning technique works best for detecting objects at night?", a: "Off-center viewing — peripheral vision (rod cells) detects dim objects better than direct gaze." },
-        { q: "What icing risks affect sUAS in cold, moist conditions?", a: "Props and sensors can accumulate ice in cold, moist conditions — reduced lift and control." }
+        { q: "What is a SIGMET weather advisory and what conditions does it cover?", a: "SIGMET = Significant Meteorological Information. Issued for weather hazards that are dangerous to ALL aircraft: severe or extreme turbulence, severe icing, widespread dust/sandstorms reducing visibility below 3 SM, and volcanic ash. Non-convective SIGMETs are valid for up to 4 hours. If a SIGMET is active in your area, do NOT fly a sUAS." },
+        { q: "What is an AIRMET weather advisory and what conditions does it cover?", a: "AIRMET = Airmen's Meteorological Information. Issued for weather that may be hazardous to small/light aircraft and sUAS (less severe than a SIGMET). Three types: AIRMET Tango (T) = moderate turbulence, sustained surface winds ≥ 30 knots, low-level wind shear. AIRMET Sierra (S) = IFR conditions (ceilings < 1,000 ft and/or visibility < 3 SM), mountain obscuration. AIRMET Zulu (Z) = moderate icing and freezing levels. Valid for up to 6 hours." },
+        { q: "What is a Convective SIGMET and what severe conditions does it warn about?", a: "Convective SIGMET = a SIGMET specifically for severe convective weather (thunderstorm-related). Issued for: tornadoes, lines of thunderstorms, thunderstorms with ≥ 3/4 inch hail, and/or wind gusts ≥ 50 knots. Issued hourly for the contiguous US (east, central, west regions). Valid for up to 2 hours. Any Convective SIGMET in your area = absolutely do NOT fly." },
+        { q: "What is the difference between a SIGMET, AIRMET, and Convective SIGMET?", a: "AIRMET (Airmen's Meteorological Information) = moderate hazards (turbulence, icing, IFR, winds ≥ 30 kt) — caution for small aircraft. SIGMET (Significant Meteorological Information) = severe/extreme hazards dangerous to ALL aircraft (severe turbulence/icing, volcanic ash, sandstorms). Convective SIGMET = specifically for severe thunderstorm activity (tornadoes, large hail, 50+ kt gusts). Severity: AIRMET < SIGMET < Convective SIGMET." },
+        { q: "What is a PIREP and why is it useful for sUAS pilots?", a: "PIREP = Pilot Report (also written UA for routine, UUA for urgent). These are real-time weather reports filed by pilots in flight — they report actual conditions at specific altitudes: turbulence, icing, cloud tops/bases, visibility, and wind. PIREPs fill gaps between station observations because they describe what is happening in the sky right now. Check PIREPs at 1800wxbrief.com or call 1-800-WX-BRIEF for your flight area." },
+        { q: "What does 'IFR' and 'VFR' mean in aviation weather context?", a: "VFR = Visual Flight Rules — ceiling ≥ 1,000 ft AND visibility ≥ 3 SM. IFR = Instrument Flight Rules — ceiling < 1,000 ft AND/OR visibility < 3 SM. MVFR = Marginal VFR — ceiling 1,000–3,000 ft AND/OR visibility 3–5 SM. LIFR = Low IFR — ceiling < 500 ft AND/OR visibility < 1 SM. Part 107 requires at least 3 SM visibility, so IFR/LIFR conditions = no legal sUAS flight." },
+        { q: "What is the difference between stable and unstable air masses?", a: "Stable air resists vertical motion — air pushed up tends to sink back down. Characteristics: smooth/laminar flow, stratiform (layered) clouds, poor visibility from trapped haze/fog, steady precipitation. Unstable air promotes vertical motion — rising air keeps accelerating upward. Characteristics: turbulent/gusty, cumuliform (puffy, towering) clouds, better surface visibility (pollutants carried upward), showery precipitation. Stability is determined by comparing the environmental lapse rate to the adiabatic lapse rate." },
+        { q: "What are the weather differences between a cold front and a warm front?", a: "Cold front: cold air undercuts warm air, forcing it up steeply. Weather: narrow band (50–100 miles), cumuliform clouds, heavy but brief precipitation, gusty/shifting winds, rapid temperature drop, quick clearing after passage. Warm front: warm air gradually slides over retreating cold air. Weather: wide band (hundreds of miles), stratiform clouds, steady light precipitation, gradual temperature rise, poor visibility from drizzle/fog. Cold fronts move faster (~25 kt) and produce more violent weather." },
+        { q: "What are the primary hazards of thunderstorms for sUAS operations?", a: "Thunderstorms produce: (1) severe turbulence and wind shear (up/downdrafts exceeding 3,000 ft/min), (2) microbursts (localized downdrafts with 45+ kt winds), (3) hail (can destroy a sUAS), (4) lightning (can disable electronics), (5) heavy rain (reduced visibility below 3 SM), (6) gust fronts (outflow winds up to 50+ kt extending miles ahead of the storm). Rule: avoid thunderstorms by at least 5–10 miles. Never fly under, around, or through a thunderstorm." },
+        { q: "What is a microburst and why is it dangerous for aircraft?", a: "A microburst is a concentrated, intense downdraft from a thunderstorm that hits the ground and spreads outward. Diameter: < 2.5 miles. Duration: 5–15 minutes. Wind speeds: up to 45+ knots at ground level, with sudden direction reversals. Dry microbursts occur with little or no rain (harder to detect visually). Wet microbursts occur with heavy rain. Extremely hazardous to low-altitude aircraft — a sUAS caught in one will be driven into the ground." },
+        { q: "What does it mean when the dew point is close to the temperature?", a: "The dew point is the temperature at which air becomes saturated (100% relative humidity) and moisture condenses. When temp and dewpoint converge (spread ≤ 2–3°C), the air is nearly saturated — expect fog, mist, or low cloud formation. In a METAR like '15/14', the 1°C spread means fog is imminent or already forming. The dew point itself doesn't change with heating/cooling — it is a fixed measure of how much moisture is in the air." },
+        { q: "What is adiabatic cooling and how does it cause cloud formation?", a: "Adiabatic = a process where temperature changes without adding or removing heat. As air rises, atmospheric pressure decreases, the air expands, and it cools. Dry adiabatic lapse rate: ~3°C per 1,000 ft (unsaturated air). Moist/saturated adiabatic lapse rate: ~1.5–2°C per 1,000 ft (slower because condensation releases latent heat). Clouds form when rising air cools to its dew point — that altitude is the cloud base. This is why clouds have relatively flat bottoms." },
+        { q: "What is the atmospheric temperature lapse rate?", a: "The environmental lapse rate is the actual decrease in temperature with altitude in the atmosphere — averages ~2°C (3.5°F) per 1,000 ft, but varies. The standard atmosphere assumes 2°C/1,000 ft. Compare it to: dry adiabatic lapse rate = 3°C/1,000 ft (rising unsaturated air), and moist adiabatic lapse rate = ~1.5–2°C/1,000 ft (rising saturated air). If the environmental rate is steeper than the adiabatic rate, the atmosphere is unstable (promotes convection and turbulence)." },
+        { q: "In aviation weather reports, how is wind direction expressed?", a: "Wind direction is reported as the direction FROM which the wind blows, in degrees true north. 360° = north, 090° = east, 180° = south, 270° = west. Example: '21016KT' = wind coming FROM 210° (south-southwest). Important: METARs use TRUE north, but tower/ATIS communications use MAGNETIC north. When comparing METAR wind to a runway heading, apply local magnetic variation." },
+        { q: "What is the standard atmospheric pressure at sea level?", a: "29.92 inches of mercury (inHg) = 1013.25 hectopascals (hPa) = 1013.25 millibars (mb). This is the International Standard Atmosphere (ISA) baseline. When the altimeter setting equals 29.92, pressure altitude equals true altitude (at sea level). Higher than 29.92 = high pressure (generally fair weather). Lower = low pressure (generally deteriorating weather)." },
+        { q: "What is density altitude and why does it matter for sUAS performance?", a: "Density altitude = pressure altitude corrected for non-standard temperature. It represents what the air 'feels like' in terms of density. Higher density altitude = thinner air → less lift from propellers, reduced motor efficiency, shorter battery life, degraded overall performance. Density altitude increases with: (1) higher elevation, (2) higher temperature, (3) higher humidity, (4) lower barometric pressure. On a hot day at high elevation, your sUAS may struggle to hover or climb." },
+        { q: "How is density altitude calculated?", a: "Density altitude = pressure altitude + (120 × [actual temp − ISA standard temp]). ISA standard temp at sea level = 15°C, decreasing 2°C per 1,000 ft. Example: field elevation 5,000 ft, altimeter 29.92, temp 30°C. Standard temp at 5,000 ft = 15 − (2×5) = 5°C. Deviation = 30 − 5 = +25°C. Density altitude = 5,000 + (120 × 25) = 8,000 ft. Your sUAS performs as if at 8,000 ft even though you are at 5,000 ft." },
+        { q: "How does cold weather affect sUAS battery performance?", a: "Cold temperatures cause: (1) reduced battery capacity — LiPo cells deliver fewer mAh below ~15°C/59°F, (2) voltage sag under load — battery voltage drops faster, triggering low-voltage warnings earlier, (3) shorter flight times — 10–30% less than normal, (4) potential for sudden voltage collapse in extreme cold. Mitigation: warm batteries to ~20°C before flight (use insulated bags or hand warmers), keep spares warm, plan shorter flights, and monitor voltage closely throughout." },
+        { q: "How does hot weather affect sUAS performance?", a: "Hot weather increases density altitude — thinner air means: (1) less lift per RPM — motors work harder for the same hover, (2) reduced max thrust — lower climb rate and payload capacity, (3) higher motor/ESC temperatures — risk of thermal throttling or overheating, (4) battery degradation — LiPo cells degrade faster in heat and may swell, (5) reduced flight time from all of the above. At 100°F/38°C at 5,000 ft elevation, density altitude can exceed 8,000 ft." },
+        { q: "How does fog affect Part 107 flight legality?", a: "Part 107 §107.51 requires a minimum flight visibility of 3 statute miles. Fog (reported as FG in METARs) typically reduces visibility well below 3 SM — often to 1/4 SM or less. If visibility is below 3 SM for ANY reason (fog, mist, rain, haze, smoke), you cannot legally fly under Part 107 unless you have a waiver. Check the current METAR before every flight — do not rely on what conditions 'look like' from your location." },
+        { q: "What is wind shear near the ground and how does it affect sUAS?", a: "Wind shear = a sudden change in wind speed and/or direction over a short distance. Near the ground, it is caused by: (1) buildings/structures creating turbulent eddies, (2) tree lines creating mechanical turbulence, (3) thermal boundaries (differential heating of surfaces), (4) frontal passages, (5) outflow from thunderstorms (gust fronts). Small sUAS are especially vulnerable because of their low mass — a sudden 15 kt shear can flip or displace a small drone. Fly cautiously near structures and terrain features." },
+        { q: "What types of turbulence occur near mountains?", a: "Mountain wave turbulence: strong winds flowing over mountains create oscillating waves downwind — smooth but can produce severe up/downdrafts extending thousands of feet above the peaks. Rotor turbulence: violently rotating air beneath mountain wave crests — the most dangerous type, extremely turbulent and unpredictable. Mechanical turbulence: wind flowing around/over terrain features creates chaotic eddies on the lee (downwind) side. Cap cloud over the peak and lenticular (lens-shaped) clouds downwind are visual indicators of mountain wave activity. Avoid flying downwind of ridgelines in strong winds." },
+        { q: "How long do rod cells (night vision) take to adapt, and what should pilots avoid?", a: "Rod cells (responsible for peripheral/low-light vision) take approximately 30 minutes to fully adapt to darkness (dark adaptation). Cone cells (central/color vision) adapt in about 5–7 minutes. To preserve night vision: avoid bright white lights — use red lighting instead (red light doesn't reset rod cell adaptation). Even a brief exposure to bright light (like checking your phone at full brightness) can reset dark adaptation, requiring another 30 minutes. For Part 107 night operations, adapt your eyes before flight and dim all screens." },
+        { q: "What scanning technique works best for detecting objects at night?", a: "Off-center viewing: look 10–15° to the side of where you expect an object. At night, the center of your eye (fovea, cone cells) has a blind spot in low light. Your peripheral vision (rod cells) is more sensitive to dim light and motion. Scan slowly — let your eyes linger on each area for 1–2 seconds before moving. Also use a systematic scan pattern rather than random glancing. Small, slow-moving objects (like other sUAS or distant aircraft lights) are easy to miss with direct gaze." },
+        { q: "What icing risks affect sUAS in cold, moist conditions?", a: "Ice can accumulate on: (1) propellers — disrupts airfoil shape, reduces thrust, increases vibration; uneven icing causes imbalance, (2) sensors — pitot tubes (airspeed), barometers (altitude), cameras (video), GPS antennas (signal), (3) airframe — adds weight, changes aerodynamics. Types: clear ice (smooth, hard, heavy — forms in freezing rain), rime ice (rough, milky — forms in supercooled cloud droplets), mixed ice (combination). Most sUAS have no de-icing capability. If temp is near or below freezing and visible moisture is present, do not fly." }
       ];
 
       const CARDS_CLEAN = CARDS.filter(function (c) {
@@ -2846,6 +3049,13 @@
       const elExamMcOptions = document.getElementById("examMcOptions");
       const elCardWrap = document.getElementById("cardWrap");
       const elExamFigures = document.getElementById("examFigures");
+      const elWxRef = document.getElementById("wxRef");
+      const elWxRefToggle = document.getElementById("wxRefToggle");
+
+      elWxRefToggle.addEventListener("click", function (e) {
+        e.stopPropagation();
+        elWxRef.classList.toggle("open");
+      });
 
       function clearExamFigures() {
         elExamFigures.innerHTML = "";
@@ -3397,6 +3607,11 @@
       }
 
       elExamSetup.hidden = true;
+
+      if (activeCat === "weather") {
+        elWxRef.hidden = false;
+        elWxRef.classList.add("open");
+      }
 
       if (activeCat !== "all") {
         var catInfo = CATEGORIES.find(function (c) { return c.id === activeCat; });
