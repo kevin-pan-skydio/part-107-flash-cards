@@ -667,7 +667,7 @@
 
   <script>
     (function () {
-const CARDS = [
+      const CARDS = [
         // ═══════════════════════════════════════════════════════════════
         // CFR — Subpart A: General (§107.1–§107.21)
         // ═══════════════════════════════════════════════════════════════
@@ -796,7 +796,8 @@ const CARDS = [
         // ═══════════════════════════════════════════════════════════════
         // CFR — Subpart D: Operations Over Human Beings (§107.100–§107.145)
         // ═══════════════════════════════════════════════════════════════
-        { q: "What are the four categories for operations over human beings?", a: "Category 1, Category 2, Category 3, and Category 4 — each with increasing capability requirements." },
+        { q: "What are the four categories for operations over human beings, and when does each apply?", a: "Category 1: sUAS ≤ 0.55 lbs (250 g), no exposed rotating parts — fly over anyone, no FAA declaration needed. Category 2: sUAS won't transfer > 11 ft-lbs kinetic energy on impact — requires FAA-accepted declaration of compliance; CAN fly over open-air assemblies. Category 3: sUAS won't transfer > 25 ft-lbs kinetic energy — requires declaration; CANNOT fly over open-air assemblies; restricted to closed/restricted sites or no sustained flight over people. Category 4: sUAS has an FAA airworthiness certificate (like manned aircraft) — operated per its approved Flight Manual." },
+        { q: "How do you decide which operations-over-people category applies to your drone?", a: "Start with your aircraft: (1) If it weighs ≤ 0.55 lbs with no exposed blades → Category 1, simplest path. (2) If heavier but impact ≤ 11 ft-lbs → Category 2 (manufacturer files declaration with FAA, labels the aircraft). (3) If impact ≤ 25 ft-lbs → Category 3 (same declaration process, but you CANNOT fly over open-air assemblies and must use closed sites or avoid sustained overflight). (4) If the sUAS has an airworthiness certificate → Category 4 (most capable, follows manned-aircraft-style maintenance rules)." },
         { q: "§107.110 — For Category 1 operations over human beings, what is the max aircraft weight?", a: "0.55 pounds (250 grams) or less on takeoff and throughout the operation, including everything on board or attached." },
         { q: "Operations over people — Category 1 weight limit is 0.55 lbs. How many grams is that?", a: "250 grams." },
         { q: "§107.110 — For Category 1 operations over human beings, what is the rotating parts requirement?", a: "Must not contain any exposed rotating parts that would lacerate human skin upon impact." },
