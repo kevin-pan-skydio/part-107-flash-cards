@@ -501,6 +501,54 @@
       border-radius: 3px;
     }
 
+    .ref-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+      line-height: 1.4;
+    }
+
+    .ref-table th {
+      text-align: left;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--skydio-blue-darker);
+      border-bottom: 2px solid var(--border);
+      padding: 0.3rem 0.5rem;
+      white-space: nowrap;
+    }
+
+    .ref-table td {
+      padding: 0.35rem 0.5rem;
+      border-bottom: 1px solid #e8f0f8;
+      vertical-align: top;
+    }
+
+    .ref-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .ref-table .ref-highlight {
+      background: #fff0f0;
+    }
+
+    .ref-table .ref-highlight td {
+      color: #b00020;
+      font-weight: 600;
+    }
+
+    @media (max-width: 40rem) {
+      .ref-table {
+        font-size: 0.72rem;
+      }
+
+      .ref-table th,
+      .ref-table td {
+        padding: 0.25rem 0.35rem;
+      }
+    }
+
     .exam-figures {
       width: min(100%, 42rem);
       margin-top: 0.5rem;
@@ -847,10 +895,179 @@
           <span><code>SIGMET</code> Significant Meteorological Information</span>
           <span><code>AIRMET</code> Airmen's Meteorological Information</span>
           <span><code>PIREP</code> Pilot Report (prefix UA/UUA)</span>
-          <span><code>NOTAM</code> Notice to Air Missions</span>
+          <span><code>NOTAM</code> Notice to Airmen</span>
           <span><code>ATIS</code> Automatic Terminal Information Service</span>
           <span><code>AWOS</code> Automated Weather Observing System</span>
           <span><code>ASOS</code> Automated Surface Observing System</span>
+        </div>
+      </div>
+    </div>
+    <div class="wx-ref" id="airspaceRef" hidden>
+      <button type="button" class="wx-ref-toggle" id="airspaceRefToggle">
+        ◎ Airspace Quick Reference <span class="arrow">▼</span>
+      </button>
+      <div class="wx-ref-body">
+        <h4>Airspace Classes</h4>
+        <table class="ref-table">
+          <thead>
+            <tr>
+              <th>Class</th>
+              <th>Altitude</th>
+              <th>Shape / Location</th>
+              <th>Chart Depiction</th>
+              <th>sUAS Auth?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>A</strong></td>
+              <td>18,000 ft MSL → FL600</td>
+              <td>Everywhere over US</td>
+              <td>Not shown</td>
+              <td>N/A (never fly here)</td>
+            </tr>
+            <tr>
+              <td><strong>B</strong></td>
+              <td>Surface → 10,000 ft MSL</td>
+              <td>Busiest airports (LAX, JFK, ORD). Upside-down wedding cake, multiple shelves</td>
+              <td><strong>Solid blue lines</strong>, shelf fractions (e.g., 100/20)</td>
+              <td>Yes (LAANC / DroneZone). 30 NM Mode C veil</td>
+            </tr>
+            <tr>
+              <td><strong>C</strong></td>
+              <td>Surface → 4,000 ft AGL</td>
+              <td>Busy towered airports w/ radar. Two tiers: inner 5 NM (SFC), outer 10 NM (1,200 AGL floor)</td>
+              <td><strong>Solid magenta lines</strong> with altitude labels</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td><strong>D</strong></td>
+              <td>Surface → 2,500 ft AGL</td>
+              <td>Towered airports (smaller). Single cylinder ~4 NM radius. Reverts to E/G when tower closes</td>
+              <td><strong>Dashed blue line</strong></td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td><strong>E</strong></td>
+              <td>Various floors → 18,000 ft MSL</td>
+              <td>Controlled airspace everywhere not A/B/C/D. VFR aircraft don't need clearance</td>
+              <td>See Class E floors below</td>
+              <td>Only at surface areas (dashed magenta)</td>
+            </tr>
+            <tr>
+              <td><strong>G</strong></td>
+              <td>Surface → floor of Class E</td>
+              <td>Uncontrolled. Whatever is left below Class E</td>
+              <td>Not depicted</td>
+              <td>No</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h4>Class E Floors — Sectional Chart Lines</h4>
+        <table class="ref-table">
+          <thead>
+            <tr>
+              <th>Chart Marking</th>
+              <th>Class E Starts At</th>
+              <th>Below Is</th>
+              <th>sUAS at ≤400 ft?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Nothing shown (default)</td>
+              <td>1,200 ft AGL</td>
+              <td>Class G</td>
+              <td>In G — <strong>no auth needed</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Fuzzy magenta</strong> (fading edge)</td>
+              <td>700 ft AGL</td>
+              <td>Class G</td>
+              <td>In G — <strong>no auth needed</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Fuzzy blue</strong> (fading edge)</td>
+              <td>1,200 ft AGL (transition back up from 700)</td>
+              <td>Class G</td>
+              <td>In G — <strong>no auth needed</strong></td>
+            </tr>
+            <tr class="ref-highlight">
+              <td><strong>Dashed magenta</strong></td>
+              <td><strong>Surface (SFC)</strong></td>
+              <td>No Class G</td>
+              <td>In E — <strong>AUTH REQUIRED</strong></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h4>Special Use Airspace</h4>
+        <table class="ref-table">
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Chart Symbol</th>
+              <th>Can sUAS Enter?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Prohibited</strong> (P-####)</td>
+              <td>Blue hatched boundary</td>
+              <td>No — never</td>
+            </tr>
+            <tr>
+              <td><strong>Restricted</strong> (R-####)</td>
+              <td>Blue hatched boundary</td>
+              <td>Only when inactive (check NOTAMs)</td>
+            </tr>
+            <tr>
+              <td><strong>MOA</strong></td>
+              <td>Magenta hatched boundary</td>
+              <td>Yes — use extreme caution</td>
+            </tr>
+            <tr>
+              <td><strong>Alert</strong> (A-###)</td>
+              <td>Magenta hatched boundary</td>
+              <td>Yes — high training activity</td>
+            </tr>
+            <tr>
+              <td><strong>Warning</strong> (W-###)</td>
+              <td>Blue hatched boundary</td>
+              <td>Yes — over international waters</td>
+            </tr>
+            <tr>
+              <td><strong>TFR</strong></td>
+              <td>Not on printed chart (check NOTAMs)</td>
+              <td>No — when active</td>
+            </tr>
+            <tr>
+              <td><strong>NSA</strong></td>
+              <td>Magenta hatched boundary</td>
+              <td>Voluntary avoidance requested</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h4>Sectional Chart Line Summary</h4>
+        <div class="wx-ref-grid">
+          <span><strong style="color:#0050aa">Solid blue</strong> = Class B boundary</span>
+          <span><strong style="color:#aa2277">Solid magenta</strong> = Class C boundary</span>
+          <span><strong style="color:#0050aa">Dashed blue</strong> = Class D boundary</span>
+          <span><strong style="color:#aa2277">Dashed magenta</strong> = Class E surface area</span>
+          <span><strong style="color:#aa2277">Fuzzy magenta</strong> = Class E floor at 700 ft AGL</span>
+          <span><strong style="color:#0050aa">Fuzzy blue</strong> = Class E floor at 1,200 ft AGL</span>
+        </div>
+
+        <h4>Key Numbers for sUAS (Part 107)</h4>
+        <div class="wx-ref-grid">
+          <span><code>400 ft</code> Max altitude AGL</span>
+          <span><code>3 SM</code> Min flight visibility</span>
+          <span><code>500 ft</code> Min distance below clouds</span>
+          <span><code>2,000 ft</code> Min horizontal from clouds</span>
+          <span><code>100 mph</code> Max groundspeed (87 kt)</span>
+          <span><code>55 lbs</code> Max takeoff weight</span>
         </div>
       </div>
     </div>
@@ -1177,21 +1394,23 @@
         { q: "Fuzzy magenta vs fuzzy blue vs dashed magenta vs dashed blue — what does each line mean on a sectional chart?", a: "Fuzzy magenta = Class E starts at 700 AGL (Class G below). Fuzzy blue = Class E starts at 1,200 AGL (Class G below). Dashed magenta = Class E starts at surface (SFC), typically instrument approach extensions. Dashed blue = Class D airspace boundary (controlled, around towered airports)." },
         { q: "Where does Class E start at 14,500 ft MSL?", a: "Only in very specific remote areas (mostly mountainous western US) that are explicitly charted with their own boundary. These are rare. Do NOT confuse with the general default — in most of the US with no boundaries shown, Class E starts at 1,200 ft AGL. The 14,500 MSL areas have huge Class G columns below them (surface to 14,500 MSL)." },
         { q: "At what altitude does Class E become Class A airspace?", a: "18,000 ft MSL. Class A extends from 18,000 ft MSL up to FL600 (60,000 ft)." },
-        { q: "What does the solid blue line with inward tick marks (spokes) indicate on a sectional chart?", a: "This is a Class E transition boundary around an airport. The tick marks point toward the side where Class E starts at a lower altitude (700 ft AGL). On the other side, Class E starts higher (typically 1,200 AGL). Do not confuse with the dashed blue line, which is the Class D boundary." },
+        { q: "What does the solid blue line with inward tick marks (spokes) radiating from a symbol indicate on a sectional chart?", a: "These are VOR radials — the spoke-like lines radiate outward from a VOR (VHF Omnidirectional Range) compass rose. A VOR is a ground-based radio navigation aid that broadcasts 360 radials (one for each degree). On the chart, the compass rose shows a circle with tick marks at each degree and longer spokes at cardinal/intercardinal points. Victor airways (blue lines connecting VORs) follow these radials. The radials are oriented to magnetic north. For sUAS pilots: expect IFR traffic tracking along VOR radials and Victor airways at low altitudes." },
         { q: "How do VR/IR Military Training Route numbers tell you the altitude of operations?", a: "4-digit routes (e.g., VR1205, IR1234): operations at or below 1,500 ft AGL — high risk for sUAS! 3-digit routes (e.g., VR125, IR305): operations above 1,500 ft AGL." },
         { q: "You see 'VR1205' on a sectional chart. Should you be concerned as a sUAS pilot?", a: "Yes — 4-digit MTR routes mean military jets fly at or below 1,500 ft AGL at high speed. This is within sUAS operating altitude. Exercise extreme caution." },
         { q: "You see 'IR305' on a sectional chart. Does this affect sUAS operations?", a: "Less concern — 3-digit routes mean operations above 1,500 ft AGL, which is above the 400 ft Part 107 ceiling. Still be aware of military activity in the area." },
         { q: "What is the difference between controlled and uncontrolled airspace?", a: "Controlled airspace (Class A/B/C/D/E): ATC provides services; IFR flights need clearance. Uncontrolled airspace (Class G): ATC does not provide separation services. For sUAS, Class B/C/D and Class E surface area require prior authorization; Class G does not." },
         { q: "What are NOTAMs and how should you check them before a sUAS flight?", a: "Notices to Airmen — alerts about temporary hazards, TFRs, runway closures, and airspace changes. How to check: (1) 1800wxbrief.com — Leidos Flight Service website, get a full preflight briefing including NOTAMs. (2) Call 1-800-WX-BRIEF — talk to a Flight Service specialist. (3) FAA NOTAM Search (notams.aim.faa.gov) — direct online lookup. (4) B4UFLY app — FAA mobile app, shows NOTAMs on a map. You must check NOTAMs before every flight." },
         { q: "What are Maximum Elevation Figures (MEF) on a sectional chart?", a: "The highest elevation in a quadrant (in thousands and hundreds of feet MSL), including terrain and obstacles plus a safety buffer. Used for obstacle clearance planning." },
-        { q: "What are isogonic lines on a sectional chart and why do they matter?", a: "Lines of equal magnetic variation — important for converting between true and magnetic heading." },
-        { q: "How do you convert between true heading and magnetic heading using magnetic variation?", a: "East is least (subtract), West is best (add). Example: True heading 090° with 10°W variation → magnetic heading = 090° + 10° = 100°." },
+        { q: "When is magnetic heading used vs. true heading in aviation?", a: "MAGNETIC heading is used for: runway numbers (e.g., Runway 27 = 270° magnetic), tower/ATIS wind reports, VOR radials, and compass navigation.\n\nTRUE heading is used for: METAR/TAF wind reports, sectional chart courses and bearings, and navigation planning on charts.\n\nTo convert: use isogonic lines on the sectional chart. 'East is least, west is best' — with easterly variation, subtract to go from true to magnetic; with westerly, add." },
+        { q: "What are isogonic lines on a sectional chart and why do they matter?", a: "Lines of equal magnetic variation (the difference between true north and magnetic north at that location). They are dashed magenta lines running roughly north–south across the chart, labeled with the variation (e.g., '10°W'). Important for converting between true and magnetic heading — you need this when comparing METAR winds (true north) to runway headings (magnetic north)." },
+        { q: "How do you convert between true heading and magnetic heading using magnetic variation?", a: "East is least (subtract), West is best (add). To go from TRUE → MAGNETIC: add westerly variation, subtract easterly. Example: True heading 090° with 10°W variation → magnetic heading = 090° + 10° = 100°. To go from MAGNETIC → TRUE: do the opposite (subtract west, add east)." },
         { q: "On a sectional chart, what does an isogonic line labeled 5°W mean?", a: "Magnetic variation is 5° west — add 5° to true heading to get magnetic heading. Example: True 180° → Magnetic 185°." },
         { q: "What is the scale of a VFR sectional chart?", a: "1:500,000 — standard for VFR navigation." },
         { q: "What is the difference between a nautical mile and a statute mile?", a: "1 NM ≈ 1.15 SM (6,076 ft vs 5,280 ft). Part 107 visibility is measured in statute miles. Sectional charts use nautical miles for distance." },
         { q: "What is the relationship between knots and mph?", a: "1 knot = 1 nautical mile per hour ≈ 1.15 mph. Part 107 max speed: 87 knots = 100 mph." },
-        { q: "What does a VOR symbol on a sectional chart indicate for sUAS pilots?", a: "VHF Omnidirectional Range navigation aid. Victor airways radiate from VORs — expect IFR traffic along these corridors." },
-        { q: "What are Victor airways on a sectional chart and why do sUAS pilots care?", a: "Low-altitude IFR routes between VORs (below 18,000 MSL). Expect instrument traffic along these corridors — be aware when operating nearby." },
+        { q: "What does a VOR symbol on a sectional chart indicate for sUAS pilots?", a: "A VOR (VHF Omnidirectional Range) is a ground-based radio navigation aid that broadcasts 360 radials — one magnetic bearing for each degree of the compass. On the chart it appears as a compass rose: a circle with degree tick marks and a central hexagonal symbol. The small arrow on the rose points to magnetic north. Manned aircraft navigate by tuning the VOR frequency (shown near the symbol, e.g., 'ABE 112.4') and tracking inbound or outbound on a specific radial. For sUAS pilots: VORs anchor Victor airways, so expect concentrated IFR traffic along radials that connect to other VORs." },
+        { q: "What is a VOR radial?", a: "A radial is a magnetic bearing radiating outward FROM a VOR station. There are 360 radials (one per degree). For example, the 090 radial extends due east from the VOR. Pilots track radials to navigate between waypoints. On a sectional chart, the spoke-like lines around the VOR compass rose represent these radials, with longer lines at 10° intervals and shorter ticks at each degree. Victor airways follow specific radials between VOR stations." },
+        { q: "What are Victor airways on a sectional chart and why do sUAS pilots care?", a: "Victor airways are low-altitude IFR routes (below 18,000 ft MSL) depicted as blue lines connecting VOR stations. They follow specific VOR radials — e.g., V16 might follow the 270 radial from one VOR to the 090 radial of the next. The airway name (V followed by a number) is printed along the line. Width is typically 4 NM either side of the centerline. For sUAS pilots: expect instrument traffic along these corridors, especially below 6,000 ft AGL — be extra vigilant when operating near a Victor airway." },
         { q: "What do obstruction symbols on a sectional chart tell sUAS pilots?", a: "Show man-made obstacles (towers, antennas, etc.). The number next to the symbol shows total height MSL, with AGL height in parentheses. A lightning bolt symbol means the obstacle is lighted." },
         { q: "What is the difference between AGL and MSL on a sectional chart?", a: "AGL = above ground level (height above terrain directly below). MSL = mean sea level (fixed reference). Charts show obstacle heights in MSL with AGL in parentheses. Part 107 altitude limit (400 ft) is AGL." },
         { q: "Why are some aviation altitudes expressed in AGL and others in MSL?", a: "AGL is used when the rule needs a consistent height above terrain regardless of location — e.g., Part 107 ceiling (400 ft AGL), Class E floors (700/1,200 ft AGL), and Class D ceiling (2,500 ft AGL). If these were MSL, a 1,200 ft MSL floor would be underground in Denver (elev 5,400 ft) but 1,200 ft up in Miami. MSL is used for high-altitude references where terrain variation matters less — Class A (18,000 MSL), Class E remote floor (14,500 MSL), and airspace shelf labels on charts." },
@@ -1215,6 +1434,7 @@
         // Airport Operations
         // ═══════════════════════════════════════════════════════════════
         { q: "How are runway numbers determined at airports?", a: "Based on the magnetic heading, divided by 10 and rounded. Runway 13 points at 130° (between east and south = southeast). Runway 27 points at 270° (west). The opposite end of Runway 13 is Runway 31 (130° + 180° = 310°)." },
+        { q: "How are parallel runways designated?", a: "Parallel runways share the same number but add a letter suffix: L (left), R (right), and C (center) if there are three. Looking from the approach end, L is the left runway and R is the right. Examples: 9L and 9R (two parallels both heading ~090°). 27L, 27C, 27R (three parallels heading ~270°). The opposite ends swap: 9L becomes 27R, 9R becomes 27L, 9C becomes 27C." },
         { q: "Runway 13 — which direction is a plane heading when it lands or takes off on this runway?", a: "130° magnetic heading — that is southeast (90° is east, 180° is south, so 130° is between them). Aircraft approach and depart on approximately this heading." },
         { q: "Why do aircraft take off and land into the wind?", a: "Flying into the wind gives more airspeed over the wings for less groundspeed, resulting in a shorter takeoff roll and slower landing speed. Wind direction determines which runway is active." },
         { q: "What is a CTAF (Common Traffic Advisory Frequency)?", a: "The frequency used for self-announcing position and intentions at non-towered airports or at towered airports when the tower is closed. At a towered airport, the tower frequency typically becomes CTAF when the tower closes." },
@@ -1376,7 +1596,7 @@
       var CAT_RULES = [
         {
           id: "sectional",
-          re: /\bsectional\b|chart.*symbol|chart.*legend|isogonic|maximum elevation figure|\bmef\b|victor airway|magenta.*blue|blue.*magenta|obstruction light.*chart|lighted obstacle|vor symbol|nautical mile|statute mile|1:500|magnetic variation|true.*magnetic|magnetic.*heading|true.*heading|\bagl\b.*\bmsl\b|chart currency|class e.*700|class e.*extension|class e.*floor|class b shelf|blue.*parenthes|knot vs|nautical.*statute|distance measurement|charted heli|airport data block|airport icon|\bawos\b|\batis\b|data block.*chart|tick marks.*airport|airport.*circle|latitude.*longitude|longitude.*latitude|shelf fraction|fuzzy magenta|fuzzy blue|dashed magenta|dashed blue/i
+          re: /\bsectional\b|chart.*symbol|chart.*legend|isogonic|maximum elevation figure|\bmef\b|victor airway|magenta.*blue|blue.*magenta|obstruction light.*chart|lighted obstacle|vor symbol|\bvor\b.*radial|vor\b.*compass|nautical mile|statute mile|1:500|magnetic variation|true.*magnetic|magnetic.*heading|true.*heading|\bagl\b.*\bmsl\b|chart currency|class e.*700|class e.*extension|class e.*floor|class b shelf|blue.*parenthes|knot vs|nautical.*statute|distance measurement|charted heli|airport data block|airport icon|\bawos\b|\batis\b|data block.*chart|tick marks.*airport|airport.*circle|latitude.*longitude|longitude.*latitude|shelf fraction|fuzzy magenta|fuzzy blue|dashed magenta|dashed blue/i
         },
         {
           id: "weather",
@@ -3052,9 +3272,17 @@
       const elWxRef = document.getElementById("wxRef");
       const elWxRefToggle = document.getElementById("wxRefToggle");
 
+      const elAirspaceRef = document.getElementById("airspaceRef");
+      const elAirspaceRefToggle = document.getElementById("airspaceRefToggle");
+
       elWxRefToggle.addEventListener("click", function (e) {
         e.stopPropagation();
         elWxRef.classList.toggle("open");
+      });
+
+      elAirspaceRefToggle.addEventListener("click", function (e) {
+        e.stopPropagation();
+        elAirspaceRef.classList.toggle("open");
       });
 
       function clearExamFigures() {
@@ -3611,6 +3839,11 @@
       if (activeCat === "weather") {
         elWxRef.hidden = false;
         elWxRef.classList.add("open");
+      }
+
+      if (activeCat === "airspace") {
+        elAirspaceRef.hidden = false;
+        elAirspaceRef.classList.add("open");
       }
 
       if (activeCat !== "all") {
