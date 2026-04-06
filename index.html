@@ -996,21 +996,27 @@
               <td><strong>B</strong></td>
               <td>Surface → 10,000 ft MSL</td>
               <td>Busiest airports (LAX, JFK, ORD). Upside-down wedding cake, multiple shelves</td>
-              <td><strong>Solid blue lines</strong>, shelf fractions (e.g., 100/20)</td>
+              <td><svg width="36" height="12" viewBox="0 0 36 12" style="vertical-align:middle;margin-right:3px">
+                  <line x1="0" y1="6" x2="36" y2="6" stroke="#0050aa" stroke-width="3" />
+                </svg><strong>Solid blue</strong>, shelf fractions (e.g., 100/20)</td>
               <td>Yes (LAANC / DroneZone). 30 NM Mode C veil</td>
             </tr>
             <tr>
               <td><strong>C</strong></td>
               <td>Surface → ~4,000 ft above airport (charted in MSL)</td>
               <td>Busy towered airports w/ radar. Two tiers: inner 5 NM (SFC), outer 10 NM (1,200 AGL floor)</td>
-              <td><strong>Solid magenta lines</strong> with altitude labels</td>
+              <td><svg width="36" height="12" viewBox="0 0 36 12" style="vertical-align:middle;margin-right:3px">
+                  <line x1="0" y1="6" x2="36" y2="6" stroke="#aa2277" stroke-width="3" />
+                </svg><strong>Solid magenta</strong> with altitude labels</td>
               <td>Yes</td>
             </tr>
             <tr>
               <td><strong>D</strong></td>
               <td>Surface → ~2,500 ft above airport (charted in MSL)</td>
               <td>Towered airports (smaller). Single cylinder ~4 NM radius. Reverts to E/G when tower closes</td>
-              <td><strong>Dashed blue line</strong></td>
+              <td><svg width="36" height="12" viewBox="0 0 36 12" style="vertical-align:middle;margin-right:3px">
+                  <line x1="0" y1="6" x2="36" y2="6" stroke="#0050aa" stroke-width="3" stroke-dasharray="6,3" />
+                </svg><strong>Dashed blue</strong></td>
               <td>Yes</td>
             </tr>
             <tr>
@@ -1018,7 +1024,9 @@
               <td>Various floors → 18,000 ft MSL</td>
               <td>Controlled airspace everywhere not A/B/C/D. VFR aircraft don't need clearance</td>
               <td>See Class E floors below</td>
-              <td>Only at surface areas (dashed magenta)</td>
+              <td>Only at surface areas (<svg width="30" height="10" viewBox="0 0 30 10" style="vertical-align:middle">
+                  <line x1="0" y1="5" x2="30" y2="5" stroke="#aa2277" stroke-width="2" stroke-dasharray="5,3" />
+                </svg> dashed magenta)</td>
             </tr>
             <tr>
               <td><strong>G</strong></td>
@@ -1042,25 +1050,45 @@
           </thead>
           <tbody>
             <tr>
-              <td>Nothing shown (default)</td>
+              <td><span style="color:#999;font-style:italic">— no line —</span></td>
               <td>1,200 ft AGL</td>
               <td>Class G</td>
               <td>In G — <strong>no auth needed</strong></td>
             </tr>
             <tr>
-              <td><strong>Fuzzy magenta</strong> (fading edge)</td>
+              <td><svg width="40" height="14" viewBox="0 0 40 14" style="vertical-align:middle;margin-right:4px">
+                  <defs>
+                    <linearGradient id="tbl-fm" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#aa2277" stop-opacity="0.7" />
+                      <stop offset="100%" stop-color="#aa2277" stop-opacity="0" />
+                    </linearGradient>
+                  </defs>
+                  <rect width="40" height="14" fill="url(#tbl-fm)" />
+                  <line x1="0" y1="1" x2="40" y2="1" stroke="#aa2277" stroke-width="2" />
+                </svg><strong style="color:#aa2277">Fuzzy magenta</strong></td>
               <td>700 ft AGL</td>
               <td>Class G</td>
               <td>In G — <strong>no auth needed</strong></td>
             </tr>
             <tr>
-              <td><strong>Fuzzy blue</strong> (fading edge)</td>
+              <td><svg width="40" height="14" viewBox="0 0 40 14" style="vertical-align:middle;margin-right:4px">
+                  <defs>
+                    <linearGradient id="tbl-fb" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#0050aa" stop-opacity="0.6" />
+                      <stop offset="100%" stop-color="#0050aa" stop-opacity="0" />
+                    </linearGradient>
+                  </defs>
+                  <rect width="40" height="14" fill="url(#tbl-fb)" />
+                  <line x1="0" y1="1" x2="40" y2="1" stroke="#0050aa" stroke-width="2" />
+                </svg><strong style="color:#0050aa">Fuzzy blue</strong></td>
               <td>1,200 ft AGL (transition back up from 700)</td>
               <td>Class G</td>
               <td>In G — <strong>no auth needed</strong></td>
             </tr>
             <tr class="ref-highlight">
-              <td><strong>Dashed magenta</strong></td>
+              <td><svg width="40" height="14" viewBox="0 0 40 14" style="vertical-align:middle;margin-right:4px">
+                  <line x1="0" y1="7" x2="40" y2="7" stroke="#aa2277" stroke-width="2.5" stroke-dasharray="6,3" />
+                </svg><strong style="color:#aa2277">Dashed magenta</strong></td>
               <td><strong>Surface (SFC)</strong></td>
               <td>No Class G</td>
               <td>In E — <strong>AUTH REQUIRED</strong></td>
@@ -1080,37 +1108,79 @@
           <tbody>
             <tr>
               <td><strong>Prohibited</strong> (P-####)</td>
-              <td>Blue hatched boundary</td>
+              <td><svg width="40" height="14" viewBox="0 0 40 14" style="vertical-align:middle;margin-right:3px">
+                  <rect width="40" height="14" fill="none" stroke="#0050aa" stroke-width="1.5" />
+                  <line x1="0" y1="14" x2="10" y2="0" stroke="#0050aa" stroke-width="1" opacity="0.5" />
+                  <line x1="8" y1="14" x2="18" y2="0" stroke="#0050aa" stroke-width="1" opacity="0.5" />
+                  <line x1="16" y1="14" x2="26" y2="0" stroke="#0050aa" stroke-width="1" opacity="0.5" />
+                  <line x1="24" y1="14" x2="34" y2="0" stroke="#0050aa" stroke-width="1" opacity="0.5" />
+                  <line x1="32" y1="14" x2="42" y2="0" stroke="#0050aa" stroke-width="1" opacity="0.5" />
+                </svg>Blue hatched</td>
               <td>No — never</td>
             </tr>
             <tr>
               <td><strong>Restricted</strong> (R-####)</td>
-              <td>Blue hatched boundary</td>
+              <td><svg width="40" height="14" viewBox="0 0 40 14" style="vertical-align:middle;margin-right:3px">
+                  <rect width="40" height="14" fill="none" stroke="#0050aa" stroke-width="1.5" />
+                  <line x1="0" y1="14" x2="10" y2="0" stroke="#0050aa" stroke-width="1" opacity="0.5" />
+                  <line x1="8" y1="14" x2="18" y2="0" stroke="#0050aa" stroke-width="1" opacity="0.5" />
+                  <line x1="16" y1="14" x2="26" y2="0" stroke="#0050aa" stroke-width="1" opacity="0.5" />
+                  <line x1="24" y1="14" x2="34" y2="0" stroke="#0050aa" stroke-width="1" opacity="0.5" />
+                  <line x1="32" y1="14" x2="42" y2="0" stroke="#0050aa" stroke-width="1" opacity="0.5" />
+                </svg>Blue hatched</td>
               <td>Only when inactive (check NOTAMs)</td>
             </tr>
             <tr>
               <td><strong>MOA</strong></td>
-              <td>Magenta hatched boundary</td>
+              <td><svg width="40" height="14" viewBox="0 0 40 14" style="vertical-align:middle;margin-right:3px">
+                  <rect width="40" height="14" fill="none" stroke="#aa2277" stroke-width="1.5" />
+                  <line x1="0" y1="14" x2="10" y2="0" stroke="#aa2277" stroke-width="1" opacity="0.5" />
+                  <line x1="8" y1="14" x2="18" y2="0" stroke="#aa2277" stroke-width="1" opacity="0.5" />
+                  <line x1="16" y1="14" x2="26" y2="0" stroke="#aa2277" stroke-width="1" opacity="0.5" />
+                  <line x1="24" y1="14" x2="34" y2="0" stroke="#aa2277" stroke-width="1" opacity="0.5" />
+                  <line x1="32" y1="14" x2="42" y2="0" stroke="#aa2277" stroke-width="1" opacity="0.5" />
+                </svg>Magenta hatched</td>
               <td>Yes — use extreme caution</td>
             </tr>
             <tr>
               <td><strong>Alert</strong> (A-###)</td>
-              <td>Magenta hatched boundary</td>
+              <td><svg width="40" height="14" viewBox="0 0 40 14" style="vertical-align:middle;margin-right:3px">
+                  <rect width="40" height="14" fill="none" stroke="#aa2277" stroke-width="1.5" />
+                  <line x1="0" y1="14" x2="10" y2="0" stroke="#aa2277" stroke-width="1" opacity="0.5" />
+                  <line x1="8" y1="14" x2="18" y2="0" stroke="#aa2277" stroke-width="1" opacity="0.5" />
+                  <line x1="16" y1="14" x2="26" y2="0" stroke="#aa2277" stroke-width="1" opacity="0.5" />
+                  <line x1="24" y1="14" x2="34" y2="0" stroke="#aa2277" stroke-width="1" opacity="0.5" />
+                  <line x1="32" y1="14" x2="42" y2="0" stroke="#aa2277" stroke-width="1" opacity="0.5" />
+                </svg>Magenta hatched</td>
               <td>Yes — high training activity</td>
             </tr>
             <tr>
               <td><strong>Warning</strong> (W-###)</td>
-              <td>Blue hatched boundary</td>
+              <td><svg width="40" height="14" viewBox="0 0 40 14" style="vertical-align:middle;margin-right:3px">
+                  <rect width="40" height="14" fill="none" stroke="#0050aa" stroke-width="1.5" />
+                  <line x1="0" y1="14" x2="10" y2="0" stroke="#0050aa" stroke-width="1" opacity="0.5" />
+                  <line x1="8" y1="14" x2="18" y2="0" stroke="#0050aa" stroke-width="1" opacity="0.5" />
+                  <line x1="16" y1="14" x2="26" y2="0" stroke="#0050aa" stroke-width="1" opacity="0.5" />
+                  <line x1="24" y1="14" x2="34" y2="0" stroke="#0050aa" stroke-width="1" opacity="0.5" />
+                  <line x1="32" y1="14" x2="42" y2="0" stroke="#0050aa" stroke-width="1" opacity="0.5" />
+                </svg>Blue hatched</td>
               <td>Yes — over international waters</td>
             </tr>
             <tr>
               <td><strong>TFR</strong></td>
-              <td>Not on printed chart (check NOTAMs)</td>
+              <td><span style="color:#999;font-style:italic">Not on printed chart</span> (check NOTAMs)</td>
               <td>No — when active</td>
             </tr>
             <tr>
               <td><strong>NSA</strong></td>
-              <td>Magenta hatched boundary</td>
+              <td><svg width="40" height="14" viewBox="0 0 40 14" style="vertical-align:middle;margin-right:3px">
+                  <rect width="40" height="14" fill="none" stroke="#aa2277" stroke-width="1.5" />
+                  <line x1="0" y1="14" x2="10" y2="0" stroke="#aa2277" stroke-width="1" opacity="0.5" />
+                  <line x1="8" y1="14" x2="18" y2="0" stroke="#aa2277" stroke-width="1" opacity="0.5" />
+                  <line x1="16" y1="14" x2="26" y2="0" stroke="#aa2277" stroke-width="1" opacity="0.5" />
+                  <line x1="24" y1="14" x2="34" y2="0" stroke="#aa2277" stroke-width="1" opacity="0.5" />
+                  <line x1="32" y1="14" x2="42" y2="0" stroke="#aa2277" stroke-width="1" opacity="0.5" />
+                </svg>Magenta hatched</td>
               <td>Voluntary avoidance requested</td>
             </tr>
           </tbody>
@@ -1118,12 +1188,38 @@
 
         <h4>Sectional Chart Line Summary</h4>
         <div class="wx-ref-grid">
-          <span><strong style="color:#0050aa">Solid blue</strong> = Class B boundary</span>
-          <span><strong style="color:#aa2277">Solid magenta</strong> = Class C boundary</span>
-          <span><strong style="color:#0050aa">Dashed blue</strong> = Class D boundary</span>
-          <span><strong style="color:#aa2277">Dashed magenta</strong> = Class E surface area</span>
-          <span><strong style="color:#aa2277">Fuzzy magenta</strong> = Class E floor at 700 ft AGL</span>
-          <span><strong style="color:#0050aa">Fuzzy blue</strong> = Class E floor at 1,200 ft AGL</span>
+          <span><svg width="48" height="16" viewBox="0 0 48 16" style="vertical-align:middle;margin-right:4px">
+              <line x1="0" y1="8" x2="48" y2="8" stroke="#0050aa" stroke-width="3" />
+            </svg><strong style="color:#0050aa">Solid blue</strong> = Class B boundary</span>
+          <span><svg width="48" height="16" viewBox="0 0 48 16" style="vertical-align:middle;margin-right:4px">
+              <line x1="0" y1="8" x2="48" y2="8" stroke="#aa2277" stroke-width="3" />
+            </svg><strong style="color:#aa2277">Solid magenta</strong> = Class C boundary</span>
+          <span><svg width="48" height="16" viewBox="0 0 48 16" style="vertical-align:middle;margin-right:4px">
+              <line x1="0" y1="8" x2="48" y2="8" stroke="#0050aa" stroke-width="3" stroke-dasharray="8,4" />
+            </svg><strong style="color:#0050aa">Dashed blue</strong> = Class D boundary</span>
+          <span><svg width="48" height="16" viewBox="0 0 48 16" style="vertical-align:middle;margin-right:4px">
+              <line x1="0" y1="8" x2="48" y2="8" stroke="#aa2277" stroke-width="3" stroke-dasharray="8,4" />
+            </svg><strong style="color:#aa2277">Dashed magenta</strong> = Class E surface area</span>
+          <span><svg width="48" height="16" viewBox="0 0 48 16" style="vertical-align:middle;margin-right:4px">
+              <defs>
+                <linearGradient id="ref-fm" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#aa2277" stop-opacity="0.7" />
+                  <stop offset="100%" stop-color="#aa2277" stop-opacity="0" />
+                </linearGradient>
+              </defs>
+              <rect x="0" y="0" width="48" height="16" fill="url(#ref-fm)" />
+              <line x1="0" y1="1" x2="48" y2="1" stroke="#aa2277" stroke-width="2" />
+            </svg><strong style="color:#aa2277">Fuzzy magenta</strong> = Class E floor at 700 ft AGL</span>
+          <span><svg width="48" height="16" viewBox="0 0 48 16" style="vertical-align:middle;margin-right:4px">
+              <defs>
+                <linearGradient id="ref-fb" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#0050aa" stop-opacity="0.6" />
+                  <stop offset="100%" stop-color="#0050aa" stop-opacity="0" />
+                </linearGradient>
+              </defs>
+              <rect x="0" y="0" width="48" height="16" fill="url(#ref-fb)" />
+              <line x1="0" y1="1" x2="48" y2="1" stroke="#0050aa" stroke-width="2" />
+            </svg><strong style="color:#0050aa">Fuzzy blue</strong> = Class E floor at 1,200 ft AGL</span>
         </div>
 
         <h4>AGL vs MSL on Sectional Charts</h4>
@@ -1489,14 +1585,20 @@
         { q: "What is Class A airspace — where does it exist and what are the rules?", a: "Class A extends from 18,000 ft MSL up to FL600 (60,000 ft). Covers the entire US. ALL flights must be IFR with ATC clearance. VFR flight is not permitted. sUAS never operate here (Part 107 max is 400 ft AGL)." },
         // — Class B
         { q: "What is Class B airspace — where does it exist and what are its dimensions?", a: "Class B surrounds the busiest airports in the US (major airports like LAX, JFK, ORD, ATL). Shaped like an upside-down wedding cake with multiple tiers/shelves. Generally extends from the surface up to 10,000 ft MSL. Inner core typically goes surface to 10,000 MSL. Outer shelves have higher floors (e.g., 2,000 or 3,000 MSL to 10,000 MSL). Each shelf's floor and ceiling are labeled on the chart." },
-        { q: "What does the 'upside-down wedding cake' shape of Class B airspace look like?", a: "Solid blue lines form concentric rings. The inner ring starts at the surface (SFC/100 means surface to 10,000 MSL). Outer rings have progressively higher floors — e.g., 20/100 means 2,000 MSL floor to 10,000 MSL ceiling. The result is wider coverage at higher altitudes, narrower at the surface. Read the shelf fractions to know exact altitudes." },
+        {
+          q: "What does the 'upside-down wedding cake' shape of Class B airspace look like?", a: "Solid blue lines form concentric rings. The inner ring starts at the surface (SFC/100 means surface to 10,000 MSL). Outer rings have progressively higher floors — e.g., 20/100 means 2,000 MSL floor to 10,000 MSL ceiling. The result is wider coverage at higher altitudes, narrower at the surface. Read the shelf fractions to know exact altitudes.",
+          svg: '<svg viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg"><rect width="300" height="160" fill="#f5f0e0" rx="4"/><text x="150" y="16" text-anchor="middle" font-size="11" fill="#666" font-family="sans-serif" font-weight="bold">CLASS B — Upside-Down Wedding Cake (side view)</text><rect x="100" y="28" width="100" height="85" fill="#ddeeff" fill-opacity="0.4" stroke="#2266cc" stroke-width="2"/><rect x="60" y="28" width="180" height="55" fill="#ddeeff" fill-opacity="0.3" stroke="#2266cc" stroke-width="2"/><rect x="30" y="28" width="240" height="30" fill="#ddeeff" fill-opacity="0.2" stroke="#2266cc" stroke-width="2"/><text x="150" y="44" text-anchor="middle" font-size="8" fill="#2255aa" font-family="sans-serif">30/100</text><text x="68" y="68" font-size="8" fill="#2255aa" font-family="sans-serif">20/100</text><text x="108" y="100" font-size="8" fill="#2255aa" font-family="sans-serif">SFC/100</text><line x1="20" y1="113" x2="280" y2="113" stroke="#886644" stroke-width="1.5"/><text x="287" y="116" font-size="7" fill="#886644" font-family="sans-serif">GND</text><text x="287" y="32" font-size="7" fill="#2255aa" font-family="sans-serif">10,000 MSL</text><circle cx="150" cy="113" r="3" fill="#2266cc"/><text x="150" y="128" text-anchor="middle" font-size="8" fill="#444" font-family="sans-serif">Wider at top, narrow at surface</text><text x="150" y="142" text-anchor="middle" font-size="8" fill="#2266cc" font-family="sans-serif" font-weight="bold">Solid blue lines on chart (top-down view: concentric rings)</text><text x="150" y="155" text-anchor="middle" font-size="8" fill="#cc4444" font-family="sans-serif">⚠ sUAS AUTH REQUIRED</text></svg>'
+        },
         { q: "What are the VFR requirements for manned aircraft in Class B airspace?", a: "Must have ATC clearance ('cleared into Class Bravo'). Visibility: 3 SM. Cloud clearance: clear of clouds. Transponder with Mode C (altitude reporting) required. For sUAS: prior ATC authorization required (LAANC or DroneZone)." },
         { q: "What is the Mode C veil and why does it matter for sUAS pilots?", a: "A 30 NM radius ring around the primary Class B airport. All manned aircraft inside the veil must have a Mode C transponder (altitude reporting), even outside Class B itself. For sUAS: this means very high traffic density — be extra vigilant. The veil does not create an authorization requirement beyond what Class B/C/D/E already requires, but it signals a busy area." },
         // — Class C
         { q: "What is Class C airspace — where does it exist and what are its dimensions?", a: "Class C surrounds busy airports with a control tower and radar approach control (smaller than Class B airports). Two-tier structure: Inner circle = 5 NM radius, surface to 4,000 ft AGL. Outer circle = 10 NM radius, 1,200 ft AGL to 4,000 ft AGL. So the outer ring has a floor of 1,200 AGL — below that in the outer ring is Class E or G." },
         { q: "What are the two tiers of Class C airspace and their dimensions?", a: "Inner circle (surface area): 5 NM radius from the airport, surface to 4,000 ft AGL above airport elevation. Outer circle (shelf): 10 NM radius from the airport, floor at 1,200 ft AGL to ceiling at 4,000 ft AGL. There is also an 'outer area' extending to 20 NM where ATC provides radar services but participation is voluntary." },
         { q: "What are the VFR requirements for manned aircraft in Class C airspace?", a: "Must establish two-way radio communication with ATC. Visibility: 3 SM. Cloud clearance: 500 ft below, 1,000 ft above, 2,000 ft horizontal. Mode C transponder required. For sUAS: prior ATC authorization required (LAANC or DroneZone)." },
-        { q: "On a sectional chart, how is Class C airspace depicted?", a: "Solid magenta circles — two concentric rings. The inner ring (5 NM) and outer ring (10 NM) with altitude labels in hundreds of feet MSL. Example: '41/SFC' (inner, surface to 4,100 MSL) and '41/15' (outer, 1,500 MSL to 4,100 MSL)." },
+        {
+          q: "On a sectional chart, how is Class C airspace depicted?", a: "Solid magenta circles — two concentric rings. The inner ring (5 NM) and outer ring (10 NM) with altitude labels in hundreds of feet MSL. Example: '41/SFC' (inner, surface to 4,100 MSL) and '41/15' (outer, 1,500 MSL to 4,100 MSL).",
+          svg: '<svg viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg"><rect width="300" height="160" fill="#f5f0e0" rx="4"/><text x="150" y="16" text-anchor="middle" font-size="11" fill="#666" font-family="sans-serif" font-weight="bold">CLASS C — Solid Magenta (top-down view)</text><circle cx="150" cy="85" r="60" fill="#cc338811" stroke="#cc3388" stroke-width="2.5"/><circle cx="150" cy="85" r="30" fill="#cc338822" stroke="#cc3388" stroke-width="2.5"/><circle cx="150" cy="85" r="3" fill="#cc3388"/><text x="150" y="82" text-anchor="middle" font-size="8" fill="#993366" font-family="sans-serif" font-weight="bold">41/SFC</text><text x="150" y="92" text-anchor="middle" font-size="7" fill="#993366" font-family="sans-serif">5 NM inner</text><text x="208" y="68" font-size="8" fill="#993366" font-family="sans-serif" font-weight="bold">41/15</text><text x="208" y="78" font-size="7" fill="#993366" font-family="sans-serif">10 NM outer</text><text x="150" y="155" text-anchor="middle" font-size="8" fill="#cc4444" font-family="sans-serif">⚠ sUAS AUTH REQUIRED — solid magenta = Class C</text></svg>'
+        },
         // — Class D
         { q: "What is Class D airspace — where does it exist and what are its dimensions?", a: "Class D surrounds airports with an operating control tower that are not Class B or C. Typically a single cylinder: 4 NM radius from the airport, surface to 2,500 ft AGL above airport elevation. Shown on the chart as a dashed blue circle. When the tower closes, Class D usually reverts to Class E or G — check NOTAMs (1800wxbrief.com / 1-800-WX-BRIEF)." },
         { q: "What are the VFR requirements for manned aircraft in Class D airspace?", a: "Must establish two-way radio communication with the tower. Visibility: 3 SM. Cloud clearance: 500 ft below, 1,000 ft above, 2,000 ft horizontal. No transponder required (unless inside Mode C veil). For sUAS: prior ATC authorization required." },
@@ -1506,10 +1608,19 @@
         { q: "What is Class E airspace and where does it exist?", a: "Class E is controlled airspace that is NOT Class A, B, C, or D. It exists almost everywhere — most of the airspace above 1,200 ft AGL (or 700 AGL near airports) up to 18,000 ft MSL is Class E. ATC provides IFR separation in Class E but VFR aircraft do not need clearance or radio contact. For sUAS: authorization required only in Class E surface areas designated for airports." },
         { q: "At what altitudes does Class E airspace typically begin?", a: "Class E has multiple possible floors: (1) At the surface (SFC) — dashed magenta line, typically instrument approach extensions. (2) At 700 ft AGL — fuzzy magenta boundary, common near airports. (3) At 1,200 ft AGL — the DEFAULT across most of the US (no boundary needed on chart; fuzzy blue marks where the floor transitions back up to 1,200 from 700). (4) At 14,500 ft MSL — only in rare, explicitly charted remote/mountainous areas. Class E always ends at 18,000 ft MSL where Class A begins." },
         { q: "Do you need authorization to fly a sUAS in Class E airspace?", a: "Yes — if you are IN Class E, you always need prior ATC authorization. The key nuance: Class E often does not extend down to the surface. If the floor is 700 ft AGL (fuzzy magenta) or 1,200 ft AGL (fuzzy blue), then at typical sUAS altitudes (below 400 ft) you are actually in Class G underneath, NOT in Class E — so no authorization is needed. But where Class E starts at the surface (dashed magenta line, e.g., instrument approach extensions), you are in Class E from the ground up and authorization IS required." },
-        { q: "How is Class E airspace starting at 700 ft AGL shown on a sectional chart?", a: "Fuzzy (fading) magenta boundary. The magenta shading fades toward the side where Class E starts at 700 ft AGL; below 700 AGL in that area is Class G. This is the most common Class E boundary — it appears around most airports to protect instrument approaches." },
-        { q: "How is Class E starting at 1,200 ft AGL shown on a sectional chart?", a: "Fuzzy (fading) blue boundary — similar to the magenta but blue. Inside the blue side, Class E starts at 1,200 ft AGL. Below 1,200 AGL is Class G. This appears in areas farther from airports." },
-        { q: "What is a Class E surface extension on a sectional chart?", a: "Shown as a dashed magenta line extending from Class C/D airspace, usually along instrument approach or departure corridors. Class E begins at the surface (SFC) in these areas — sUAS need prior ATC authorization to fly here. Think of them as 'hallways' of controlled airspace connecting the airport to the approach path." },
-        { q: "Where does Class E exist when there are no fuzzy magenta or blue boundaries on the chart?", a: "Class E starts at 14,500 ft MSL by default in areas without a lower Class E boundary. Below 14,500 MSL in those areas is Class G (uncontrolled). This mainly applies to remote, sparsely populated areas." },
+        {
+          q: "How is Class E airspace starting at 700 ft AGL shown on a sectional chart?", a: "Fuzzy (fading) magenta boundary. The magenta shading fades toward the side where Class E starts at 700 ft AGL; below 700 AGL in that area is Class G. This is the most common Class E boundary — it appears around most airports to protect instrument approaches.",
+          svg: '<svg viewBox="0 0 300 140" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="fzm" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#cc3388" stop-opacity="0.7"/><stop offset="100%" stop-color="#cc3388" stop-opacity="0"/></linearGradient></defs><rect width="300" height="140" fill="#f5f0e0" rx="4"/><text x="150" y="18" text-anchor="middle" font-size="11" fill="#666" font-family="sans-serif" font-weight="bold">SECTIONAL CHART — Fuzzy Magenta</text><rect x="20" y="30" width="260" height="45" fill="url(#fzm)"/><line x1="20" y1="30" x2="280" y2="30" stroke="#cc3388" stroke-width="2.5"/><text x="150" y="50" text-anchor="middle" font-size="10" fill="#993366" font-family="sans-serif">← fading magenta edge →</text><text x="35" y="95" font-size="10" fill="#444" font-family="sans-serif" font-weight="bold">Above line: Class E (starts 700 AGL)</text><text x="35" y="112" font-size="10" fill="#888" font-family="sans-serif">Below line: Class G (uncontrolled)</text><text x="35" y="128" font-size="9" fill="#66aa44" font-family="sans-serif">sUAS at ≤400 ft → in Class G → no auth needed</text></svg>'
+        },
+        {
+          q: "How is Class E starting at 1,200 ft AGL shown on a sectional chart?", a: "Fuzzy (fading) blue boundary — similar to the magenta but blue. Inside the blue side, Class E starts at 1,200 ft AGL. Below 1,200 AGL is Class G. This appears in areas farther from airports.",
+          svg: '<svg viewBox="0 0 300 140" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="fzb" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2266cc" stop-opacity="0.6"/><stop offset="100%" stop-color="#2266cc" stop-opacity="0"/></linearGradient></defs><rect width="300" height="140" fill="#f5f0e0" rx="4"/><text x="150" y="18" text-anchor="middle" font-size="11" fill="#666" font-family="sans-serif" font-weight="bold">SECTIONAL CHART — Fuzzy Blue</text><rect x="20" y="30" width="260" height="45" fill="url(#fzb)"/><line x1="20" y1="30" x2="280" y2="30" stroke="#2266cc" stroke-width="2.5"/><text x="150" y="50" text-anchor="middle" font-size="10" fill="#2255aa" font-family="sans-serif">← fading blue edge →</text><text x="35" y="95" font-size="10" fill="#444" font-family="sans-serif" font-weight="bold">Above line: Class E (starts 1,200 AGL)</text><text x="35" y="112" font-size="10" fill="#888" font-family="sans-serif">Below line: Class G (uncontrolled)</text><text x="35" y="128" font-size="9" fill="#66aa44" font-family="sans-serif">sUAS at ≤400 ft → in Class G → no auth needed</text></svg>'
+        },
+        {
+          q: "What is a Class E surface extension on a sectional chart?", a: "Shown as a dashed magenta line extending from Class C/D airspace, usually along instrument approach or departure corridors. Class E begins at the surface (SFC) in these areas — sUAS need prior ATC authorization to fly here. Think of them as 'hallways' of controlled airspace connecting the airport to the approach path.",
+          svg: '<svg viewBox="0 0 300 140" xmlns="http://www.w3.org/2000/svg"><rect width="300" height="140" fill="#f5f0e0" rx="4"/><text x="150" y="18" text-anchor="middle" font-size="11" fill="#666" font-family="sans-serif" font-weight="bold">SECTIONAL CHART — Dashed Magenta</text><line x1="20" y1="45" x2="280" y2="45" stroke="#cc3388" stroke-width="2.5" stroke-dasharray="12,6"/><line x1="20" y1="75" x2="280" y2="75" stroke="#cc3388" stroke-width="2.5" stroke-dasharray="12,6"/><text x="150" y="64" text-anchor="middle" font-size="10" fill="#993366" font-family="sans-serif" font-weight="bold">Class E — Surface (SFC)</text><text x="150" y="96" font-size="10" fill="#444" font-family="sans-serif" text-anchor="middle">Extends from Class D airport along approach corridor</text><text x="150" y="115" font-size="9" fill="#cc4444" font-family="sans-serif" text-anchor="middle" font-weight="bold">⚠ sUAS AUTH REQUIRED — you are in Class E from the ground up</text><text x="150" y="132" font-size="8" fill="#888" font-family="sans-serif" text-anchor="middle">Dashed (not fuzzy) = starts at surface, not 700/1,200 AGL</text></svg>'
+        },
+        { q: "Where does Class E exist when there are no fuzzy magenta or blue boundaries on the chart?", a: "The DEFAULT is Class E starts at 1,200 ft AGL — this applies across most of the US whenever no magenta or blue boundary is shown. No line is needed on the chart because 1,200 AGL is the assumed floor. The 14,500 ft MSL floor is a rare exception that only exists in specifically charted remote/mountainous areas (mostly western US) — those areas have their own explicit boundaries on the chart." },
         { q: "At what altitude does Class E end and Class A begin?", a: "18,000 ft MSL. Class A extends from 18,000 ft MSL to FL600 (60,000 ft). All flights in Class A must be IFR." },
         { q: "In Class E airspace, what are the rules for IFR vs VFR aircraft?", a: "IFR aircraft: must have ATC clearance and are separated from other IFR traffic by ATC. VFR aircraft: do NOT need ATC clearance, do NOT need to talk to ATC, are responsible for their own see-and-avoid. sUAS must yield right-of-way to all of them." },
         // — Class G
@@ -1553,11 +1664,20 @@
         { q: "How do you read latitude and longitude on a sectional chart?", a: "Each degree of latitude or longitude is divided into 60 minutes. On the chart, every 10 minutes is marked with a heavy tick line. Example: if you see 47° with 3 heavy lines below it, that position is 46°30' (46 degrees and 30 minutes)." },
         { q: "How many minutes are in one degree of latitude or longitude?", a: "60 minutes per degree. Each heavy tick mark on a sectional chart represents 10 minutes." },
         { q: "On a sectional chart, you see 47° and count 3 heavy tick lines south of it. What is the latitude?", a: "46°30' — each heavy tick = 10 minutes, so 3 ticks = 30 minutes south of 47° = 46 degrees 30 minutes." },
-        { q: "On an airspace shelf fraction like '40/SFC', what do the numbers mean?", a: "The top number (40) = ceiling in hundreds of feet MSL, so 4,000 ft MSL. The bottom (SFC) = surface (ground level). So '40/SFC' means the airspace extends from the surface up to 4,000 ft MSL." },
+        {
+          q: "On an airspace shelf fraction like '40/SFC', what do the numbers mean?", a: "The top number (40) = ceiling in hundreds of feet MSL, so 4,000 ft MSL. The bottom (SFC) = surface (ground level). So '40/SFC' means the airspace extends from the surface up to 4,000 ft MSL.",
+          svg: '<svg viewBox="0 0 300 130" xmlns="http://www.w3.org/2000/svg"><rect width="300" height="130" fill="#f5f0e0" rx="4"/><text x="150" y="16" text-anchor="middle" font-size="11" fill="#666" font-family="sans-serif" font-weight="bold">SHELF FRACTIONS — How to Read</text><rect x="30" y="30" width="100" height="60" fill="#ddeeff" fill-opacity="0.4" stroke="#2266cc" stroke-width="2" rx="2"/><text x="80" y="55" text-anchor="middle" font-size="18" fill="#2255aa" font-family="sans-serif" font-weight="bold">40</text><line x1="55" y1="62" x2="105" y2="62" stroke="#2255aa" stroke-width="1.5"/><text x="80" y="78" text-anchor="middle" font-size="14" fill="#2255aa" font-family="sans-serif" font-weight="bold">SFC</text><text x="80" y="105" text-anchor="middle" font-size="8" fill="#444" font-family="sans-serif">SFC → 4,000 MSL</text><rect x="170" y="30" width="100" height="60" fill="#ddeeff" fill-opacity="0.4" stroke="#2266cc" stroke-width="2" rx="2"/><text x="220" y="55" text-anchor="middle" font-size="18" fill="#2255aa" font-family="sans-serif" font-weight="bold">80</text><line x1="195" y1="62" x2="245" y2="62" stroke="#2255aa" stroke-width="1.5"/><text x="220" y="78" text-anchor="middle" font-size="18" fill="#2255aa" font-family="sans-serif" font-weight="bold">40</text><text x="220" y="105" text-anchor="middle" font-size="8" fill="#444" font-family="sans-serif">4,000 → 8,000 MSL</text><text x="150" y="124" text-anchor="middle" font-size="9" fill="#888" font-family="sans-serif">Top = ceiling (×100 MSL) · Bottom = floor (×100 MSL or SFC)</text></svg>'
+        },
         { q: "On a sectional chart, what does '80/40' mean on an airspace shelf?", a: "The shelf extends from 4,000 ft MSL (bottom number × 100) up to 8,000 ft MSL (top number × 100). If you are below 4,000 MSL at that location, you are not inside that shelf." },
         { q: "When does Class E start at 1,200 ft AGL?", a: "Everywhere else (not fuzzy magenta), meaning anytime you’re outside of the thick and fuzzy magenta circle or set of lines, or nothing is being indicated on the sectional chart, Class E airspace starts at 1,200 ft. AGL." },
-        { q: "What does a dashed blue line on a sectional chart indicate?", a: "Class D airspace boundary — typically around airports with a part-time or full-time control tower. When the tower closes, the airspace usually reverts to Class E or G. Check NOTAMs (1800wxbrief.com / 1-800-WX-BRIEF) and the Chart Supplement for hours." },
-        { q: "Fuzzy magenta vs fuzzy blue vs dashed magenta vs dashed blue — what does each line mean on a sectional chart?", a: "Fuzzy magenta = Class E starts at 700 AGL (Class G below). Fuzzy blue = Class E starts at 1,200 AGL (Class G below). Dashed magenta = Class E starts at surface (SFC), typically instrument approach extensions. Dashed blue = Class D airspace boundary (controlled, around towered airports)." },
+        {
+          q: "What does a dashed blue line on a sectional chart indicate?", a: "Class D airspace boundary — typically around airports with a part-time or full-time control tower. When the tower closes, the airspace usually reverts to Class E or G. Check NOTAMs (1800wxbrief.com / 1-800-WX-BRIEF) and the Chart Supplement for hours.",
+          svg: '<svg viewBox="0 0 300 140" xmlns="http://www.w3.org/2000/svg"><rect width="300" height="140" fill="#f5f0e0" rx="4"/><text x="150" y="18" text-anchor="middle" font-size="11" fill="#666" font-family="sans-serif" font-weight="bold">SECTIONAL CHART — Dashed Blue</text><circle cx="150" cy="72" r="48" fill="none" stroke="#2266cc" stroke-width="2.5" stroke-dasharray="10,5"/><text x="150" y="68" text-anchor="middle" font-size="9" fill="#2255aa" font-family="sans-serif" font-weight="bold">Class D</text><text x="150" y="80" text-anchor="middle" font-size="8" fill="#2255aa" font-family="sans-serif">[25] ← ceiling MSL</text><circle cx="150" cy="72" r="3" fill="#2266cc"/><text x="150" y="135" text-anchor="middle" font-size="9" fill="#cc4444" font-family="sans-serif" font-weight="bold">⚠ sUAS AUTH REQUIRED (towered airport)</text></svg>'
+        },
+        {
+          q: "Fuzzy magenta vs fuzzy blue vs dashed magenta vs dashed blue — what does each line mean on a sectional chart?", a: "Fuzzy magenta = Class E starts at 700 AGL (Class G below). Fuzzy blue = Class E starts at 1,200 AGL (Class G below). Dashed magenta = Class E starts at surface (SFC), typically instrument approach extensions. Dashed blue = Class D airspace boundary (controlled, around towered airports).",
+          svg: '<svg viewBox="0 0 300 170" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="fm2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#cc3388" stop-opacity="0.6"/><stop offset="100%" stop-color="#cc3388" stop-opacity="0"/></linearGradient><linearGradient id="fb2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2266cc" stop-opacity="0.5"/><stop offset="100%" stop-color="#2266cc" stop-opacity="0"/></linearGradient></defs><rect width="300" height="170" fill="#f5f0e0" rx="4"/><text x="150" y="15" text-anchor="middle" font-size="10" fill="#666" font-family="sans-serif" font-weight="bold">FOUR LINE TYPES — Side-by-Side Comparison</text><rect x="10" y="25" width="65" height="25" fill="url(#fm2)"/><line x1="10" y1="25" x2="75" y2="25" stroke="#cc3388" stroke-width="2"/><text x="42" y="60" text-anchor="middle" font-size="7" fill="#993366" font-family="sans-serif" font-weight="bold">Fuzzy Magenta</text><text x="42" y="70" text-anchor="middle" font-size="6" fill="#666" font-family="sans-serif">E at 700 AGL</text><text x="42" y="80" text-anchor="middle" font-size="6" fill="#66aa44" font-family="sans-serif">G below → OK</text><rect x="82" y="25" width="65" height="25" fill="url(#fb2)"/><line x1="82" y1="25" x2="147" y2="25" stroke="#2266cc" stroke-width="2"/><text x="114" y="60" text-anchor="middle" font-size="7" fill="#2255aa" font-family="sans-serif" font-weight="bold">Fuzzy Blue</text><text x="114" y="70" text-anchor="middle" font-size="6" fill="#666" font-family="sans-serif">E at 1,200 AGL</text><text x="114" y="80" text-anchor="middle" font-size="6" fill="#66aa44" font-family="sans-serif">G below → OK</text><rect x="154" y="25" width="65" height="25" fill="none"/><line x1="154" y1="33" x2="219" y2="33" stroke="#cc3388" stroke-width="2" stroke-dasharray="8,4"/><line x1="154" y1="43" x2="219" y2="43" stroke="#cc3388" stroke-width="2" stroke-dasharray="8,4"/><text x="186" y="60" text-anchor="middle" font-size="7" fill="#993366" font-family="sans-serif" font-weight="bold">Dashed Magenta</text><text x="186" y="70" text-anchor="middle" font-size="6" fill="#666" font-family="sans-serif">E at SFC</text><text x="186" y="80" text-anchor="middle" font-size="6" fill="#cc4444" font-family="sans-serif" font-weight="bold">⚠ AUTH REQ</text><rect x="226" y="25" width="65" height="25" fill="none"/><circle cx="258" cy="38" r="16" fill="none" stroke="#2266cc" stroke-width="2" stroke-dasharray="6,3"/><text x="258" y="60" text-anchor="middle" font-size="7" fill="#2255aa" font-family="sans-serif" font-weight="bold">Dashed Blue</text><text x="258" y="70" text-anchor="middle" font-size="6" fill="#666" font-family="sans-serif">Class D</text><text x="258" y="80" text-anchor="middle" font-size="6" fill="#cc4444" font-family="sans-serif" font-weight="bold">⚠ AUTH REQ</text><line x1="10" y1="88" x2="290" y2="88" stroke="#ccc" stroke-width="0.5"/><text x="10" y="102" font-size="8" fill="#66aa44" font-family="sans-serif" font-weight="bold">✓ No auth needed (Class G at sUAS altitude):</text><text x="15" y="115" font-size="8" fill="#666" font-family="sans-serif">Fuzzy magenta (E at 700) and fuzzy blue (E at 1,200)</text><text x="10" y="132" font-size="8" fill="#cc4444" font-family="sans-serif" font-weight="bold">⚠ Auth REQUIRED:</text><text x="15" y="145" font-size="8" fill="#666" font-family="sans-serif">Dashed magenta (E at surface) and dashed blue (Class D)</text><text x="15" y="162" font-size="7" fill="#888" font-family="sans-serif">Also auth required: solid blue (Class B) and solid magenta (Class C)</text></svg>'
+        },
         { q: "Where does Class E start at 14,500 ft MSL?", a: "Only in very specific remote areas (mostly mountainous western US) that are explicitly charted with their own boundary. These are rare. Do NOT confuse with the general default — in most of the US with no boundaries shown, Class E starts at 1,200 ft AGL. The 14,500 MSL areas have huge Class G columns below them (surface to 14,500 MSL)." },
         { q: "What does the solid blue line with inward tick marks (spokes) radiating from a symbol indicate on a sectional chart?", a: "These are VOR radials — the spoke-like lines radiate outward from a VOR (VHF Omnidirectional Range) compass rose. A VOR is a ground-based radio navigation aid that broadcasts 360 radials (one for each degree). On the chart, the compass rose shows a circle with tick marks at each degree and longer spokes at cardinal/intercardinal points. Victor airways (blue lines connecting VORs) follow these radials. The radials are oriented to magnetic north. For sUAS pilots: expect IFR traffic tracking along VOR radials and Victor airways at low altitudes." },
         { q: "You see 'IR305' on a sectional chart. Does this affect sUAS operations?", a: "Less concern — 3-digit routes mean operations above 1,500 ft AGL, which is above the 400 ft Part 107 ceiling. Still be aware of military activity in the area." },
@@ -1571,10 +1691,16 @@
         { q: "What is the scale of a VFR sectional chart?", a: "1:500,000 — standard for VFR navigation." },
         { q: "What is the difference between a nautical mile and a statute mile?", a: "1 NM ≈ 1.15 SM (6,076 ft vs 5,280 ft). Part 107 visibility is measured in statute miles. Sectional charts use nautical miles for distance." },
         { q: "What is the relationship between knots and mph?", a: "1 knot = 1 nautical mile per hour ≈ 1.15 mph. Part 107 max speed: 87 knots = 100 mph." },
-        { q: "What does a VOR symbol on a sectional chart indicate for sUAS pilots?", a: "A VOR (VHF Omnidirectional Range) is a ground-based radio navigation aid that broadcasts 360 radials — one magnetic bearing for each degree of the compass. On the chart it appears as a compass rose: a circle with degree tick marks and a central hexagonal symbol. The small arrow on the rose points to magnetic north. Manned aircraft navigate by tuning the VOR frequency (shown near the symbol, e.g., 'ABE 112.4') and tracking inbound or outbound on a specific radial. For sUAS pilots: VORs anchor Victor airways, so expect concentrated IFR traffic along radials that connect to other VORs." },
+        {
+          q: "What does a VOR symbol on a sectional chart indicate for sUAS pilots?", a: "A VOR (VHF Omnidirectional Range) is a ground-based radio navigation aid that broadcasts 360 radials — one magnetic bearing for each degree of the compass. On the chart it appears as a compass rose: a circle with degree tick marks and a central hexagonal symbol. The small arrow on the rose points to magnetic north. Manned aircraft navigate by tuning the VOR frequency (shown near the symbol, e.g., 'ABE 112.4') and tracking inbound or outbound on a specific radial. For sUAS pilots: VORs anchor Victor airways, so expect concentrated IFR traffic along radials that connect to other VORs.",
+          svg: '<svg viewBox="0 0 300 170" xmlns="http://www.w3.org/2000/svg"><rect width="300" height="170" fill="#f5f0e0" rx="4"/><text x="150" y="16" text-anchor="middle" font-size="11" fill="#666" font-family="sans-serif" font-weight="bold">VOR COMPASS ROSE on Sectional Chart</text><circle cx="130" cy="92" r="50" fill="none" stroke="#2266cc" stroke-width="1"/><line x1="130" y1="38" x2="130" y2="32" stroke="#2266cc" stroke-width="2"/><line x1="130" y1="146" x2="130" y2="152" stroke="#2266cc" stroke-width="1.5"/><line x1="76" y1="92" x2="70" y2="92" stroke="#2266cc" stroke-width="1.5"/><line x1="184" y1="92" x2="190" y2="92" stroke="#2266cc" stroke-width="1.5"/><line x1="95" y1="57" x2="91" y2="53" stroke="#2266cc" stroke-width="1"/><line x1="165" y1="57" x2="169" y2="53" stroke="#2266cc" stroke-width="1"/><line x1="95" y1="127" x2="91" y2="131" stroke="#2266cc" stroke-width="1"/><line x1="165" y1="127" x2="169" y2="131" stroke="#2266cc" stroke-width="1"/><polygon points="130,82 124,95 130,90 136,95" fill="#2266cc"/><polygon points="126,88 130,82 134,88 130,86" fill="#2266cc"/><text x="130" y="36" text-anchor="middle" font-size="7" fill="#2266cc" font-family="sans-serif">N</text><line x1="130" y1="32" x2="190" y2="92" stroke="#2266cc" stroke-width="0.5" stroke-dasharray="3,4" opacity="0.5"/><text x="194" y="88" font-size="7" fill="#2266cc" font-family="sans-serif">090°</text><line x1="130" y1="92" x2="280" y2="92" stroke="#2266cc" stroke-width="1.5"/><text x="255" y="86" font-size="7" fill="#2266cc" font-family="sans-serif">V16</text><text x="255" y="100" font-size="6" fill="#888" font-family="sans-serif">Victor airway</text><text x="220" y="42" font-size="9" fill="#2255aa" font-family="sans-serif" font-weight="bold">ABE 112.4</text><text x="220" y="54" font-size="8" fill="#888" font-family="sans-serif">VOR name + freq</text><text x="150" y="166" text-anchor="middle" font-size="8" fill="#444" font-family="sans-serif">Expect IFR traffic along Victor airways (blue lines between VORs)</text></svg>'
+        },
         { q: "What is a VOR radial?", a: "A radial is a magnetic bearing radiating outward FROM a VOR station. There are 360 radials (one per degree). For example, the 090 radial extends due east from the VOR. Pilots track radials to navigate between waypoints. On a sectional chart, the spoke-like lines around the VOR compass rose represent these radials, with longer lines at 10° intervals and shorter ticks at each degree. Victor airways follow specific radials between VOR stations." },
         { q: "What are Victor airways on a sectional chart and why do sUAS pilots care?", a: "Victor airways are low-altitude IFR routes (below 18,000 ft MSL) depicted as blue lines connecting VOR stations. They follow specific VOR radials — e.g., V16 might follow the 270 radial from one VOR to the 090 radial of the next. The airway name (V followed by a number) is printed along the line. Width is typically 4 NM either side of the centerline. For sUAS pilots: expect instrument traffic along these corridors, especially below 6,000 ft AGL — be extra vigilant when operating near a Victor airway." },
-        { q: "What do obstruction symbols on a sectional chart tell sUAS pilots?", a: "Show man-made obstacles (towers, antennas, etc.). The number next to the symbol shows total height MSL, with AGL height in parentheses. A lightning bolt symbol means the obstacle is lighted." },
+        {
+          q: "What do obstruction symbols on a sectional chart tell sUAS pilots?", a: "Show man-made obstacles (towers, antennas, etc.). The number next to the symbol shows total height MSL, with AGL height in parentheses. A lightning bolt symbol means the obstacle is lighted.",
+          svg: '<svg viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg"><rect width="300" height="150" fill="#f5f0e0" rx="4"/><text x="150" y="16" text-anchor="middle" font-size="11" fill="#666" font-family="sans-serif" font-weight="bold">OBSTACLE SYMBOLS on Sectional Charts</text><line x1="70" y1="110" x2="70" y2="50" stroke="#333" stroke-width="2"/><circle cx="70" cy="47" r="5" fill="none" stroke="#333" stroke-width="1.5"/><line x1="65" y1="47" x2="75" y2="47" stroke="#333" stroke-width="1.5"/><line x1="70" y1="42" x2="70" y2="52" stroke="#333" stroke-width="1.5"/><text x="88" y="50" font-size="11" fill="#333" font-family="sans-serif" font-weight="bold">1,549</text><text x="88" y="63" font-size="10" fill="#666" font-family="sans-serif">(1,219)</text><text x="88" y="78" font-size="8" fill="#888" font-family="sans-serif">↑ MSL bold</text><text x="88" y="89" font-size="8" fill="#888" font-family="sans-serif">↑ (AGL) in parens</text><line x1="200" y1="110" x2="200" y2="50" stroke="#333" stroke-width="2"/><circle cx="200" cy="47" r="5" fill="none" stroke="#333" stroke-width="1.5"/><polygon points="197,44 200,38 203,44" fill="#ffcc00" stroke="#333" stroke-width="0.5"/><text x="218" y="50" font-size="11" fill="#333" font-family="sans-serif" font-weight="bold">2,049</text><text x="218" y="63" font-size="10" fill="#666" font-family="sans-serif">(1,700)</text><text x="218" y="78" font-size="8" fill="#ffaa00" font-family="sans-serif" font-weight="bold">⚡ = lighted</text><line x1="20" y1="110" x2="280" y2="110" stroke="#886644" stroke-width="1"/><text x="150" y="125" text-anchor="middle" font-size="9" fill="#444" font-family="sans-serif">Bold number = MSL · (parentheses) = AGL above ground</text><text x="150" y="140" text-anchor="middle" font-size="8" fill="#888" font-family="sans-serif">Tower on left: 1,549 MSL, 1,219 ft tall · Right: lighted, 2,049 MSL, 1,700 ft tall</text></svg>'
+        },
         { q: "What is the difference between AGL and MSL on a sectional chart?", a: "AGL = above ground level (height above terrain directly below). MSL = mean sea level (fixed reference). Charts show obstacle heights in MSL with AGL in parentheses. Part 107 altitude limit (400 ft) is AGL." },
         { q: "Why are some aviation altitudes expressed in AGL and others in MSL?", a: "AGL is used when the rule needs a consistent height above terrain regardless of location — e.g., Part 107 ceiling (400 ft AGL), Class E floors (700/1,200 ft AGL), and Class D ceiling (2,500 ft AGL). If these were MSL, a 1,200 ft MSL floor would be underground in Denver (elev 5,400 ft) but 1,200 ft up in Miami. MSL is used for high-altitude references where terrain variation matters less — Class A (18,000 MSL), Class E remote floor (14,500 MSL), and airspace shelf labels on charts." },
         { q: "Why should sUAS pilots check VFR sectional chart effective dates?", a: "Airspace boundaries, frequencies, and obstacles can change between editions. An outdated chart may show incorrect airspace classifications or missing TFRs." },
@@ -1805,16 +1931,16 @@
 
       var CAT_RULES = [
         {
-          id: "sectional",
-          re: /\bsectional\b|chart.*symbol|chart.*legend|isogonic|maximum elevation figure|\bmef\b|victor airway|magenta.*blue|blue.*magenta|obstruction light.*chart|lighted obstacle|vor symbol|\bvor\b.*radial|vor\b.*compass|nautical mile|statute mile|1:500|magnetic variation|true.*magnetic|magnetic.*heading|true.*heading|\bagl\b.*\bmsl\b|chart currency|class e.*700|class e.*extension|class e.*floor|class b shelf|blue.*parenthes|knot vs|nautical.*statute|distance measurement|charted heli|airport data block|airport icon|\bawos\b|\batis\b|data block.*chart|tick marks.*airport|airport.*circle|latitude.*longitude|longitude.*latitude|shelf fraction|fuzzy magenta|fuzzy blue|dashed magenta|dashed blue/i
-        },
-        {
           id: "weather",
           re: /\bmetar\b|\btaf\b|\bsigmet\b|\bairmet\b|convective|thunderstorm|cold front|warm front|microburst|wind shear|wind gradient|density altitude|precipitation|dew point|lapse rate|adiabatic|icing risk|fog\b|haze\b|humidity|stable.*unstable|unstable.*air|barometer|altimeter setting|standard pressure|\b29\.92\b|1013|wind direction|turbulence.*mountain|cold weather|hot weather|battery.*cold|battery.*effect|night vision|rod cell|scanning at night|sun.*glare|ceiling definition|cloud formation|temperature|weather|solar storm/i
         },
         {
           id: "airport",
-          re: /\brunway\b|traffic pattern|upwind.*downwind|downwind.*leg|crosswind.*takeoff|\bctaf\b|\bunicom\b|helipad|heliport|airport.*diagram|airport.*elevation|left traffic|right traffic|converging.*aircraft|overtaking\b|head-on\b|wake turbulence|wake.*vortex|phonetic alphabet|romeo.*sierra|squawk|emergency.*frequency|121\.5|mayday|pan-pan|see-and-avoid|scanning for aircraft|airport operator|into the wind|hold short|taxiway.*sign|taxiway.*center|runway.*marking|airport.*marking|airport.*sign|blast pad|chevron|displaced threshold|\bils\b.*hold|closed.*runway|closed.*taxiway|color rule.*airport/i
+          re: /\brunway\b|traffic pattern|upwind.*downwind|downwind.*leg|crosswind.*takeoff|\bctaf\b|\bunicom\b|helipad|heliport|airport.*diagram|airport.*elevation|left traffic|right traffic|converging.*aircraft|overtaking\b|head-on\b|wake turbulence|wake.*vortex|phonetic alphabet|romeo.*sierra|squawk|emergency.*frequency|121\.5|mayday|pan-pan|see-and-avoid|scanning for aircraft|airport operator|into the wind|hold short|taxiway.*sign|taxiway.*center|runway.*marking|airport.*marking|airport.*sign|blast pad|chevron|displaced threshold|\bils\b.*hold|closed.*runway|closed.*taxiway|color rule.*airport|\bawos\b|\batis\b/i
+        },
+        {
+          id: "sectional",
+          re: /\bsectional\b|chart.*symbol|chart.*legend|isogonic|magnetic.*variation|maximum elevation figure|\bmef\b|victor airway|magenta.*blue|blue.*magenta|obstruction.*chart|lighted obstacle|vor symbol|\bvor\b.*radial|vor\b.*compass|1:500|chart currency|class e.*700|class e.*extension|class e.*floor|class b shelf|blue.*parenthes|charted heli|airport data block|airport icon|data block.*chart|tick marks.*airport|airport.*circle|latitude.*longitude|longitude.*latitude|shelf fraction|fuzzy magenta|fuzzy blue|dashed magenta|dashed blue|nautical.*statute/i
         },
         {
           id: "airspace",
@@ -4074,7 +4200,7 @@
         elWxRef.classList.add("open");
       }
 
-      if (activeCat === "airspace") {
+      if (activeCat === "airspace" || activeCat === "sectional") {
         elAirspaceRef.hidden = false;
         elAirspaceRef.classList.add("open");
       }
