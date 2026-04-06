@@ -1001,14 +1001,14 @@
             </tr>
             <tr>
               <td><strong>C</strong></td>
-              <td>Surface → 4,000 ft AGL</td>
+              <td>Surface → ~4,000 ft above airport (charted in MSL)</td>
               <td>Busy towered airports w/ radar. Two tiers: inner 5 NM (SFC), outer 10 NM (1,200 AGL floor)</td>
               <td><strong>Solid magenta lines</strong> with altitude labels</td>
               <td>Yes</td>
             </tr>
             <tr>
               <td><strong>D</strong></td>
-              <td>Surface → 2,500 ft AGL</td>
+              <td>Surface → ~2,500 ft above airport (charted in MSL)</td>
               <td>Towered airports (smaller). Single cylinder ~4 NM radius. Reverts to E/G when tower closes</td>
               <td><strong>Dashed blue line</strong></td>
               <td>Yes</td>
@@ -1126,6 +1126,93 @@
           <span><strong style="color:#0050aa">Fuzzy blue</strong> = Class E floor at 1,200 ft AGL</span>
         </div>
 
+        <h4>AGL vs MSL on Sectional Charts</h4>
+        <table class="ref-table">
+          <thead>
+            <tr>
+              <th>Reference</th>
+              <th>Uses AGL</th>
+              <th>Uses MSL</th>
+              <th>Why?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Class C ceiling &amp; shelves</strong></td>
+              <td></td>
+              <td>MSL (×100) ✓</td>
+              <td>Chart shows MSL fractions (e.g. 40/SFC). Typically ~4,000 ft above airport</td>
+            </tr>
+            <tr>
+              <td><strong>Class D ceiling</strong></td>
+              <td></td>
+              <td>MSL (×100) ✓</td>
+              <td>Shown in brackets (e.g. [25] = 2,500 MSL). Typically ~2,500 ft above airport</td>
+            </tr>
+            <tr>
+              <td><strong>Class E floor (default)</strong></td>
+              <td>1,200 ft AGL ✓</td>
+              <td></td>
+              <td>Consistent height above terrain everywhere</td>
+            </tr>
+            <tr>
+              <td><strong>Class E floor (magenta)</strong></td>
+              <td>700 ft AGL ✓</td>
+              <td></td>
+              <td>Lowered near airports for instrument approaches</td>
+            </tr>
+            <tr>
+              <td><strong>Class A floor</strong></td>
+              <td></td>
+              <td>18,000 ft MSL ✓</td>
+              <td>High altitude — terrain variation irrelevant</td>
+            </tr>
+            <tr>
+              <td><strong>Airspace shelf labels</strong><br>(e.g. 80/40, 100/SFC)</td>
+              <td></td>
+              <td>MSL (×100) ✓</td>
+              <td>Chart fractions are always MSL hundreds</td>
+            </tr>
+            <tr>
+              <td><strong>Obstacle heights</strong></td>
+              <td>(AGL) in parentheses</td>
+              <td>MSL on top</td>
+              <td>Both shown — MSL bold, AGL in (parens)</td>
+            </tr>
+            <tr>
+              <td><strong>Airport elevation</strong></td>
+              <td></td>
+              <td>MSL ✓</td>
+              <td>Fixed reference for altimeter setting</td>
+            </tr>
+            <tr>
+              <td><strong>MEF (Max Elevation Fig)</strong></td>
+              <td></td>
+              <td>MSL ✓</td>
+              <td>Highest point in quadrant + buffer</td>
+            </tr>
+            <tr>
+              <td><strong>Part 107 altitude limit</strong></td>
+              <td>400 ft AGL ✓</td>
+              <td></td>
+              <td>Height above ground below the drone</td>
+            </tr>
+            <tr>
+              <td><strong>MTR boundary</strong></td>
+              <td>1,500 ft AGL ✓</td>
+              <td></td>
+              <td>3-digit = above, 4-digit = at/below</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="margin:.5rem 0 0;font-size:.85rem;color:var(--text-dim)">
+          <strong>Rule of thumb:</strong> Low-altitude boundaries near terrain use <strong>AGL</strong>
+          (so a 1,200 ft floor stays 1,200 ft above ground whether in Miami or Denver).
+          High-altitude boundaries and chart labels use <strong>MSL</strong>
+          (fixed reference regardless of terrain).
+          Obstacles show <em>both</em> — the tall number is MSL, the number in parentheses is AGL.
+        </p>
+
         <h4>Key Numbers for sUAS (Part 107)</h4>
         <div class="wx-ref-grid">
           <span><code>400 ft</code> Max altitude AGL</span>
@@ -1198,16 +1285,12 @@
         { q: "§107.23 — Can you drop objects from a drone under Part 107?", a: "Yes, but not in a manner that creates an undue hazard to persons or property." },
         { q: "§107.25 — Can you operate a sUAS from a moving aircraft?", a: "No — operating from a moving aircraft is prohibited." },
         { q: "§107.25 — Can you operate a sUAS from a moving vehicle?", a: "Only if the sUAS is flown over a sparsely populated area and is NOT transporting another person's property for compensation or hire.", ctx: "Common scenario: operating from a slowly moving truck on a farm or ranch for agricultural survey. Both conditions must be met simultaneously — sparsely populated AND not carrying cargo for hire. Operating from a moving watercraft (boat) follows the same rules as a vehicle. Operating from a moving AIRCRAFT is always prohibited, no exceptions." },
-        { q: "§107.25 — Two conditions for operating from a moving vehicle?", a: "(1) Over a sparsely populated area, and (2) not transporting another person's property for compensation or hire." },
         { q: "§107.27 — What alcohol/drug rules apply to Part 107 operations?", a: "§91.17: No operating (1) within 8 hours of consuming alcohol ('8 hours bottle to throttle'), (2) while under the influence of alcohol, (3) with a blood alcohol content of 0.04% or greater, or (4) while using any drug that affects faculties contrary to safety. §91.19: No carrying a person who appears intoxicated (less relevant for sUAS). These apply to the remote PIC, person manipulating controls, and visual observer.", ctx: "Memory aid: '8 hours bottle to throttle, 0.04 BAC.' The 0.04% BAC limit is HALF the legal driving limit in most states (0.08%). Both the 8-hour rule AND the 'under the influence' rule must be met — you can't fly even after 8 hours if you're still impaired. The drug rule covers prescription medications (e.g., codeine), OTC drugs (antihistamines, sleep aids), and illegal substances — anything that causes drowsiness, dizziness, or impaired judgment. Refusing an FAA alcohol test = automatic grounds for certificate suspension/revocation (§107.59)." },
         { q: "§107.29 — What training is required for night operations?", a: "The remote PIC must have completed the updated initial knowledge test or recurrent training (which includes night operations topics) after April 6, 2021. If you passed the old test before that date, you need to complete the updated recurrent training before flying at night. No separate waiver is needed — night flight is allowed by default once training is current.", ctx: "Night operations checklist: (1) Anti-collision lights visible for 3 SM (required during night AND civil twilight). (2) PIC may reduce (but not turn off) light intensity for safety. (3) Civil twilight = 30 min before sunrise to sunrise, and sunset to 30 min after sunset. (4) Night vision: allow 30 min for dark adaptation (rod cells), use off-center viewing, avoid bright white lights (use red). (5) All other Part 107 rules still apply — 3 SM visibility, 500 ft below clouds, VLOS, etc." },
         { q: "§107.29 — What lighting is required for night operations?", a: "Anti-collision lighting visible for at least 3 statute miles with a flash rate sufficient to avoid a collision." },
-        { q: "Under Part 107, how far must anti-collision lights be visible for night or twilight sUAS flight?", a: "At least 3 statute miles." },
         { q: "§107.29 — Can the remote PIC reduce anti-collision light intensity?", a: "Yes — the PIC may reduce intensity (but not extinguish) the anti-collision lighting if operating conditions make it in the interest of safety." },
         { q: "§107.29 — Must anti-collision lighting be used during civil twilight?", a: "Yes — the sUAS must have lighted anti-collision lighting visible for at least 3 statute miles during civil twilight." },
         { q: "§107.29 — What is civil twilight (except Alaska)?", a: "Morning: 30 minutes before official sunrise to official sunrise. Evening: official sunset to 30 minutes after official sunset." },
-        { q: "Civil twilight begins how many minutes before sunrise?", a: "30 minutes before official sunrise (and ends at sunrise)." },
-        { q: "Civil twilight ends how many minutes after sunset?", a: "30 minutes after official sunset (begins at sunset)." },
         { q: "§107.31 — What does VLOS require?", a: "The remote PIC, VO, or person manipulating controls must be able to see the unmanned aircraft throughout the entire flight with vision unaided by any device other than corrective lenses.", ctx: "Common VLOS pitfalls: (1) FPV goggles do NOT satisfy VLOS — if using FPV, a separate person (PIC or VO) must maintain unaided visual contact. (2) Distance and size matter — a small sUAS becomes hard to see beyond ~1,500 ft in good conditions; in haze or against clouds it's even worse. (3) You can use a chain of VOs to extend operational area, but each VO must see the aircraft and communicate with PIC. (4) Flying behind buildings, trees, or terrain where you lose sight = VLOS violation. (5) Beyond VLOS (BVLOS) requires a Part 107 waiver, which is one of the hardest waivers to obtain." },
         { q: "§107.31 — Can you use binoculars to maintain VLOS?", a: "No — only corrective lenses (spectacles or contact lenses) are permitted. Binoculars are not corrective lenses." },
         { q: "§107.31 — What four things must you determine by VLOS?", a: "(1) The aircraft's location, (2) its attitude, altitude, and direction of flight, (3) observe airspace for other traffic or hazards, (4) determine it doesn't endanger life or property." },
@@ -1232,12 +1315,8 @@
         { q: "§107.49 — Must crew be briefed before flight?", a: "Yes — the remote PIC must ensure all persons directly participating are informed about operating conditions, emergency procedures, contingency procedures, roles and responsibilities, and potential hazards." },
         { q: "§107.49 — What must be checked regarding control links?", a: "Ensure all control links between the ground control station and the sUAS are working properly." },
         { q: "§107.49 — What must be checked regarding power?", a: "If the sUAS is powered, ensure there is enough available power for the intended operational time." },
-        { q: "§107.49 — What must be checked about objects attached to the aircraft?", a: "Any object attached or carried must be secure and must not adversely affect flight characteristics or controllability." },
         { q: "§107.51(a) — What is the maximum groundspeed for a small UAS?", a: "87 knots (100 miles per hour)." },
-        { q: "Under Part 107, what is the maximum groundspeed for a sUAS in miles per hour?", a: "100 mph." },
-        { q: "Under Part 107, what is the maximum groundspeed for a sUAS in knots?", a: "87 knots." },
         { q: "§107.51(b) — What is the maximum altitude for a small UAS?", a: "400 feet above ground level (AGL).", ctx: "400 ft AGL is measured from the ground directly below the aircraft, NOT from the launch point. If you're flying over a hill, the 400 ft is from the hilltop. If flying over a valley, it's from the valley floor. The structure exception allows higher flight near tall buildings/towers. Also note: LAANC may authorize you to fly at lower altitudes in controlled airspace (e.g., 0 ft, 100 ft, 200 ft) — the 400 ft is a maximum, not a guaranteed minimum." },
-        { q: "How high can a UAS fly under Part 107?", a: "400 feet AGL, unless within a 400-foot radius of a structure — then up to 400 feet above the structure's immediate uppermost limit." },
         { q: "§107.51(b) — Structure exception to the 400 ft altitude limit?", a: "The sUAS may fly higher than 400 ft AGL if (1) it is within a 400-foot radius of a structure, and (2) does not fly higher than 400 feet above the structure's immediate uppermost limit.", ctx: "Example: A cell tower is 300 ft tall. Within a 400-ft horizontal radius of that tower, you can fly up to 700 ft AGL (300 + 400). But once you fly beyond 400 ft from the tower, you must descend back to 400 ft AGL. The practical use case is inspecting tall structures — towers, buildings, bridges, wind turbines. 'Immediate uppermost limit' means the highest point of the structure itself (including antennas, spires, etc.)." },
         { q: "What is the lateral limit for the structure altitude exception?", a: "400-foot radius from the structure." },
         { q: "If a tower is 300 feet tall, what is the max altitude within its vicinity?", a: "700 feet AGL (300 ft structure + 400 ft above it), if within a 400-foot radius." },
@@ -1266,18 +1345,15 @@
         { q: "§107.64 — How long is a temporary remote pilot certificate valid?", a: "Up to 120 calendar days." },
         { q: "§107.64 — When does a temporary certificate expire?", a: "(1) On the expiration date shown, (2) upon receipt of the permanent certificate, or (3) upon notice that the certificate is denied or revoked." },
         { q: "§107.65 — How often must you complete recurrent training or testing?", a: "Within the previous 24 calendar months.", ctx: "Three ways to stay current: (1) Pass the initial knowledge test again ($175), (2) Complete free online recurrent training at FAASafety.gov (WINGS program), (3) If you hold a manned pilot certificate with current flight review, complete the shorter Part 107 online course. Option 2 is the most common — it's free and takes about 1–2 hours online. Your certificate never expires, but you cannot fly if your recurrent training lapses. The 24-month clock resets each time you complete any of the three options." },
-        { q: "How often must a Part 107 remote pilot complete recurrent training or testing?", a: "Every 24 calendar months." },
         { q: "§107.65 — What satisfies the aeronautical knowledge recency requirement?", a: "Within the previous 24 calendar months you must have: (a) passed the initial knowledge test (covers all 13 knowledge areas including night ops), (b) completed free online recurrent training at FAA Safety (same knowledge areas), OR (c) if you hold a manned pilot certificate with a current flight review, completed the shorter Part 107-specific online training. Any one of these keeps your certificate current." },
         { q: "Does the remote pilot certificate expire?", a: "No — but you cannot exercise privileges unless you have completed recurrent training/testing within the previous 24 calendar months." },
         { q: "§107.67 — What ID is required for a knowledge test?", a: "Proper identification with: (1) photograph, (2) signature, (3) date of birth, and (4) permanent mailing address." },
         { q: "§107.69 — Penalty for cheating on a knowledge test?", a: "Prohibited from applying for any certificate/rating/authorization AND from taking any test for 1 year. Existing certificates may also be suspended or revoked." },
         { q: "§107.69 — For how long are you banned from testing after cheating?", a: "1 year after the date of the prohibited act." },
         { q: "§107.71 — How long must you wait to retake a failed knowledge test?", a: "14 calendar days after failing." },
-        { q: "After failing the Part 107 knowledge test, how long must you wait to retake it?", a: "14 calendar days." },
         { q: "§107.73 — What knowledge areas does the initial test and recurrent training cover?", a: "(a) Regulations, (b) airspace classification and restrictions, (c) weather sources and effects, (d) sUAS loading, (e) emergency procedures, (f) CRM, (g) radio comms, (h) performance, (i) drugs/alcohol effects, (j) ADM, (k) airport operations, (l) maintenance/preflight, (m) night operations." },
         { q: "How many knowledge areas are on the Part 107 test?", a: "13 areas: regulations, airspace, weather, loading, emergency, CRM, radio comms, performance, drugs/alcohol, ADM/judgment, airport ops, maintenance/preflight, and night operations." },
         { q: "§107.77 — How soon must you notify the FAA of an address change?", a: "Within 30 days — you may not exercise privileges after 30 days from the change unless the FAA has been notified." },
-        { q: "After changing your permanent address, how long do you have to notify the FAA?", a: "30 days." },
         { q: "§107.79 — Can you voluntarily surrender your remote pilot certificate?", a: "Yes — you may voluntarily surrender it for cancellation, but to get it back you must start over: meet all eligibility requirements (age 16+, English, no disqualifying conditions) and either pass the full initial knowledge test again or complete initial training if you hold a manned pilot certificate." },
         { q: "§107.74 — How can a manned aircraft pilot get a Part 107 certificate without taking the full knowledge test?", a: "A person who holds a pilot certificate issued under Part 61 (other than student pilot) with a current flight review may complete an online training course at FAASafety.gov instead of taking the proctored knowledge test. After completing the course, apply through IACRA with the training completion certificate.", ctx: "This is commonly called the 'Part 61 shortcut.' Requirements: (1) hold a Part 61 certificate (private, commercial, ATP — NOT student pilot), (2) have a current flight review (within 24 months), (3) complete the FAA's free online Part 107 initial training course at FAASafety.gov. For recurrent training, the same shortcut applies — manned pilots complete the shorter Part 107-specific online course instead of the full recurrent course. This path saves time and the ~$175 testing fee." },
         // ═══════════════════════════════════════════════════════════════
@@ -1286,16 +1362,13 @@
         { q: "What are the four categories for operations over human beings, and when does each apply?", a: "Category 1: sUAS ≤ 0.55 lbs (250 g), no exposed rotating parts — fly over anyone, no FAA declaration needed. Category 2: sUAS won't transfer > 11 ft-lbs kinetic energy on impact — requires FAA-accepted declaration of compliance; CAN fly over open-air assemblies. Category 3: sUAS won't transfer > 25 ft-lbs kinetic energy — requires declaration; CANNOT fly over open-air assemblies; restricted to closed/restricted sites or no sustained flight over people. Category 4: sUAS has an FAA airworthiness certificate (like manned aircraft) — operated per its approved Flight Manual.", ctx: "Quick reference — open-air assemblies: Cat 1 YES, Cat 2 YES, Cat 3 NO, Cat 4 YES. Declaration of Compliance needed: Cat 1 NO, Cat 2 YES, Cat 3 YES, Cat 4 N/A (uses airworthiness cert instead). All categories except Cat 1 require Remote ID. All categories require no exposed rotating parts that lacerate skin (Cat 1–3 explicitly, Cat 4 per Flight Manual). Without meeting ANY category, you can still fly over people who are directly participating, under a covered structure, or inside a stationary vehicle." },
         { q: "How do you decide which operations-over-people category applies to your drone?", a: "Start with your aircraft: (1) If it weighs ≤ 0.55 lbs with no exposed blades → Category 1, simplest path. (2) If heavier but impact ≤ 11 ft-lbs → Category 2 (manufacturer files declaration with FAA, labels the aircraft). (3) If impact ≤ 25 ft-lbs → Category 3 (same declaration process, but you CANNOT fly over open-air assemblies and must use closed sites or avoid sustained overflight). (4) If the sUAS has an airworthiness certificate → Category 4 (most capable, follows manned-aircraft-style maintenance rules).", ctx: "The pilot doesn't choose the category — the aircraft's characteristics determine it. The manufacturer is responsible for testing, filing the Declaration of Compliance (Cat 2/3), and labeling the aircraft. As a PIC, you verify the label matches your intended operation. Key exam distinction: Cat 1 is the ONLY category with a weight limit (0.55 lbs). Cat 2 and Cat 3 use kinetic energy on impact (11 and 25 ft-lbs), which depends on both weight and speed — not weight alone." },
         { q: "§107.110 — Category 1 lets you fly over people with the lightest drones. What is the max weight?", a: "0.55 pounds (250 grams) or less on takeoff and throughout the operation, including everything on board or attached.", ctx: "Category 1 is the simplest path — no manufacturer declaration needed, no FAA paperwork. Just meet the weight limit and ensure no exposed rotating parts that could cut skin. Examples: DJI Mini series (249g) fits exactly. But 'including everything on board or attached' means payload, prop guards, cameras — everything. Cat 1 can fly over people AND open-air assemblies (with Remote ID). It's the only category that doesn't require an FAA-accepted declaration of compliance." },
-        { q: "Category 1 (lightest drones, operations over people) weight limit is 0.55 lbs. How many grams is that?", a: "250 grams.", ctx: "250g is the magic number — the DJI Mini series (249g) was designed specifically to fit under this limit. Cat 1 is the easiest path to fly over people: no manufacturer declaration, no FAA paperwork, just stay ≤250g with no exposed blades. Compare to Cat 2 (≤11 ft-lbs kinetic energy) and Cat 3 (≤25 ft-lbs) which require manufacturer Declarations of Compliance, or Cat 4 which requires a full airworthiness certificate." },
         { q: "§107.110 — Category 1 (≤ 0.55 lbs, operations over people): what is the rotating parts requirement?", a: "Must not contain any exposed rotating parts that would lacerate human skin upon impact.", ctx: "This requirement applies to Categories 1, 2, and 3 — all three prohibit exposed rotating parts that could lacerate skin. Prop guards can help meet this requirement. Cat 4 follows its Flight Manual instead. The 'lacerate human skin' standard is the threshold — minor contact that wouldn't break skin is acceptable. This is a design/manufacturing requirement, not something the pilot tests in the field." },
         { q: "Category 1 (≤ 0.55 lbs, no exposed blades, operations over people) — can it fly over open-air assemblies like concerts or stadiums?", a: "Yes — but only if the operation meets Remote ID requirements (§89.110 or §89.115(a)). No sustained flight over open-air assemblies without Remote ID compliance.", ctx: "Open-air assembly access by category: Cat 1 YES, Cat 2 YES, Cat 3 NO, Cat 4 YES. Cat 3 is the only exception. Remote ID is required for all categories when flying over open-air assemblies — this ensures the drone can be identified by law enforcement and the public. An 'open-air assembly' means outdoor gatherings like concerts, sporting events, parades, and festivals." },
         { q: "§107.120 — Category 2 (heavier drones that need an FAA declaration, operations over people): what is the kinetic energy impact limit?", a: "Must not cause injury equivalent to or greater than a transfer of 11 foot-pounds of kinetic energy upon impact from a rigid object.", ctx: "Cat 2 vs Cat 3 comparison: Cat 2 (≤11 ft-lbs) CAN fly over open-air assemblies. Cat 3 (≤25 ft-lbs) CANNOT. Both require an FAA-accepted Declaration of Compliance (DoC) from the manufacturer, a category label on the aircraft, and no exposed rotating parts that lacerate skin. The 11 ft-lbs threshold was chosen by the FAA based on injury research — it represents an impact unlikely to cause serious injury. The manufacturer, not the pilot, is responsible for proving compliance." },
-        { q: "Category 2 (operations over people, requires manufacturer declaration of compliance): what is the kinetic energy threshold on impact?", a: "11 foot-pounds.", ctx: "Memory aid: '11 and 25' — Cat 2 = 11 ft-lbs (lower energy, fewer restrictions), Cat 3 = 25 ft-lbs (higher energy, more restrictions). Cat 2 CAN fly over open-air assemblies; Cat 3 CANNOT. Kinetic energy depends on weight AND speed at impact — a lighter drone falling from higher altitude could exceed 11 ft-lbs. The manufacturer tests and certifies this, not the pilot." },
         { q: "§107.120 — Category 2 (≤ 11 ft-lbs impact, operations over people): what are the three design requirements?", a: "(1) Kinetic energy ≤ 11 ft-lbs, (2) no exposed rotating parts that would lacerate skin, (3) no safety defects.", ctx: "Cat 3 shares the same three requirements but with a higher energy threshold (25 ft-lbs) and a different defect standard ('low probability of fatality' vs Cat 2's 'low probability of casualty'). The 'no safety defects' requirement ties into the manufacturer's product support process — they must track and notify about defects. Cat 1 only has weight (≤0.55 lbs) and rotating parts requirements, no defect notification system needed. Cat 4 follows its airworthiness certificate and Flight Manual instead." },
         { q: "To qualify a drone for Category 2 (≤ 11 ft-lbs impact, operations over people), what must the manufacturer provide to the FAA?", a: "An FAA-accepted declaration of compliance, a label on the aircraft, remote pilot operating instructions, and a product support/notification process.", ctx: "The same manufacturer requirements apply to Cat 3 (with the higher 25 ft-lbs threshold). Cat 1 doesn't need any of this — just meet the weight/blade requirements. Cat 4 uses the much more rigorous airworthiness certification process instead. As a PIC, your role is to: (1) verify the category label is on the aircraft, (2) follow the manufacturer's operating instructions, (3) replace the label if damaged or missing before flying over people." },
         { q: "Category 2 (≤ 11 ft-lbs impact, FAA declaration required, operations over people) — can it fly over open-air assemblies like concerts?", a: "Yes — if it meets Remote ID requirements.", ctx: "Open-air assembly access: Cat 1 YES, Cat 2 YES, Cat 3 NO, Cat 4 YES. Cat 3 is the only one that cannot — despite having similar manufacturer requirements to Cat 2, its higher kinetic energy (25 ft-lbs vs 11) means the FAA restricts it from large outdoor crowds. Remote ID compliance is required for all categories when flying over open-air assemblies." },
         { q: "§107.130 — Category 3 (higher impact than Cat 2, more restricted, operations over people): what is the kinetic energy limit?", a: "Must not cause injury equivalent to or greater than a transfer of 25 foot-pounds of kinetic energy upon impact from a rigid object.", ctx: "Cat 3 allows heavier drones (up to 25 ft-lbs vs Cat 2's 11 ft-lbs) but with tighter operational restrictions: (1) CANNOT fly over open-air assemblies — this is the key difference from Cat 2. (2) CAN only fly over people in a closed/restricted-access site where everyone is notified, OR without sustained flight over non-participants. (3) Still requires manufacturer DoC and category label. (4) Defect notification threshold is 'low probability of fatality' (vs Cat 2's 'low probability of casualty'). Think of Cat 3 as: bigger drone, more restrictions on WHERE you can fly over people." },
-        { q: "Category 3 (operations over people, more restricted than Cat 2, requires declaration): what is the kinetic energy threshold on impact?", a: "25 foot-pounds.", ctx: "Memory aid: '11 and 25' — Cat 2 = 11 ft-lbs, Cat 3 = 25 ft-lbs. Higher energy = more restrictions: Cat 3 CANNOT fly over open-air assemblies (Cat 2 can). Cat 3 can only fly over individual people in closed/restricted-access sites or without sustained overflight. Cat 1 uses weight (≤0.55 lbs) instead of kinetic energy. Cat 4 has no energy limit but requires an airworthiness certificate." },
         { q: "Category 3 (≤ 25 ft-lbs impact, operations over people) — can it fly over open-air assemblies like concerts or stadiums?", a: "No — Category 3 may NOT operate over open-air assemblies of human beings.", ctx: "This is a commonly tested distinction. Categories that CAN fly over open-air assemblies: Cat 1, Cat 2, and Cat 4. The ONLY category that cannot: Cat 3. An 'open-air assembly' is any gathering of people in an outdoor area — concerts, sporting events, parades, festivals, protests. Cat 3's restriction makes sense: higher kinetic energy (up to 25 ft-lbs) combined with large crowds = unacceptable risk. Cat 3 can still fly over individual people in controlled/restricted sites." },
         { q: "Category 3 (≤ 25 ft-lbs impact, cannot fly over open-air assemblies): under what conditions CAN it fly over individual people?", a: "May only fly over people if: (1) within a closed/restricted-access site where people are on notice, OR (2) does not maintain sustained flight over anyone not directly participating or not under cover/in a stationary vehicle.", ctx: "Compare to other categories: Cat 1 and Cat 2 can fly over anyone (people, open-air assemblies) with no site restrictions. Cat 4 also has no site restrictions. Cat 3 is uniquely restricted — the 'closed/restricted-access site' means all people present have been informed that a drone is operating overhead. 'No sustained flight' means you can briefly transit over someone, but you can't hover or loiter over non-participants. This is the trade-off for the higher 25 ft-lbs energy threshold." },
         { q: "Category 2 (lighter impact) vs Category 3 (heavier impact) for operations over people — what are their kinetic energy limits?", a: "Category 2: ≤ 11 ft-lbs. Category 3: ≤ 25 ft-lbs.", ctx: "Memory aid: '11 and 25' — Cat 2 is the lower number (11) with fewer restrictions, Cat 3 is the higher number (25) with more restrictions. Both require a manufacturer Declaration of Compliance (DoC). The key operational difference: Cat 2 can fly over open-air assemblies, Cat 3 cannot. Neither category has a specific weight limit — the criterion is kinetic energy on impact, which depends on both weight and speed at the moment of impact." },
@@ -1387,8 +1460,6 @@
         { q: "You moved last week — when must you notify the FAA?", a: "Within 30 days. After 30 days without notification, you cannot exercise certificate privileges (§107.77)." },
         { q: "Part 107 vs §44809 recreational — what's the difference?", a: "Part 107 covers commercial and non-recreational operations with a remote pilot certificate. §44809 covers purely recreational flying with TRUST test and community guidelines." },
         { q: "Must you comply with TFRs when flying under Part 107?", a: "Yes — you must comply with all Temporary Flight Restrictions including: disaster/hazard areas, airspace restrictions for national security, presidential/VIP movement, space launch operations, and aviation events. Always check NOTAMs before every flight at 1800wxbrief.com or call 1-800-WX-BRIEF." },
-        { q: "Can you fly a sUAS with a transponder turned on?", a: "No — §107.52 prohibits operating with a transponder on unless authorized by the Administrator." },
-        { q: "Can you fly a sUAS with ADS-B Out transmitting?", a: "No — §107.53 prohibits operating with ADS-B Out in transmit mode unless authorized." },
         { q: "What does IACRA stand for and what is it used for?", a: "Integrated Airman Certification and Rating Application — used for pilot certificate applications." },
         { q: "What is an FSDO (Flight Standards District Office)?", a: "Flight Standards District Office — FAA local offices for questions and enforcement context." },
         // ═══════════════════════════════════════════════════════════════
@@ -1457,7 +1528,6 @@
         { q: "What is a National Security Area (NSA) on a sectional chart?", a: "Areas over locations requiring increased security (e.g., power plants, government facilities). Pilots are REQUESTED to voluntarily avoid these areas. Not legally prohibited, but flying through one may draw law enforcement attention." },
         // — TFRs & NOTAMs
         { q: "What is a TFR (Temporary Flight Restriction) and how does it affect sUAS?", a: "A TFR temporarily restricts flight in a defined area. Common TFR types: disaster/hazard areas (wildfires, hurricanes), VIP/presidential movement, sporting events (3 NM radius, 3,000 ft AGL for MLB/NFL/NCAA), space launches, and national security. Violating a TFR can result in certificate action, fines, or interception. Always check before every flight." },
-        { q: "Where do you check TFRs and NOTAMs before a flight?", a: "Primary source: 1800wxbrief.com or call 1-800-WX-BRIEF (Leidos Flight Service) for a full preflight briefing that includes TFRs, NOTAMs, and weather. Also: FAA NOTAM Search (notams.aim.faa.gov) for direct lookup, B4UFLY app for map-based awareness, and FAA DroneZone for sUAS-specific advisories. Always check before every flight — conditions change rapidly." },
         { q: "Step by step — how do you check NOTAMs before a sUAS flight?", a: "(1) Go to 1800wxbrief.com (Leidos Flight Service) and request a preflight briefing for your flight area — this is the most thorough option and includes TFRs, NOTAMs, and weather all in one. (2) Or call 1-800-WX-BRIEF and ask a specialist for a briefing. (3) For a quick direct lookup, use FAA NOTAM Search at notams.aim.faa.gov — search by location identifier or coordinates. (4) Use the B4UFLY app on your phone for a map view of active restrictions. Do this before EVERY flight — even if you flew the same spot yesterday." },
         { q: "What is an FDC NOTAM (Flight Data Center NOTAM)?", a: "An FDC NOTAM is issued by the FAA's Flight Data Center for regulatory information — TFRs, chart corrections, procedure changes, and security restrictions. They take precedence over published charts until the chart is updated. Check at 1800wxbrief.com or call 1-800-WX-BRIEF." },
         { q: "What are wildfire TFRs and why are they critical for drone pilots?", a: "TFRs established around active wildfires to protect firefighting aircraft (air tankers, helicopters). Violating a wildfire TFR can ground firefighting operations — 'If you fly, they can't.' Penalties include fines up to $20,000+ and certificate revocation." },
@@ -1485,16 +1555,11 @@
         { q: "On a sectional chart, you see 47° and count 3 heavy tick lines south of it. What is the latitude?", a: "46°30' — each heavy tick = 10 minutes, so 3 ticks = 30 minutes south of 47° = 46 degrees 30 minutes." },
         { q: "On an airspace shelf fraction like '40/SFC', what do the numbers mean?", a: "The top number (40) = ceiling in hundreds of feet MSL, so 4,000 ft MSL. The bottom (SFC) = surface (ground level). So '40/SFC' means the airspace extends from the surface up to 4,000 ft MSL." },
         { q: "On a sectional chart, what does '80/40' mean on an airspace shelf?", a: "The shelf extends from 4,000 ft MSL (bottom number × 100) up to 8,000 ft MSL (top number × 100). If you are below 4,000 MSL at that location, you are not inside that shelf." },
-        { q: "What does a fuzzy magenta line on a sectional chart indicate?", a: "Class E airspace starts at 700 ft AGL. Below 700 ft AGL is Class G (uncontrolled). This is the most common Class E boundary you will encounter." },
         { q: "When does Class E start at 1,200 ft AGL?", a: "Everywhere else (not fuzzy magenta), meaning anytime you’re outside of the thick and fuzzy magenta circle or set of lines, or nothing is being indicated on the sectional chart, Class E airspace starts at 1,200 ft. AGL." },
-        { q: "What does a dashed magenta line on a sectional chart indicate?", a: "Class E airspace starts at the surface (SFC). This typically appears as extensions from Class C or D airspace, often along instrument approach corridors." },
         { q: "What does a dashed blue line on a sectional chart indicate?", a: "Class D airspace boundary — typically around airports with a part-time or full-time control tower. When the tower closes, the airspace usually reverts to Class E or G. Check NOTAMs (1800wxbrief.com / 1-800-WX-BRIEF) and the Chart Supplement for hours." },
         { q: "Fuzzy magenta vs fuzzy blue vs dashed magenta vs dashed blue — what does each line mean on a sectional chart?", a: "Fuzzy magenta = Class E starts at 700 AGL (Class G below). Fuzzy blue = Class E starts at 1,200 AGL (Class G below). Dashed magenta = Class E starts at surface (SFC), typically instrument approach extensions. Dashed blue = Class D airspace boundary (controlled, around towered airports)." },
         { q: "Where does Class E start at 14,500 ft MSL?", a: "Only in very specific remote areas (mostly mountainous western US) that are explicitly charted with their own boundary. These are rare. Do NOT confuse with the general default — in most of the US with no boundaries shown, Class E starts at 1,200 ft AGL. The 14,500 MSL areas have huge Class G columns below them (surface to 14,500 MSL)." },
-        { q: "At what altitude does Class E become Class A airspace?", a: "18,000 ft MSL. Class A extends from 18,000 ft MSL up to FL600 (60,000 ft)." },
         { q: "What does the solid blue line with inward tick marks (spokes) radiating from a symbol indicate on a sectional chart?", a: "These are VOR radials — the spoke-like lines radiate outward from a VOR (VHF Omnidirectional Range) compass rose. A VOR is a ground-based radio navigation aid that broadcasts 360 radials (one for each degree). On the chart, the compass rose shows a circle with tick marks at each degree and longer spokes at cardinal/intercardinal points. Victor airways (blue lines connecting VORs) follow these radials. The radials are oriented to magnetic north. For sUAS pilots: expect IFR traffic tracking along VOR radials and Victor airways at low altitudes." },
-        { q: "How do VR/IR Military Training Route numbers tell you the altitude of operations?", a: "4-digit routes (e.g., VR1205, IR1234): operations at or below 1,500 ft AGL — high risk for sUAS! 3-digit routes (e.g., VR125, IR305): operations above 1,500 ft AGL." },
-        { q: "You see 'VR1205' on a sectional chart. Should you be concerned as a sUAS pilot?", a: "Yes — 4-digit MTR routes mean military jets fly at or below 1,500 ft AGL at high speed. This is within sUAS operating altitude. Exercise extreme caution." },
         { q: "You see 'IR305' on a sectional chart. Does this affect sUAS operations?", a: "Less concern — 3-digit routes mean operations above 1,500 ft AGL, which is above the 400 ft Part 107 ceiling. Still be aware of military activity in the area." },
         { q: "What is the difference between controlled and uncontrolled airspace?", a: "Controlled airspace (Class A/B/C/D/E): ATC provides services; IFR flights need clearance. Uncontrolled airspace (Class G): ATC does not provide separation services. For sUAS, Class B/C/D and Class E surface area require prior authorization; Class G does not." },
         { q: "What are NOTAMs and how should you check them before a sUAS flight?", a: "Notices to Airmen — alerts about temporary hazards, TFRs, runway closures, and airspace changes. How to check: (1) 1800wxbrief.com — Leidos Flight Service website, get a full preflight briefing including NOTAMs. (2) Call 1-800-WX-BRIEF — talk to a Flight Service specialist. (3) FAA NOTAM Search (notams.aim.faa.gov) — direct online lookup. (4) B4UFLY app — FAA mobile app, shows NOTAMs on a map. You must check NOTAMs before every flight." },
@@ -1616,7 +1681,6 @@
         { q: "METAR wind: decode 'VRB05KT'.", a: "Variable direction at 5 knots. 'VRB' is used when wind speed is ≤ 6 knots and direction is variable." },
         { q: "METAR wind: decode '18012KT 150V210'.", a: "Wind from 180° at 12 knots, but direction is variable between 150° and 210°. The 'V' group appears when wind direction varies ≥ 60° and speed is > 6 knots." },
         { q: "METAR wind: decode '32028G40KT'.", a: "Wind from 320° (northwest) at 28 knots, gusting to 40 knots. This is a strong, gusty wind — sUAS operators should seriously consider postponing the flight." },
-        { q: "In a METAR, are wind directions magnetic or true north?", a: "METAR winds are reported relative to TRUE north. This differs from ATIS/tower communications, which give winds relative to MAGNETIC north. When comparing METAR wind to a runway heading, apply local magnetic variation." },
 
         // ── METAR visibility decoding ────────────────────────────────
         { q: "METAR visibility: decode '10SM'.", a: "10 statute miles visibility — clear conditions. This is the maximum visibility reported in a standard METAR." },
